@@ -360,7 +360,7 @@
 .lets-farewell-card .lets-btn { margin-top: 8px; }
 
 /* --------------------------------------------------------------- motion */
-@keyframes lets-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(calc(-2px - 4px * var(--lets-play))); } }
+@keyframes lets-bob { 0%, 100% { transform: translateY(0) rotate(calc(-3deg * var(--lets-play))); } 50% { transform: translateY(calc(-2px - 4px * var(--lets-play))) rotate(calc(3deg * var(--lets-play))); } }
 @keyframes lets-breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.025, .975); } }
 @keyframes lets-spin { to { transform: rotate(360deg); } }
 @keyframes lets-pulse { 0%, 100% { opacity: .7; transform: scale(1); } 50% { opacity: 1; transform: scale(1.1); } }

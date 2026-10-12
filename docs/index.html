@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Docs · lets</title>
-  <meta name="description" content="Documentation for lets: install, the companion Pip, uniques, the graph board, the LIP protocol and the architecture.">
+  <meta name="description" content="Documentation for lets: install, the companion Doto, uniques, the graph board, the LIP protocol and the architecture.">
   <meta name="theme-color" content="#120b1f">
   <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../css/site.css">
@@ -36,7 +36,7 @@
       <ul>
         <li><a href="./index.html" aria-current="page">Overview</a></li>
         <li><a href="./getting-started.html">Getting started</a></li>
-        <li><a href="./companion.html">The companion (Pip)</a></li>
+        <li><a href="./companion.html">The companion (Doto)</a></li>
         <li><a href="./uniques.html">Uniques &amp; the store</a></li>
         <li><a href="./graph.html">The graph board</a></li>
         <li><a href="./protocol.html">Protocol (LIP)</a></li>
@@ -54,8 +54,8 @@
     <p>Install with your agent or by hand, your first <code>/lets graph</code>, listening vs away, and Send to Claude with resume.</p>
   </article>
   <article class="card">
-    <h2><a class="stretch" href="./companion.html">The companion (Pip)</a></h2>
-    <p>Persona, moods, how Pip learns you, the special skills it writes for itself, and its expressions and secret moves.</p>
+    <h2><a class="stretch" href="./companion.html">The companion (Doto)</a></h2>
+    <p>Persona, moods, voice, how Doto learns you, the special skills he writes for himself, and his expressions and secret moves.</p>
   </article>
   <article class="card">
     <h2><a class="stretch" href="./uniques.html">Uniques &amp; the store</a></h2>
@@ -93,7 +93,7 @@
   <dt>unique</dt><dd>One interactive medium the engine hosts, like the graph board. A repository with a manifest, a guide for Claude and a static UI.</dd>
   <dt>window</dt><dd>One open instance of a unique, shown in the app's browser pane. Each window has its own id and token.</dd>
   <dt>shell</dt><dd>The shared browser layer every unique mounts: companion, chat, components, image paste, toasts, theme.</dd>
-  <dt>companion, Pip</dt><dd>Claude's presence inside the window. Pip is the default name; you can rename it.</dd>
+  <dt>companion, Doto</dt><dd>Claude's presence inside the window: a dot that does. Doto is the default name; you can rename him.</dd>
   <dt>LIP</dt><dd>The Lets Interaction Protocol: the JSON envelopes that cross between window, host and Claude.</dd>
   <dt>defaults</dt><dd>The uniques every installation gets, listed in the engine's <code>defaults.json</code> (graph today).</dd>
   <dt>store</dt><dd>A git repository whose <code>index.json</code> lists community uniques by git URL. <a href="https://github.com/TikoTikTok/lets-store">lets-store</a> is the first.</dd>

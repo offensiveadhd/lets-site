@@ -36,7 +36,7 @@
       <ul>
         <li><a href="./index.html">Overview</a></li>
         <li><a href="./getting-started.html" aria-current="page">Getting started</a></li>
-        <li><a href="./companion.html">The companion (Pip)</a></li>
+        <li><a href="./companion.html">The companion (Doto)</a></li>
         <li><a href="./uniques.html">Uniques &amp; the store</a></li>
         <li><a href="./graph.html">The graph board</a></li>
         <li><a href="./protocol.html">Protocol (LIP)</a></li>
@@ -112,17 +112,17 @@ node install.mjs</code></pre>
 
 <h2 id="first-window">Your first window</h2>
 <ol>
-  <li><code>/lets graph plan the auth flow</code>. Claude opens the board in the app's browser pane, seeds a few nodes, and the companion greets you.</li>
-  <li>Draw. Double-click a node to rename it, drag from a node's edge to connect, right-click to summon or dismiss the companion, click it for suggestions.</li>
+  <li><code>/lets graph plan the auth flow</code>. Claude opens the board in the app's browser pane, seeds a few nodes, and Doto says hi.</li>
+  <li>Draw. Double-click a node to rename it, drag from a node's edge to connect, right-click to summon or dismiss Doto, click him for suggestions.</li>
   <li>Press <strong>Send to Claude</strong>, or just keep chatting: window events reach Claude automatically with your next message.</li>
   <li>Ask for more. <em>"Open an image uploader"</em> and a paste/drop card appears; paste a screenshot and Claude reads the file. <em>"Give me sliders for the weights"</em> and sliders appear, and every change reaches Claude.</li>
-  <li><code>/lets entity</code> shows who the companion is and what it has learned; <code>/lets store timeline</code> searches the community store.</li>
+  <li><code>/lets entity</code> shows who Doto is and what he has learned; <code>/lets store timeline</code> searches the community store.</li>
 </ol>
 <p>Everything the board can do is on <a href="./graph.html">The graph board</a>.</p>
 
 <h2 id="listening">Listening vs away</h2>
-<p>While <code>/lets graph</code> runs, Claude stays in an <strong>attentive loop</strong> and the window shows a <strong>green dot</strong>: everything you do in the window (chat, Ask, Send to Claude, Pip's menu, a pasted image) gets a reaction within seconds.</p>
-<p>When Claude is not in that loop the dot turns <strong>amber</strong> and the chat says <em>Pip is away</em>. Nothing is lost: your messages are kept and delivered with your next prompt in Claude Code, by a prompt hook, at zero tool-call cost.</p>
+<p>While <code>/lets graph</code> runs, Claude stays in an <strong>attentive loop</strong> and the window shows a <strong>green dot</strong>: everything you do in the window (chat, Ask, Send to Claude, Doto's menu, a pasted image) gets a reaction within seconds.</p>
+<p>When Claude is not in that loop the dot turns <strong>amber</strong> and the chat says <em>Doto is away</em>. Nothing is lost: your messages are kept and delivered with your next prompt in Claude Code, by a prompt hook, at zero tool-call cost.</p>
 <p>In the terminal CLI you can also load the plugin as a channel, and window events then wake Claude directly:</p>
 <pre><code>claude --dangerously-load-development-channels plugin:lets@lets</code></pre>
 
@@ -130,7 +130,7 @@ node install.mjs</code></pre>
 <p>Pressing <strong>Send to Claude</strong> is a handoff. The window has done its job, so it steps out of the way:</p>
 <ol>
   <li>The engine saves the board as a <strong>session</strong> in <code>~/.lets/sessions/&lt;unique&gt;/&lt;id&gt;.json</code> (one session per window; later sends from the same window update it).</li>
-  <li>Pip waves goodbye (<em>"Sent to Claude ✦ see you in Claude Code"</em>) and the window closes itself. If the browser won't let the tab close, the farewell stays up with a <strong>Keep working</strong> button that brings the window back.</li>
+  <li>Doto waves goodbye (<em>"Sent. See you in Claude Code ✦"</em>, then a little "Bye.") and the window closes itself. If the browser won't let the tab close, the farewell stays up with a <strong>Keep working</strong> button that brings the window back.</li>
   <li>Claude answers in your Claude Code chat, not in the window: a short summary of the flow, the gaps it sees, and concrete additions you can say yes to. It also gives the session a short label.</li>
 </ol>
 <p>This works even when Claude is away, because the engine does it, not the model.</p>
@@ -160,7 +160,7 @@ node install.mjs</code></pre>
       <tr><td><code>/lets graph resume</code></td><td>Reopen the last board you sent. <span class="badge badge-new">new in 0.4.0</span></td></tr>
       <tr><td><code>/lets list</code></td><td>List installed uniques and any problems.</td></tr>
       <tr><td><code>/lets store &lt;query&gt;</code></td><td>Search the store; install only after inspecting and saying yes.</td></tr>
-      <tr><td><code>/lets entity</code></td><td>Who the companion is, what it learned, which special skills it has.</td></tr>
+      <tr><td><code>/lets entity</code></td><td>Who Doto is, what he learned, which special skills he has.</td></tr>
       <tr><td><code>/lets plan …</code></td><td>Split work into parallel waves and pick a model per task (below).</td></tr>
     </tbody>
   </table>
@@ -176,7 +176,7 @@ node install.mjs</code></pre>
     <thead><tr><th scope="col">Key</th><th scope="col">Action</th></tr></thead>
     <tbody>
       <tr><td>Right-click / <kbd>Ctrl</kbd>+<kbd>Space</kbd></td><td>Summon or dismiss the companion</td></tr>
-      <tr><td><kbd>Enter</kbd> on the companion</td><td>Open its menu (arrow keys move, <kbd>Esc</kbd> closes)</td></tr>
+      <tr><td><kbd>Enter</kbd> on the companion</td><td>Open his menu (arrow keys move, <kbd>Esc</kbd> closes)</td></tr>
       <tr><td><kbd>Ctrl</kbd>+<kbd>/</kbd></td><td>Toggle the chat panel</td></tr>
       <tr><td><kbd>Enter</kbd> / <kbd>Shift</kbd>+<kbd>Enter</kbd></td><td>Send / new line in chat</td></tr>
       <tr><td><kbd>Esc</kbd></td><td>Close menus and bubbles</td></tr>
@@ -192,7 +192,7 @@ node install.mjs</code></pre>
 node install.mjs --uninstall       # from your checkout: remove</code></pre>
 <p class="note">Tip for the app's browser pane: open the window URL once with its <code>#w=…&amp;t=…</code> hash. A hash-only navigation does not reload the page, so after a host restart navigate elsewhere first.</p>
 
-<nav class="doc-pager" aria-label="Previous and next page"><a class="prev" href="./index.html"><small>← Previous</small>Overview</a><a class="next" href="./companion.html"><small>Next →</small>The companion (Pip)</a></nav>
+<nav class="doc-pager" aria-label="Previous and next page"><a class="prev" href="./index.html"><small>← Previous</small>Overview</a><a class="next" href="./companion.html"><small>Next →</small>The companion (Doto)</a></nav>
   </main>
 </div>
 

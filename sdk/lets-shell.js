@@ -10,7 +10,7 @@
  *   import { Lets } from '/sdk/lets-client.js';
  *   import { Shell } from '/sdk/lets-shell.js';
  *   const lets = Lets.connect({ unique: 'graph', version: '0.1.0', caps: ['entity', 'chat', 'components', 'media.image'] });
- *   const shell = Shell.mount(lets, { entity: { name: 'Pip' }, context: () => ({}), quickSuggestions: () => [] });
+ *   const shell = Shell.mount(lets, { entity: { name: 'Doto' }, context: () => ({}), quickSuggestions: () => [] });
  *
  * Works under the host CSP: no inline scripts, no eval, image previews are
  * painted to <canvas>. Motion is transform/opacity only and honours
@@ -39,7 +39,7 @@ const HANDLED = Symbol('lets.handled');
 const RM = typeof matchMedia === 'function' ? matchMedia('(prefers-reduced-motion: reduce)') : { matches: false };
 const ICONS = { note: '✎', options: '☰', slider: '⇆', toggle: '◐', form: '▤', 'image-drop': '⬒', progress: '◔', code: '</>' };
 const TITLES = { note: 'Note', options: 'Choose', slider: 'Adjust', toggle: 'Switch', form: 'Form', 'image-drop': 'Add an image', progress: 'Progress', code: 'Code' };
-const GREETINGS = ['Hi!', 'Hey there ✦', 'Ready when you are.', 'What are we making?', 'Oh, hello!'];
+const GREETINGS = ['Hi.', 'Ready when you are.', 'What are we making?', 'Point. I do.', 'Next?'];
 // Reactions (docs/ENTITY.md "Expressions & secret moves"): cooldown and default length in ms, plus the CSS hooks
 // set on the entity layer while one plays: data-face (eyes), data-mouth, data-fx (extra parts). Motion: motion().
 const REACT = {
@@ -65,9 +65,11 @@ const REACT = {
   wheee:      { cd: 0,     ms: 1200, face: 'squint', mouth: 'grin',  fx: 'trail' },
 };
 // secret moves: emitted once per window as entity.secret {name}, counted in entity.profile.secrets
-const SECRETS = { spin: 'barrel roll', dance: 'name dance', disco: 'disco', dizzy: 'round and round', nightcap: 'nightcap', boop: 'boop streak', wheee: 'wheee' };
+const SECRETS = { spin: 'barrel roll', dance: 'the dot bounce', disco: 'disco', dizzy: 'round and round', nightcap: 'nightcap', boop: 'five dots', wheee: 'wheee' };
+const SECRET_LINES = { boop: "Five dots. You're keeping count too." };   // a secret with its own line instead of the generic one
+const BOOP_LINES = ['Boop.', 'Again? Fine.', 'That tickles.', 'Dot.'];
 const KONAMI = 'ArrowUp ArrowUp ArrowDown ArrowDown ArrowLeft ArrowRight ArrowLeft ArrowRight b a';
-const FAREWELL = { handoff: 'Sent to Claude ✦ see you in Claude Code', idle: 'All quiet here, so this window is closing ✦ see you in Claude Code', claude: 'Back to Claude Code ✦ see you there' };
+const FAREWELL = { handoff: 'Sent. See you in Claude Code ✦', idle: 'All quiet here, so this window is closing. See you in Claude Code ✦', claude: 'Back to Claude Code. See you there ✦' };
 let uid = 0;
 
 // ------------------------------------------------------------------ helpers
@@ -362,7 +364,7 @@ function mount(lets, opts) {
   host.append(root);
 
   // ================================================================ entity
-  const persona = { name: 'Pip', tagline: '', traits: { speed: 0.5, distance: 0.5, chatty: 0.5, playful: 0.6 }, color: null, pace: 0 };
+  const persona = { name: 'Doto', tagline: '', traits: { speed: 0.6, distance: 0.45, chatty: 0.4, playful: 0.7 }, color: null, pace: 0 };
   const saved = loadProfile();
   const P = { start: Date.now(), speeds: [], gaps: [], reg: { tl: 0, tr: 0, bl: 0, br: 0, c: 0 }, clicks: 0, idleMs: 0, summons: 0, picks: 0, dismisses: 0, secrets: 0,
     lastInput: performance.now(), lastAction: 0, winT: 0, winD: 0, dirty: false, lastEmit: Date.now() };
@@ -566,7 +568,7 @@ function mount(lets, opts) {
       ...items.map((it) => h('button', { class: 'lets-menu-item', type: 'button', role: 'menuitem', 'data-src': it.src, onclick: () => pick(it) },
         h('span', { class: 'lets-mi-label', text: it.label }), it.hint && h('span', { class: 'lets-mi-hint', text: it.hint }))),
       M.waiting ? h('div', { class: 'lets-menu-wait lets-dots', 'aria-hidden': 'true' }, h('i'), h('i'), h('i'))
-        : !items.length && h('div', { class: 'lets-menu-empty', text: 'Nothing to suggest yet.' }));
+        : !items.length && h('div', { class: 'lets-menu-empty', text: 'Nothing yet. Draw something.' }));
     sprite.dataset.hasSuggestions = String(!M.open && M.remote.length > 0);
     if (fi >= 0 && items.length) menu.querySelectorAll('.lets-menu-item')[Math.min(fi, items.length - 1)].focus();
   }
@@ -880,7 +882,7 @@ function mount(lets, opts) {
     if (S.has(name) || !SECRETS[name]) return;
     S.add(name); P.secrets = S.size; P.dirty = true;
     lets.emit('entity.secret', { name });
-    later(() => bubbleSay(`✦ Secret move found: **${SECRETS[name]}** (${S.size}/${Object.keys(SECRETS).length})`, 4200), 250);
+    later(() => bubbleSay(`✦ ${SECRET_LINES[name] || `Secret move found: **${SECRETS[name]}**`} (${S.size}/${Object.keys(SECRETS).length}).`, 4200), 250);
   }
   /** A quick click on the companion: squish and a heart. Five in a row (each within 1.5 s) is the "boop streak" secret. */
   function boop(silent) {
@@ -889,7 +891,7 @@ function mount(lets, opts) {
     const streak = D.boops >= 5;
     if (streak) D.boops = 0;
     if (streak && !S.has('boop')) { if (auto('boop', { force: true })) secret('boop'); }
-    else if (!silent) auto('boop');
+    else if (!silent && auto('boop') && !streak && root.dataset.closing !== 'true' && Math.random() < 0.25 + 0.5 * persona.traits.chatty) bubbleSay(BOOP_LINES[(D.boops - 1) % BOOP_LINES.length], 1300);
   }
   /** Dragging the caught companion ("wheee"): it follows the pointer directly, squints, and lands on release. */
   function startWheee() {
@@ -937,7 +939,7 @@ function mount(lets, opts) {
     while (t - D.fast[0][0] > 1500) D.fast.shift();
     if (D.fast.length >= 8 && t - D.fast[0][0] >= 1200 && median(D.fast.map((f) => f[1])) >= 2500) { D.fast.length = 0; auto('dizzy'); }
   }
-  /** Keys outside text fields: Delete/Backspace → gasp, Ctrl+Z → oops, "pip" (or its name) → dance, Konami → disco. */
+  /** Keys outside text fields: Delete/Backspace → gasp, Ctrl+Z → oops, "doto" (or his current name) → dance (the dot bounce), Konami → disco. */
   function keyMoves(e, t) {
     if (e.repeat || e.isComposing || isTextField(e.target) || isTextField(document.activeElement)) return;
     const k = String(e.key || ''), kk = k.length === 1 ? k.toLowerCase() : k, mod = e.ctrlKey || e.metaKey;
@@ -949,7 +951,7 @@ function mount(lets, opts) {
     if (!/^[a-z]$/.test(kk) || mod || e.altKey) { D.word = ''; return; }
     D.word = ((t - D.wordT < 1500 ? D.word : '') + kk).slice(-16); D.wordT = t;
     const name = persona.name.toLowerCase();
-    if (D.word.endsWith('pip') || (/^[a-z]{3,16}$/.test(name) && D.word.endsWith(name))) { D.word = ''; if (auto('dance', { force: !S.has('dance') })) secret('dance'); }
+    if (D.word.endsWith('doto') || (/^[a-z]{3,16}$/.test(name) && D.word.endsWith(name))) { D.word = ''; if (auto('dance', { force: !S.has('dance') })) secret('dance'); }
   }
 
   const entity = {
@@ -1288,7 +1290,7 @@ function mount(lets, opts) {
     if (!F.el.isConnected) root.append(F.el);
     moveTo({ to: 'center' }); E.hold = Infinity;              // stay centred until the window goes (or Keep working)
     play('wave', { ms: Math.max(1600, ms + 300), force: true });
-    bubbleSay('Bye! ✦', ms + 600);
+    bubbleSay('Bye.', ms + 600);
     lets.emitNow('session.closing', { reason });
     F.btn.focus({ preventScroll: true });
     F.t = later(() => {
@@ -1418,7 +1420,7 @@ function mount(lets, opts) {
       if ((innerWidth < 80 || innerHeight < 80) && tries < 120) return requestAnimationFrame(() => boot(tries + 1));
       E.x = E.tx = E.tlx = innerWidth - 150; E.y = E.ty = E.tly = innerHeight - 46;
       show({ x: E.x, y: E.y });
-      if (!saved) later(() => bubbleSay(`Hi, I'm **${persona.name}**! Right-click anywhere to call me, click me for ideas.`, 6500), 700);
+      if (!saved) later(() => bubbleSay(`Hi, I'm **${persona.name}**. Point at something and let's do it. Right-click calls me, a click gets ideas.`, 6500), 700);
     };
     boot();
   });
@@ -1448,7 +1450,7 @@ function bootDemo(Lets) {
   lets.envelope = (type, data, extra) => {
     log(`↑ ${type} ${JSON.stringify(data ?? {}).slice(0, 120)}`);
     if (!live && type === 'entity.click') setTimeout(() => cmd('entity.suggest', { items: [{ id: 'r-explain', label: 'Explain this canvas', hint: 'arrived via entity.suggest' }, { id: 'r-tidy', label: 'Tidy up the cards' }] }), 900);
-    if (!live && type === 'entity.pick' && String(data?.id).startsWith('r-')) setTimeout(() => cmd('entity.say', { text: `On it: **${data.label}**`, mood: 'busy', ttl: 2500 }), 300);
+    if (!live && type === 'entity.pick' && String(data?.id).startsWith('r-')) setTimeout(() => cmd('entity.say', { text: `On it. **${data.label}**.`, mood: 'busy', ttl: 2500 }), 300);
     if (!live && type === 'chat.message') setTimeout(() => streamReply(`(offline echo) You said: **${data.text || '…'}**${data.attachments ? `\nwith ${data.attachments.length} attachment(s): \`${data.attachments[0].path}\`` : ''}`), 300);
     return envelope(type, data, extra);
   };
@@ -1466,10 +1468,10 @@ function bootDemo(Lets) {
     };
   }
   shell = Shell.mount(lets, {
-    entity: { name: 'Pip' },
+    entity: { name: 'Doto' },
     context: (info) => ({ demo: true, at: info ? { x: Math.round(info.x), y: Math.round(info.y) } : null }),
     quickSuggestions: () => [
-      { id: 'hi', label: 'Say hi', hint: 'local bubble', run: () => shell.entity.say({ text: 'Hi! I am **Pip**. Try `Ctrl+/` for chat.', mood: 'happy' }) },
+      { id: 'hi', label: 'Say hi', hint: 'local bubble', run: () => shell.entity.say({ text: "Hi, I'm **Doto**. Point at something and let's do it. `Ctrl+/` opens chat.", mood: 'happy' }) },
       { id: 'chat', label: 'Open chat', run: () => shell.chat.open() },
       { id: 'shot', label: 'Paste a screenshot', hint: 'creates an image-drop card', run: () => shell.components.create({ type: 'image-drop', slot: 'float', props: { title: 'Paste a screenshot' } }) },
       { id: 'think', label: 'Think about it', run: () => shell.entity.mood('thinking') },
@@ -1501,7 +1503,7 @@ function bootDemo(Lets) {
         b('suggest', () => cmd('entity.suggest', { items: [{ id: 'r-more', label: 'A remote idea', hint: 'from entity.suggest' }] })),
         b('center', () => cmd('entity.move', { to: 'center' })), b('cursor', () => cmd('entity.move', { to: 'cursor' })),
         b('show', () => cmd('entity.show')), b('hide', () => cmd('entity.hide')),
-        b('persona', () => { alt = !alt; cmd('entity.persona', alt ? { name: 'Nova', traits: { speed: 0.9, distance: 0.3, chatty: 1, playful: 1 }, color: '#e0559b' } : { name: 'Pip', traits: { speed: 0.5, distance: 0.5, chatty: 0.5, playful: 0.6 }, color: '' }); })),
+        b('persona', () => { alt = !alt; cmd('entity.persona', alt ? { name: 'Nova', traits: { speed: 0.9, distance: 0.3, chatty: 1, playful: 1 }, color: '#e0559b' } : { name: 'Doto', traits: { speed: 0.6, distance: 0.45, chatty: 0.4, playful: 0.7 }, color: '' }); })),
       row('mood', ...MOODS.map((m) => b(m, () => cmd('entity.mood', { mood: m })))),
       row('reactions', ...Object.keys(REACT).map((n) => b(n, () => cmd('entity.react', { name: n, force: true })))),
       row('chat', b('stream reply', () => { cmd('chat.open'); streamReply('Sure! Here is a **streamed** reply, with a cursor while it streams.\n```js\nconst answer = 42;\n```\nDone.'); }),
@@ -1509,9 +1511,9 @@ function bootDemo(Lets) {
       row('components', ...Object.keys(SAMPLES).map((t) => b(t, () => { const id = `demo-${t}-${++k}`; cmd('component.create', { id, ...SAMPLES[t](id) }); }))),
       row('ui', ...['info', 'ok', 'warn', 'error'].map((l) => b(l, () => cmd('ui.toast', { text: `A ${l} toast`, level: l }))),
         b('theme', () => { warm = !warm; cmd('ui.theme', { name: warm ? 'ember' : 'deep-violet', vars: { accent: warm ? '#ff9f6b' : '', 'accent-2': warm ? '#ffd166' : '' } }); }),
-        b('session.close', () => cmd('session.close', { reason: 'handoff', text: 'Sent to Claude ✦ see you in Claude Code', ms: 1400 }))));
+        b('session.close', () => cmd('session.close', { reason: 'handoff', text: 'Sent. See you in Claude Code ✦', ms: 1400 }))));
   });
   shell.components.create({ id: 'demo-controls', type: 'demo-controls', slot: 'panel', props: { title: live ? 'Shell demo (live host)' : 'Shell demo (offline loopback)' } });
-  shell.components.create({ id: 'demo-help', type: 'note', props: { title: 'Try me', text: '**Right-click** anywhere or **Ctrl+Space**: summon / dismiss.\n**Click** the companion for suggestions, **Esc** closes.\n**Ctrl+/** toggles chat. **Paste** or **drop** an image anywhere.\nShake the mouse, hover or boop the companion… it has a few *secret moves* too.' } });
+  shell.components.create({ id: 'demo-help', type: 'note', props: { title: 'Try me', text: '**Right-click** anywhere or **Ctrl+Space**: summon / dismiss.\n**Click** the companion for suggestions, **Esc** closes.\n**Ctrl+/** toggles chat. **Paste** or **drop** an image anywhere.\nShake the mouse, hover or boop Doto. He has a few *secret moves* too.' } });
   shell.components.create({ id: 'demo-log', type: 'code', props: { title: 'Events → Claude', lang: 'lip', code: '(nothing yet)' } });
 }

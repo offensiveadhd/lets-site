@@ -158,83 +158,83 @@ td code { white-space: normal; }
 @media (max-width: 420px) { .stage-node { font-size: .74rem; padding: 4px 9px; } .stage-node.n2 { top: 8%; right: 5%; } .stage-node.n1 { top: auto; bottom: 30%; left: 4%; } }
 .stage-hint { position: absolute; bottom: 12px; left: 0; right: 0; text-align: center; font-size: .8rem; color: var(--lets-fg-dim); }
 
-/* ------------------------------------------------------------- the orb (Pip) */
-.pip { --pip-glow: var(--lets-accent); --pip-tint: #7b4fe0; --pip-bob: 3.2s; position: relative; display: inline-grid; place-items: center; width: 168px; height: 168px; padding: 0; border: 0; border-radius: 50%; background: none; color: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; }
-.pip:focus-visible { outline-offset: 6px; border-radius: 50%; }
-.pip-sm { width: 112px; height: 112px; }
-.pip-squash > svg { display: block; width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0 10px 18px rgba(5, 2, 14, .55)); }
-.pip-bob { width: 100%; height: 100%; animation: pip-bob var(--pip-bob) ease-in-out infinite; }
-.pip-squash { width: 100%; height: 100%; transform-origin: 50% 88%; }
-.pip-aura { transform-box: fill-box; transform-origin: center; animation: pip-pulse 3.6s ease-in-out infinite; }
-.pip .g0 { stop-color: var(--pip-glow); stop-opacity: .55; }
-.pip .g1 { stop-color: var(--pip-glow); stop-opacity: 0; }
-.pip .b0 { stop-color: #b892ff; }
-.pip .b1 { stop-color: #4a2a8e; }
-.pip .b2 { stop-color: #120a26; }
-.pip .r0 { stop-color: var(--lets-accent-3); }
-.pip .r1 { stop-color: var(--lets-accent-2); }
-.pip-ring { fill: none; stroke: var(--lets-accent); stroke-opacity: .42; stroke-width: .8; stroke-dasharray: 1.4 4.2; transform-box: view-box; transform-origin: 0 0; animation: pip-spin 24s linear infinite; }
-.pip-body { transform-box: fill-box; transform-origin: 50% 60%; animation: pip-breathe 4.2s ease-in-out infinite; }
-.pip-blob { stroke-width: 1.3; }
-.pip-shine { fill: #fff; opacity: .16; }
-.pip-cheek { fill: var(--lets-accent-2); opacity: .18; transition: opacity .3s; }
-.pip-blinker, .pip-eye, .pip-mouth, .pip-z { transform-box: fill-box; transform-origin: center; }
-.pip-eye { transition: transform .25s cubic-bezier(.3, 1.5, .5, 1); }
-.pip-white { fill: #f7f3ff; transition: opacity .2s; }
-.pip-pupil { fill: #1b0f3a; transition: opacity .2s; }
-.pip-glint { fill: #fff; }
-.pip-arc { fill: none; stroke: #f7f3ff; stroke-width: 2; stroke-linecap: round; opacity: 0; transition: opacity .2s; }
-.pip-mouth { fill: none; stroke: #f7f3ff; stroke-width: 1.5; stroke-linecap: round; opacity: 0; transition: opacity .2s, transform .25s; }
-.pip-m-smile { opacity: 1; }
-.pip-orbit { fill: var(--lets-accent-3); opacity: 0; transform-box: view-box; transform-origin: 0 0; transition: opacity .3s; }
-.pip-z { fill: var(--lets-fg-dim); font: 700 8px var(--lets-font); opacity: 0; }
-.pip-blinker.blink { animation: pip-blink .17s ease-in-out; }
+/* ------------------------------------------------------------- the orb (Doto) */
+.doto { --doto-glow: var(--lets-accent); --doto-tint: #7b4fe0; --doto-bob: 3.2s; position: relative; display: inline-grid; place-items: center; width: 168px; height: 168px; padding: 0; border: 0; border-radius: 50%; background: none; color: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.doto:focus-visible { outline-offset: 6px; border-radius: 50%; }
+.doto-sm { width: 112px; height: 112px; }
+.doto-squash > svg { display: block; width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0 10px 18px rgba(5, 2, 14, .55)); }
+.doto-bob { width: 100%; height: 100%; animation: doto-bob var(--doto-bob) ease-in-out infinite; }
+.doto-squash { width: 100%; height: 100%; transform-origin: 50% 88%; }
+.doto-aura { transform-box: fill-box; transform-origin: center; animation: doto-pulse 3.6s ease-in-out infinite; }
+.doto .g0 { stop-color: var(--doto-glow); stop-opacity: .55; }
+.doto .g1 { stop-color: var(--doto-glow); stop-opacity: 0; }
+.doto .b0 { stop-color: #b892ff; }
+.doto .b1 { stop-color: #4a2a8e; }
+.doto .b2 { stop-color: #120a26; }
+.doto .r0 { stop-color: var(--lets-accent-3); }
+.doto .r1 { stop-color: var(--lets-accent-2); }
+.doto-ring { fill: none; stroke: var(--lets-accent); stroke-opacity: .42; stroke-width: .8; stroke-dasharray: 1.4 4.2; transform-box: view-box; transform-origin: 0 0; animation: doto-spin 24s linear infinite; }
+.doto-body { transform-box: fill-box; transform-origin: 50% 60%; animation: doto-breathe 4.2s ease-in-out infinite; }
+.doto-blob { stroke-width: 1.3; }
+.doto-shine { fill: #fff; opacity: .16; }
+.doto-cheek { fill: var(--lets-accent-2); opacity: .18; transition: opacity .3s; }
+.doto-blinker, .doto-eye, .doto-mouth, .doto-z { transform-box: fill-box; transform-origin: center; }
+.doto-eye { transition: transform .25s cubic-bezier(.3, 1.5, .5, 1); }
+.doto-white { fill: #f7f3ff; transition: opacity .2s; }
+.doto-pupil { fill: #1b0f3a; transition: opacity .2s; }
+.doto-glint { fill: #fff; }
+.doto-arc { fill: none; stroke: #f7f3ff; stroke-width: 2; stroke-linecap: round; opacity: 0; transition: opacity .2s; }
+.doto-mouth { fill: none; stroke: #f7f3ff; stroke-width: 1.5; stroke-linecap: round; opacity: 0; transition: opacity .2s, transform .25s; }
+.doto-m-smile { opacity: 1; }
+.doto-orbit { fill: var(--lets-accent-3); opacity: 0; transform-box: view-box; transform-origin: 0 0; transition: opacity .3s; }
+.doto-z { fill: var(--lets-fg-dim); font: 700 8px var(--lets-font); opacity: 0; }
+.doto-blinker.blink { animation: doto-blink .17s ease-in-out; }
 
-.pip[data-mood=happy]    { --pip-glow: var(--lets-accent-2); --pip-bob: 1.7s; }
-.pip[data-mood=curious]  { --pip-glow: var(--lets-accent-3); --pip-bob: 2.4s; }
-.pip[data-mood=thinking] { --pip-glow: #8f7bff; --pip-bob: 4.2s; }
-.pip[data-mood=busy]     { --pip-glow: var(--lets-accent-3); --pip-bob: 1.1s; }
-.pip[data-mood=proud]    { --pip-glow: var(--lets-warn); --pip-bob: 2s; }
-.pip[data-mood=sleepy]   { --pip-glow: #6d5aa8; --pip-bob: 5.5s; }
-.pip[data-mood=alert]    { --pip-glow: var(--lets-err); --pip-bob: .9s; }
-.pip:is([data-mood=happy], [data-mood=proud]) :is(.pip-white, .pip-pupil) { opacity: 0; }
-.pip:is([data-mood=happy], [data-mood=proud]) .pip-arc { opacity: 1; }
-.pip:is([data-mood=happy], [data-mood=proud]) .pip-cheek { opacity: .55; }
-.pip:is([data-mood=happy], [data-mood=proud]) .pip-m-smile { transform: scale(1.35); }
-.pip[data-mood=curious] .pip-eye-r { transform: scale(1.18); }
-.pip[data-mood=curious] .pip-eye-l { transform: scale(.9); }
-.pip[data-mood=busy] .pip-eye { transform: scaleY(.72); }
-.pip[data-mood=thinking] .pip-eye { transform: scaleY(.9); }
-.pip[data-mood=sleepy] .pip-eye { transform: scaleY(.4); transform-origin: 50% 90%; }
-.pip[data-mood=alert] .pip-eye { transform: scale(1.16); }
-.pip:is([data-mood=curious], [data-mood=alert], [data-mood=thinking], [data-mood=busy], [data-mood=sleepy]) .pip-m-smile { opacity: 0; }
-.pip:is([data-mood=curious], [data-mood=alert]) .pip-m-o { opacity: 1; }
-.pip:is([data-mood=thinking], [data-mood=busy], [data-mood=sleepy]) .pip-m-flat { opacity: .85; }
-.pip[data-mood=thinking] .pip-orbit { opacity: .95; animation: pip-spin 3.2s linear infinite; }
-.pip[data-mood=busy] .pip-orbit { opacity: .95; animation: pip-spin 1s linear infinite; }
-.pip[data-mood=busy] .pip-ring { animation-duration: 6s; }
-.pip[data-mood=sleepy] .pip-aura { opacity: .5; }
-.pip[data-mood=sleepy] .pip-z { animation: pip-z 2.6s ease-out infinite; }
-.pip[data-mood=alert] .pip-aura { animation-duration: .9s; }
+.doto[data-mood=happy]    { --doto-glow: var(--lets-accent-2); --doto-bob: 1.7s; }
+.doto[data-mood=curious]  { --doto-glow: var(--lets-accent-3); --doto-bob: 2.4s; }
+.doto[data-mood=thinking] { --doto-glow: #8f7bff; --doto-bob: 4.2s; }
+.doto[data-mood=busy]     { --doto-glow: var(--lets-accent-3); --doto-bob: 1.1s; }
+.doto[data-mood=proud]    { --doto-glow: var(--lets-warn); --doto-bob: 2s; }
+.doto[data-mood=sleepy]   { --doto-glow: #6d5aa8; --doto-bob: 5.5s; }
+.doto[data-mood=alert]    { --doto-glow: var(--lets-err); --doto-bob: .9s; }
+.doto:is([data-mood=happy], [data-mood=proud]) :is(.doto-white, .doto-pupil) { opacity: 0; }
+.doto:is([data-mood=happy], [data-mood=proud]) .doto-arc { opacity: 1; }
+.doto:is([data-mood=happy], [data-mood=proud]) .doto-cheek { opacity: .55; }
+.doto:is([data-mood=happy], [data-mood=proud]) .doto-m-smile { transform: scale(1.35); }
+.doto[data-mood=curious] .doto-eye-r { transform: scale(1.18); }
+.doto[data-mood=curious] .doto-eye-l { transform: scale(.9); }
+.doto[data-mood=busy] .doto-eye { transform: scaleY(.72); }
+.doto[data-mood=thinking] .doto-eye { transform: scaleY(.9); }
+.doto[data-mood=sleepy] .doto-eye { transform: scaleY(.4); transform-origin: 50% 90%; }
+.doto[data-mood=alert] .doto-eye { transform: scale(1.16); }
+.doto:is([data-mood=curious], [data-mood=alert], [data-mood=thinking], [data-mood=busy], [data-mood=sleepy]) .doto-m-smile { opacity: 0; }
+.doto:is([data-mood=curious], [data-mood=alert]) .doto-m-o { opacity: 1; }
+.doto:is([data-mood=thinking], [data-mood=busy], [data-mood=sleepy]) .doto-m-flat { opacity: .85; }
+.doto[data-mood=thinking] .doto-orbit { opacity: .95; animation: doto-spin 3.2s linear infinite; }
+.doto[data-mood=busy] .doto-orbit { opacity: .95; animation: doto-spin 1s linear infinite; }
+.doto[data-mood=busy] .doto-ring { animation-duration: 6s; }
+.doto[data-mood=sleepy] .doto-aura { opacity: .5; }
+.doto[data-mood=sleepy] .doto-z { animation: doto-z 2.6s ease-out infinite; }
+.doto[data-mood=alert] .doto-aura { animation-duration: .9s; }
 
 /* boop: squish + a heart floats up */
-.pip.booped .pip-squash { animation: pip-squish .45s ease-out; }
-.pip-heart { position: absolute; left: 50%; top: 8%; width: 22px; height: 22px; margin-left: -11px; color: var(--lets-accent-2); pointer-events: none; opacity: 0; }
-.pip.booped .pip-heart { animation: pip-heart 1.1s ease-out; }
+.doto.booped .doto-squash { animation: doto-squish .45s ease-out; }
+.doto-heart { position: absolute; left: 50%; top: 8%; width: 22px; height: 22px; margin-left: -11px; color: var(--lets-accent-2); pointer-events: none; opacity: 0; }
+.doto.booped .doto-heart { animation: doto-heart 1.1s ease-out; }
 
-.pip-bubble { position: absolute; left: 50%; bottom: calc(100% + 4px); transform: translateX(-50%); width: max-content; max-width: min(260px, 80vw); padding: 8px 12px; border-radius: 12px; border: 1px solid var(--lets-line); background: var(--lets-glass); box-shadow: var(--lets-shadow); color: var(--lets-fg); font-size: .9rem; line-height: 1.4; text-align: center; opacity: 0; transition: opacity .25s, transform .25s; pointer-events: none; }
-.pip-bubble[data-open="true"] { opacity: 1; transform: translateX(-50%) translateY(-4px); }
-.pip-bubble::after { content: ""; position: absolute; left: 50%; top: 100%; width: 10px; height: 10px; margin: -5px 0 0 -5px; transform: rotate(45deg); background: var(--lets-bg-2); border-right: 1px solid var(--lets-line); border-bottom: 1px solid var(--lets-line); }
-.pip-holder { position: relative; display: inline-grid; place-items: center; }
+.doto-bubble { position: absolute; left: 50%; bottom: calc(100% + 4px); transform: translateX(-50%); width: max-content; max-width: min(260px, 80vw); padding: 8px 12px; border-radius: 12px; border: 1px solid var(--lets-line); background: var(--lets-glass); box-shadow: var(--lets-shadow); color: var(--lets-fg); font-size: .9rem; line-height: 1.4; text-align: center; opacity: 0; transition: opacity .25s, transform .25s; pointer-events: none; }
+.doto-bubble[data-open="true"] { opacity: 1; transform: translateX(-50%) translateY(-4px); }
+.doto-bubble::after { content: ""; position: absolute; left: 50%; top: 100%; width: 10px; height: 10px; margin: -5px 0 0 -5px; transform: rotate(45deg); background: var(--lets-bg-2); border-right: 1px solid var(--lets-line); border-bottom: 1px solid var(--lets-line); }
+.doto-holder { position: relative; display: inline-grid; place-items: center; }
 
-@keyframes pip-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
-@keyframes pip-breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.025, .985); } }
-@keyframes pip-spin { to { transform: rotate(360deg); } }
-@keyframes pip-pulse { 0%, 100% { transform: scale(1); opacity: .9; } 50% { transform: scale(1.08); opacity: 1; } }
-@keyframes pip-blink { 0%, 100% { transform: scaleY(1); } 45% { transform: scaleY(.1); } }
-@keyframes pip-z { 0% { opacity: 0; transform: translate(0, 0); } 30% { opacity: .9; } 100% { opacity: 0; transform: translate(6px, -10px); } }
-@keyframes pip-squish { 0% { transform: none; } 30% { transform: scale(1.16, .84); } 60% { transform: scale(.94, 1.06); } 100% { transform: none; } }
-@keyframes pip-heart { 0% { opacity: 0; transform: translateY(6px) scale(.6); } 20% { opacity: 1; transform: translateY(0) scale(1); } 100% { opacity: 0; transform: translateY(-44px) scale(1.1); } }
+@keyframes doto-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+@keyframes doto-breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.025, .985); } }
+@keyframes doto-spin { to { transform: rotate(360deg); } }
+@keyframes doto-pulse { 0%, 100% { transform: scale(1); opacity: .9; } 50% { transform: scale(1.08); opacity: 1; } }
+@keyframes doto-blink { 0%, 100% { transform: scaleY(1); } 45% { transform: scaleY(.1); } }
+@keyframes doto-z { 0% { opacity: 0; transform: translate(0, 0); } 30% { opacity: .9; } 100% { opacity: 0; transform: translate(6px, -10px); } }
+@keyframes doto-squish { 0% { transform: none; } 30% { transform: scale(1.16, .84); } 60% { transform: scale(.94, 1.06); } 100% { transform: none; } }
+@keyframes doto-heart { 0% { opacity: 0; transform: translateY(6px) scale(.6); } 20% { opacity: 1; transform: translateY(0) scale(1); } 100% { opacity: 0; transform: translateY(-44px) scale(1.1); } }
 
 /* -------------------------------------------------------------- sections */
 .section { padding: 56px 0; }
@@ -266,10 +266,10 @@ td code { white-space: normal; }
 .shot img { width: 100%; border-radius: 14px; border: 1px solid var(--lets-line-2); box-shadow: var(--lets-shadow); background: var(--lets-bg-2); }
 .shot figcaption { margin-top: 10px; color: var(--lets-fg-dim); font-size: .93rem; }
 
-/* Pip teaser */
-.pip-teaser { display: grid; gap: 28px; align-items: start; }
-@media (min-width: 900px) { .pip-teaser { grid-template-columns: 300px 1fr; gap: 44px; } }
-.pip-panel { display: grid; justify-items: center; gap: 14px; padding: 52px 18px 18px; border-radius: 20px; border: 1px solid var(--lets-line); background: var(--lets-bg-2); }
+/* Doto teaser */
+.doto-teaser { display: grid; gap: 28px; align-items: start; }
+@media (min-width: 900px) { .doto-teaser { grid-template-columns: 300px 1fr; gap: 44px; } }
+.doto-panel { display: grid; justify-items: center; gap: 14px; padding: 52px 18px 18px; border-radius: 20px; border: 1px solid var(--lets-line); background: var(--lets-bg-2); }
 .mood-chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
 .chip { min-height: 32px; padding: 4px 11px; border-radius: 999px; border: 1px solid var(--lets-line); background: var(--lets-bg-3); color: var(--lets-fg); font: 550 13px/1.2 var(--lets-font); cursor: pointer; }
 .chip:hover { border-color: var(--lets-line-2); }
@@ -403,7 +403,7 @@ figure.diagram figcaption { margin-top: 10px; color: var(--lets-fg-dim); font-si
 /* -------------------------------------------------------- reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
-  .pip-bob, .pip-ring, .pip-body, .pip-aura, .pip-orbit, .pip-z { animation: none !important; }
-  .pip[data-mood=sleepy] .pip-z { opacity: .8; }
-  .pip[data-mood=thinking] .pip-orbit, .pip[data-mood=busy] .pip-orbit { opacity: .95; }
+  .doto-bob, .doto-ring, .doto-body, .doto-aura, .doto-orbit, .doto-z { animation: none !important; }
+  .doto[data-mood=sleepy] .doto-z { opacity: .8; }
+  .doto[data-mood=thinking] .doto-orbit, .doto[data-mood=busy] .doto-orbit { opacity: .95; }
 }

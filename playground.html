@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Playground · lets</title>
-  <meta name="description" content="Play with Pip: the real lets shell running on an offline loopback, with buttons for moods, speech, suggestions, reactions and an echoing chat.">
+  <meta name="description" content="Play with Doto: the real lets shell running on an offline loopback, with buttons for moods, speech, suggestions, reactions and an echoing chat.">
   <meta name="theme-color" content="#120b1f">
   <link rel="icon" href="./assets/logo.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./css/site.css">
@@ -34,8 +34,8 @@
 <section class="page-head" aria-labelledby="pg-title">
   <div class="wrap">
     <span class="eyebrow">Playground</span>
-    <h1 id="pg-title">Play with Pip</h1>
-    <p>This is the real shell from <code>lets/sdk</code>, running on an offline loopback: no host, no Claude, nothing leaves this page. <strong>Right-click anywhere</strong> to summon or dismiss Pip, and click it for suggestions.</p>
+    <h1 id="pg-title">Play with Doto</h1>
+    <p>This is the real shell from <code>lets/sdk</code>, running on an offline loopback: no host, no Claude, nothing leaves this page. <strong>Right-click anywhere</strong> to summon or dismiss Doto, and click him for suggestions.</p>
     <p><span class="pg-status" id="pg-status" role="status">Starting the shell…</span></p>
   </div>
 </section>
@@ -51,24 +51,24 @@
     </div>
 
     <div class="pg-group">
-      <h3 id="pg-say-h">Make Pip say something <span class="dim" style="text-transform:none;letter-spacing:0">(<code>entity.say</code>)</span></h3>
+      <h3 id="pg-say-h">Make Doto say something <span class="dim" style="text-transform:none;letter-spacing:0">(<code>entity.say</code>)</span></h3>
       <form class="pg-say" id="pg-say" aria-labelledby="pg-say-h">
-        <label class="sr-only" for="pg-say-text">What Pip says</label>
-        <input id="pg-say-text" type="text" maxlength="200" placeholder="Hello! **bold** and `code` work" autocomplete="off">
+        <label class="sr-only" for="pg-say-text">What Doto says</label>
+        <input id="pg-say-text" type="text" maxlength="200" placeholder="On it. **bold** and `code` work" autocomplete="off">
         <button class="btn btn-primary btn-sm" type="submit">Say it</button>
       </form>
     </div>
 
     <div class="pg-group">
-      <h3 id="pg-pip-h">Pip</h3>
-      <div class="btn-row" role="group" aria-labelledby="pg-pip-h">
+      <h3 id="pg-doto-h">Doto</h3>
+      <div class="btn-row" role="group" aria-labelledby="pg-doto-h">
         <button class="btn btn-sm" type="button" id="pg-suggest">Suggest</button>
         <button class="btn btn-sm" type="button" id="pg-center">Move to centre</button>
         <button class="btn btn-sm" type="button" id="pg-cursor">Follow the cursor</button>
         <button class="btn btn-sm" type="button" id="pg-show">Show</button>
         <button class="btn btn-sm" type="button" id="pg-hide">Hide</button>
       </div>
-      <p class="pg-hint">Suggest adds items to Pip's click menu (a dot appears on Pip). Click Pip to see them.</p>
+      <p class="pg-hint">Suggest adds items to Doto's click menu (a small dot appears on him). Click him to see them.</p>
     </div>
 
     <div class="pg-group">
@@ -96,9 +96,9 @@
       <h3>Try</h3>
       <ul class="dim" style="margin:0;padding-left:1.1em;font-size:.92rem">
         <li>Right-click or <kbd>Ctrl</kbd>+<kbd>Space</kbd>: summon / dismiss</li>
-        <li>Click Pip, or <kbd>Tab</kbd> to it and press <kbd>Enter</kbd>: suggestions</li>
+        <li>Click Doto, or <kbd>Tab</kbd> to it and press <kbd>Enter</kbd>: suggestions</li>
         <li><kbd>Ctrl</kbd>+<kbd>/</kbd>: chat · <kbd>Esc</kbd>: close menus</li>
-        <li>Reach for Pip slowly to catch it</li>
+        <li>Reach for Doto slowly to catch him</li>
       </ul>
     </div>
   </aside>

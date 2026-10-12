@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>lets</title>
-  <meta name="description" content="lets is a Claude Code plugin: talk to Claude through interactive windows (a graph board first), with a small companion, Pip, that flies beside your cursor.">
+  <meta name="description" content="lets is a Claude Code plugin: talk to Claude through interactive windows (a graph board first), with Doto, a small companion dot that rolls along beside your cursor.">
   <meta name="theme-color" content="#120b1f">
   <link rel="icon" href="./assets/logo.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./css/site.css">
@@ -38,7 +38,7 @@
           <h1 id="hero-title">lets</h1>
         </div>
         <p class="tagline">Talk to Claude through windows, not just text.</p>
-        <p class="hero-lead"><code>/lets graph</code> opens a dark-violet board where you draw the thing you mean while you chat. A small, bright companion flies beside your cursor, suggests, learns you, and teaches itself new tricks.</p>
+        <p class="hero-lead"><code>/lets graph</code> opens a dark-violet board where you draw the thing you mean while you chat. Doto, a small bright dot, rolls along beside your cursor, points, pitches in, learns how you work, and teaches himself new tricks.</p>
         <div class="btn-row">
           <a class="btn btn-primary" href="#install">Install with your agent</a>
           <a class="btn" href="./docs/graph.html">See the graph board</a>
@@ -51,39 +51,39 @@
           <span class="stage-node n1" aria-hidden="true">API gateway</span>
           <span class="stage-node n2" aria-hidden="true">Users DB</span>
           <span class="stage-node n3" aria-hidden="true">Token valid?</span>
-          <div class="pip-holder">
-            <div class="pip-bubble" role="status" data-open="false"></div>
-            <button class="pip" id="pip-hero" type="button" data-mood="idle" data-doze="1"
-              data-greet="Hi, I'm Pip! Click me."
-              data-lines="Right-click anywhere in a window to call me.|Draw it. Claude reads the same board.|Press Send to Claude and I'll see you in the chat ✦|I learn how you work, and I write it down."
-              aria-label="Pip, the companion. Press to boop.">
-              <span class="pip-bob"><span class="pip-squash">
+          <div class="doto-holder">
+            <div class="doto-bubble" role="status" data-open="false"></div>
+            <button class="doto" id="doto-hero" type="button" data-mood="idle" data-doze="1"
+              data-greet="Hi, I'm Doto. A dot that does."
+              data-lines="Three nodes on this card. I counted.|Right-click in a window. I roll right over.|Draw it. Claude reads the same board.|Press Send to Claude. See you in Claude Code.|I learn how you work. Then I write it down."
+              aria-label="Doto, the companion dot. Press to boop.">
+              <span class="doto-bob"><span class="doto-squash">
                 <svg viewBox="-32 -32 64 64" aria-hidden="true" focusable="false">
                   <defs>
                     <radialGradient id="pa1"><stop offset="0" class="g0"/><stop offset="1" class="g1"/></radialGradient>
                     <radialGradient id="pb1" cx="38%" cy="30%" r="75%"><stop offset="0" class="b0"/><stop offset=".55" class="b1"/><stop offset="1" class="b2"/></radialGradient>
                     <linearGradient id="pr1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" class="r0"/><stop offset="1" class="r1"/></linearGradient>
                   </defs>
-                  <circle class="pip-aura" r="31" fill="url(#pa1)"/>
-                  <circle class="pip-ring" r="28.5"/>
-                  <g class="pip-body">
-                    <path class="pip-blob" d="M0-21C14-21 23-11 22 2 21 15 12 21 0 21S-21 15-22 2C-23-11-14-21 0-21Z" fill="url(#pb1)" stroke="url(#pr1)"/>
-                    <ellipse class="pip-shine" cx="-8" cy="-12" rx="7" ry="3.4" transform="rotate(-24 -8 -12)"/>
-                    <ellipse class="pip-cheek" cx="-13" cy="6" rx="3.4" ry="2"/><ellipse class="pip-cheek" cx="13" cy="6" rx="3.4" ry="2"/>
-                    <g class="pip-blinker">
-                      <g transform="translate(-8 -2)"><g class="pip-eye pip-eye-l"><ellipse class="pip-white" rx="3.9" ry="5"/><g class="pip-pupil"><circle r="2.2"/><circle class="pip-glint" cx=".8" cy="-.9" r=".8"/></g><path class="pip-arc" d="M-3.8 1.4Q0-3.6 3.8 1.4"/></g></g>
-                      <g transform="translate(8 -2)"><g class="pip-eye pip-eye-r"><ellipse class="pip-white" rx="3.9" ry="5"/><g class="pip-pupil"><circle r="2.2"/><circle class="pip-glint" cx=".8" cy="-.9" r=".8"/></g><path class="pip-arc" d="M-3.8 1.4Q0-3.6 3.8 1.4"/></g></g>
+                  <circle class="doto-aura" r="31" fill="url(#pa1)"/>
+                  <circle class="doto-ring" r="28.5"/>
+                  <g class="doto-body">
+                    <path class="doto-blob" d="M0-21C14-21 23-11 22 2 21 15 12 21 0 21S-21 15-22 2C-23-11-14-21 0-21Z" fill="url(#pb1)" stroke="url(#pr1)"/>
+                    <ellipse class="doto-shine" cx="-8" cy="-12" rx="7" ry="3.4" transform="rotate(-24 -8 -12)"/>
+                    <ellipse class="doto-cheek" cx="-13" cy="6" rx="3.4" ry="2"/><ellipse class="doto-cheek" cx="13" cy="6" rx="3.4" ry="2"/>
+                    <g class="doto-blinker">
+                      <g transform="translate(-8 -2)"><g class="doto-eye doto-eye-l"><ellipse class="doto-white" rx="3.9" ry="5"/><g class="doto-pupil"><circle r="2.2"/><circle class="doto-glint" cx=".8" cy="-.9" r=".8"/></g><path class="doto-arc" d="M-3.8 1.4Q0-3.6 3.8 1.4"/></g></g>
+                      <g transform="translate(8 -2)"><g class="doto-eye doto-eye-r"><ellipse class="doto-white" rx="3.9" ry="5"/><g class="doto-pupil"><circle r="2.2"/><circle class="doto-glint" cx=".8" cy="-.9" r=".8"/></g><path class="doto-arc" d="M-3.8 1.4Q0-3.6 3.8 1.4"/></g></g>
                     </g>
-                    <path class="pip-mouth pip-m-smile" d="M-4 9Q0 12.5 4 9"/><path class="pip-mouth pip-m-flat" d="M-3 10.5H3"/><ellipse class="pip-mouth pip-m-o" cx="0" cy="10.5" rx="2" ry="2.4"/>
-                    <text class="pip-z" x="13" y="-15">z</text>
+                    <path class="doto-mouth doto-m-smile" d="M-4 9Q0 12.5 4 9"/><path class="doto-mouth doto-m-flat" d="M-3 10.5H3"/><ellipse class="doto-mouth doto-m-o" cx="0" cy="10.5" rx="2" ry="2.4"/>
+                    <text class="doto-z" x="13" y="-15">z</text>
                   </g>
-                  <g class="pip-orbit"><circle cx="0" cy="-28.5" r="2.6"/></g>
+                  <g class="doto-orbit"><circle cx="0" cy="-28.5" r="2.6"/></g>
                 </svg>
               </span></span>
-              <svg class="pip-heart" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 21s-7.5-4.6-9.6-9.2C1 8.6 3 5 6.6 5c2.1 0 3.6 1.2 4.4 2.6h2C13.8 6.2 15.3 5 17.4 5 21 5 23 8.6 21.6 11.8 19.5 16.4 12 21 12 21z"/></svg>
+              <svg class="doto-heart" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 21s-7.5-4.6-9.6-9.2C1 8.6 3 5 6.6 5c2.1 0 3.6 1.2 4.4 2.6h2C13.8 6.2 15.3 5 17.4 5 21 5 23 8.6 21.6 11.8 19.5 16.4 12 21 12 21z"/></svg>
             </button>
           </div>
-          <p class="stage-hint">Click Pip. It likes that.</p>
+          <p class="stage-hint">Click Doto. He counts.</p>
         </div>
       </div>
     </div>
@@ -110,8 +110,8 @@
         </article>
         <article class="card">
           <h3><span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="7"/><path d="M9.5 11v1M14.5 11v1M10 15c1.2.8 2.8.8 4 0"/></svg></span>Companion</h3>
-          <p>Pip, Claude's presence in the window: a floating orb that follows your cursor, suggests, learns how you work, and keeps special skills it writes for itself. It costs zero tokens until you click it.</p>
-          <p><a class="more" href="./docs/companion.html">Meet Pip →</a></p>
+          <p>Doto, Claude's presence in the window: a small dot that rolls after your cursor, points, pitches in, learns how you work, and keeps the special skills he writes for himself. He costs zero tokens until you click him.</p>
+          <p><a class="more" href="./docs/companion.html">Meet Doto →</a></p>
         </article>
       </div>
     </div>
@@ -127,11 +127,11 @@
       <ol class="steps">
         <li>
           <h3>Open a window</h3>
-          <p><code>/lets graph plan the auth flow</code>. Claude opens the board in the app's browser pane, seeds a few nodes, and Pip says hi.</p>
+          <p><code>/lets graph plan the auth flow</code>. Claude opens the board in the app's browser pane, seeds a few nodes, and Doto says hi.</p>
         </li>
         <li>
           <h3>Draw &amp; chat</h3>
-          <p>Double-click to add a node, drag to connect, right-click for Pip, chat on the side. Paste a screenshot and Claude reads the file.</p>
+          <p>Double-click to add a node, drag to connect, right-click for Doto, chat on the side. Paste a screenshot and Claude reads the file.</p>
         </li>
         <li>
           <h3>Send to Claude</h3>
@@ -154,53 +154,58 @@
       </div>
       <div class="shots">
         <figure class="shot">
-          <img src="./assets/screenshot-graph.jpg" width="800" height="450" loading="lazy"
-            alt="The graph board: an API gateway node connects to an Auth service node, which looks up a Users DB and leads to a 'Token valid?' decision; a sticky note asks 'rate-limit here?'; Pip floats bottom-right next to the Chat button.">
+          <img src="./assets/screenshot-graph.jpg" width="800" height="600" loading="lazy"
+            alt="The graph board: an API gateway node connects to an Auth service node, which looks up a Users DB and leads to a 'Token valid?' decision with yes and no branches; a sticky note asks 'rate-limit here?'; Doto sits beside the nodes saying what he just added.">
           <figcaption>The graph board after a short back-and-forth: two nodes drawn by hand, the rest added by Claude (a data node, a decision, an annotation, a tree layout).</figcaption>
         </figure>
         <figure class="shot">
-          <img src="./assets/screenshot-companion.jpg" width="800" height="450" loading="lazy"
-            alt="The shell demo: a control panel on the left, Pip in the middle with its suggestion menu open (Say hi, Open chat, Paste a screenshot, Think about it), and on the right a help card and a live log of events on their way to Claude.">
-          <figcaption>The shell every unique gets for free: Pip's click menu, cards Claude can summon at runtime, and the stream of events on their way to Claude.</figcaption>
+          <img src="./assets/screenshot-companion.jpg" width="800" height="600" loading="lazy"
+            alt="The shell demo: a control panel on the left, Doto in the middle with his suggestion menu open (Say hi, Open chat, Paste a screenshot, Think about it), and on the right a help card and a live log of events on their way to Claude.">
+          <figcaption>The shell every unique gets for free: Doto's click menu, cards Claude can summon at runtime, and the stream of events on their way to Claude.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="./assets/screenshot-farewell.jpg" width="800" height="600" loading="lazy"
+            alt="The farewell card after Send to Claude: 'Sent. See you in Claude Code', 'This window is closing', a Keep working button, and Doto waving with a 'Bye.' bubble.">
+          <figcaption>The handoff: Doto waves, the card says where to find Claude, and the window closes itself. Keep working brings it back.</figcaption>
         </figure>
       </div>
     </div>
   </section>
 
-  <!-- ============================================================ (d) Pip -->
-  <section class="section section-alt" aria-labelledby="pip-title">
-    <div class="wrap pip-teaser">
-      <div class="pip-panel">
-        <div class="pip-holder">
-          <div class="pip-bubble" role="status" data-open="false"></div>
-          <button class="pip pip-sm" id="pip-moods" type="button" data-mood="idle" aria-label="Pip, showing a mood. Press to boop.">
-            <span class="pip-bob"><span class="pip-squash">
+  <!-- ============================================================ (d) Doto -->
+  <section class="section section-alt" aria-labelledby="doto-title">
+    <div class="wrap doto-teaser">
+      <div class="doto-panel">
+        <div class="doto-holder">
+          <div class="doto-bubble" role="status" data-open="false"></div>
+          <button class="doto doto-sm" id="doto-moods" type="button" data-mood="idle" aria-label="Doto, showing a mood. Press to boop.">
+            <span class="doto-bob"><span class="doto-squash">
               <svg viewBox="-32 -32 64 64" aria-hidden="true" focusable="false">
                 <defs>
                   <radialGradient id="pa2"><stop offset="0" class="g0"/><stop offset="1" class="g1"/></radialGradient>
                   <radialGradient id="pb2" cx="38%" cy="30%" r="75%"><stop offset="0" class="b0"/><stop offset=".55" class="b1"/><stop offset="1" class="b2"/></radialGradient>
                   <linearGradient id="pr2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" class="r0"/><stop offset="1" class="r1"/></linearGradient>
                 </defs>
-                <circle class="pip-aura" r="31" fill="url(#pa2)"/>
-                <circle class="pip-ring" r="28.5"/>
-                <g class="pip-body">
-                  <path class="pip-blob" d="M0-21C14-21 23-11 22 2 21 15 12 21 0 21S-21 15-22 2C-23-11-14-21 0-21Z" fill="url(#pb2)" stroke="url(#pr2)"/>
-                  <ellipse class="pip-shine" cx="-8" cy="-12" rx="7" ry="3.4" transform="rotate(-24 -8 -12)"/>
-                  <ellipse class="pip-cheek" cx="-13" cy="6" rx="3.4" ry="2"/><ellipse class="pip-cheek" cx="13" cy="6" rx="3.4" ry="2"/>
-                  <g class="pip-blinker">
-                    <g transform="translate(-8 -2)"><g class="pip-eye pip-eye-l"><ellipse class="pip-white" rx="3.9" ry="5"/><g class="pip-pupil"><circle r="2.2"/><circle class="pip-glint" cx=".8" cy="-.9" r=".8"/></g><path class="pip-arc" d="M-3.8 1.4Q0-3.6 3.8 1.4"/></g></g>
-                    <g transform="translate(8 -2)"><g class="pip-eye pip-eye-r"><ellipse class="pip-white" rx="3.9" ry="5"/><g class="pip-pupil"><circle r="2.2"/><circle class="pip-glint" cx=".8" cy="-.9" r=".8"/></g><path class="pip-arc" d="M-3.8 1.4Q0-3.6 3.8 1.4"/></g></g>
+                <circle class="doto-aura" r="31" fill="url(#pa2)"/>
+                <circle class="doto-ring" r="28.5"/>
+                <g class="doto-body">
+                  <path class="doto-blob" d="M0-21C14-21 23-11 22 2 21 15 12 21 0 21S-21 15-22 2C-23-11-14-21 0-21Z" fill="url(#pb2)" stroke="url(#pr2)"/>
+                  <ellipse class="doto-shine" cx="-8" cy="-12" rx="7" ry="3.4" transform="rotate(-24 -8 -12)"/>
+                  <ellipse class="doto-cheek" cx="-13" cy="6" rx="3.4" ry="2"/><ellipse class="doto-cheek" cx="13" cy="6" rx="3.4" ry="2"/>
+                  <g class="doto-blinker">
+                    <g transform="translate(-8 -2)"><g class="doto-eye doto-eye-l"><ellipse class="doto-white" rx="3.9" ry="5"/><g class="doto-pupil"><circle r="2.2"/><circle class="doto-glint" cx=".8" cy="-.9" r=".8"/></g><path class="doto-arc" d="M-3.8 1.4Q0-3.6 3.8 1.4"/></g></g>
+                    <g transform="translate(8 -2)"><g class="doto-eye doto-eye-r"><ellipse class="doto-white" rx="3.9" ry="5"/><g class="doto-pupil"><circle r="2.2"/><circle class="doto-glint" cx=".8" cy="-.9" r=".8"/></g><path class="doto-arc" d="M-3.8 1.4Q0-3.6 3.8 1.4"/></g></g>
                   </g>
-                  <path class="pip-mouth pip-m-smile" d="M-4 9Q0 12.5 4 9"/><path class="pip-mouth pip-m-flat" d="M-3 10.5H3"/><ellipse class="pip-mouth pip-m-o" cx="0" cy="10.5" rx="2" ry="2.4"/>
-                  <text class="pip-z" x="13" y="-15">z</text>
+                  <path class="doto-mouth doto-m-smile" d="M-4 9Q0 12.5 4 9"/><path class="doto-mouth doto-m-flat" d="M-3 10.5H3"/><ellipse class="doto-mouth doto-m-o" cx="0" cy="10.5" rx="2" ry="2.4"/>
+                  <text class="doto-z" x="13" y="-15">z</text>
                 </g>
-                <g class="pip-orbit"><circle cx="0" cy="-28.5" r="2.6"/></g>
+                <g class="doto-orbit"><circle cx="0" cy="-28.5" r="2.6"/></g>
               </svg>
             </span></span>
-            <svg class="pip-heart" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 21s-7.5-4.6-9.6-9.2C1 8.6 3 5 6.6 5c2.1 0 3.6 1.2 4.4 2.6h2C13.8 6.2 15.3 5 17.4 5 21 5 23 8.6 21.6 11.8 19.5 16.4 12 21 12 21z"/></svg>
+            <svg class="doto-heart" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 21s-7.5-4.6-9.6-9.2C1 8.6 3 5 6.6 5c2.1 0 3.6 1.2 4.4 2.6h2C13.8 6.2 15.3 5 17.4 5 21 5 23 8.6 21.6 11.8 19.5 16.4 12 21 12 21z"/></svg>
           </button>
         </div>
-        <div class="mood-chips" role="group" aria-label="Pip's moods" data-pip-controls="pip-moods">
+        <div class="mood-chips" role="group" aria-label="Doto's moods" data-doto-controls="doto-moods">
           <button class="chip" type="button" data-mood="idle" aria-pressed="true">idle</button>
           <button class="chip" type="button" data-mood="happy" aria-pressed="false">happy</button>
           <button class="chip" type="button" data-mood="curious" aria-pressed="false">curious</button>
@@ -215,26 +220,26 @@
 
       <div>
         <span class="eyebrow">The companion</span>
-        <h2 id="pip-title">Meet Pip</h2>
-        <p>Pip is Claude's presence inside the window. It follows your cursor on a gentle spring, flips sides so it never covers what you point at, and gets sleepy when you pause. Claude sets its mood: <em>thinking</em> while it works, <em>proud</em> when it's done, <em>curious</em> when it asks.</p>
-        <p>Pip learns how you work (your pace, your clicks, what you liked) and writes it down where you can read it, in <code>~/.lets/entity/</code>. Nothing is learned silently. You can rename it, too.</p>
+        <h2 id="doto-title">Meet Doto</h2>
+        <p>Doto is a dot that does: Claude's presence inside the window. He rolls after your cursor on a gentle spring, flips sides so he never covers what you point at, and gets sleepy when you pause. Claude sets his mood: <em>thinking</em> while it works, <em>proud</em> when it's done, <em>curious</em> when it asks.</p>
+        <p>He talks short: verb first, one line, ending on a dot. <em>"On it." "Done. Look."</em> He keeps count, too: boops in a row, secrets found. And he learns how you work (your pace, your clicks, what you liked) and writes it down where you can read it, in <code>~/.lets/entity/</code>. Nothing is learned silently. You can rename him, too.</p>
 
         <h3 style="margin-top:1.4em">Expressions <span class="badge badge-new">new in 0.4.0</span></h3>
-        <p>Pip reacts to how you move: shake the mouse and it gets dizzy, a click storm startles it, an undo gets an "oops", lingering on it makes it blush. It all runs in the window: zero tokens, short, never in your way, and calm when you prefer reduced motion.</p>
+        <p>Doto reacts to how you move: shake the mouse and he gets dizzy, a click storm startles him, an undo gets an "oops", lingering on him makes him blush. It all runs in the window: zero tokens, short, never in your way, and calm when you prefer reduced motion.</p>
 
         <h3 style="margin-top:1.4em">Secret moves</h3>
-        <p>Pip has seven. It notices the first time you find each one.</p>
+        <p>Doto has seven, and he counts the ones you find.</p>
         <ul class="secrets">
-          <li>Double-click Pip…</li>
-          <li>Type <kbd>p</kbd>-<kbd>i</kbd>-<kbd>p</kbd> anywhere outside a text box…</li>
+          <li>Double-click Doto…</li>
+          <li>Type <kbd>d</kbd>-<kbd>o</kbd>-<kbd>t</kbd>-<kbd>o</kbd> anywhere outside a text box…</li>
           <li>The Konami code does something.</li>
-          <li><span class="sr-only">Redacted secret.</span><span class="redacted" aria-hidden="true">Draw two circles around it, fast</span></li>
-          <li><span class="sr-only">Redacted secret.</span><span class="redacted" aria-hidden="true">Stay up very late with it</span></li>
+          <li><span class="sr-only">Redacted secret.</span><span class="redacted" aria-hidden="true">Draw two circles around him, fast</span></li>
+          <li><span class="sr-only">Redacted secret.</span><span class="redacted" aria-hidden="true">Stay up very late with him</span></li>
           <li><span class="sr-only">Two redacted secrets.</span><span class="redacted-bar" aria-hidden="true"></span><span class="dim" style="margin-left:.5em">and two more you'll have to find.</span></li>
         </ul>
         <div class="btn-row">
-          <a class="btn" href="./playground.html">Play with Pip</a>
-          <a class="btn" href="./docs/companion.html">How Pip works</a>
+          <a class="btn" href="./playground.html">Play with Doto</a>
+          <a class="btn" href="./docs/companion.html">How Doto works</a>
         </div>
       </div>
     </div>

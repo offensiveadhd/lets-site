@@ -17,6 +17,8 @@ const $ = (sel) => document.querySelector(sel);
 const statusEl = $('#pg-status');
 const logEl = $('#pg-log');
 const MOODS = ['idle', 'happy', 'curious', 'thinking', 'busy', 'proud', 'sleepy', 'alert'];
+// Doto's default persona (the same as the engine's DEFAULT_PERSONA): a dot that does
+const PERSONA = { name: 'Doto', tagline: 'a dot that does', traits: { speed: 0.6, distance: 0.45, chatty: 0.4, playful: 0.7, formality: 0.15, curiosity: 0.6 }, color: '#a66bff' };
 const REACTIONS = ['dizzy', 'whoa', 'startled', 'gasp', 'oops', 'wink', 'cheer', 'blush', 'boop', 'yawn', 'peek', 'nod', 'shake-no', 'wave', 'spin', 'dance', 'disco', 'sparkle'];
 
 const lines = [];
@@ -73,7 +75,7 @@ try {
     if (type === 'entity.click') {
       setTimeout(() => cmd('entity.suggest', { items: [{ id: 'r-explain', label: 'Explain this page', hint: 'arrived via entity.suggest' }, { id: 'r-joke', label: 'Tell me something nice' }] }), 800);
     } else if (type === 'entity.pick' && String(data?.id).startsWith('r-')) {
-      const text = data.id === 'r-joke' ? 'You make very good diagrams. Probably.' : 'This is my playground. In a real window I sit on top of a unique, like the graph board.';
+      const text = data.id === 'r-joke' ? 'You make good company. Noted.' : 'My playground. In a real window I roll around on top of a unique, like the graph board.';
       setTimeout(() => cmd('entity.say', { text, mood: 'happy', ttl: 5000 }), 300);
     } else if (type === 'chat.message') {
       setTimeout(() => streamReply(`(playground echo) You said: **${String(data?.text || '…').slice(0, 200)}**\nIn a real window, Claude answers here.`), 300);
@@ -85,11 +87,11 @@ try {
 
   shell = Shell.mount(lets, {
     root: document.body,
-    entity: { name: 'Pip' },
+    entity: PERSONA,
     media: false,
     context: (info) => ({ page: 'playground', at: info ? { x: Math.round(info.x), y: Math.round(info.y) } : null }),
     quickSuggestions: () => [
-      { id: 'hi', label: 'Say hi', hint: 'a local bubble', run: () => shell.entity.say({ text: 'Hi! I am **Pip**. Try `Ctrl+/` for chat.', mood: 'happy' }) },
+      { id: 'hi', label: 'Say hi', hint: 'a local bubble', run: () => shell.entity.say({ text: "Hi, I'm **Doto**. Point at something and let's do it.", mood: 'happy' }) },
       { id: 'chat', label: 'Open chat', run: () => shell.chat.open() },
       { id: 'think', label: 'Think about it', run: () => shell.entity.mood('thinking') },
     ],
@@ -112,12 +114,12 @@ try {
   $('#pg-say').addEventListener('submit', (e) => {
     e.preventDefault();
     const input = $('#pg-say-text');
-    const text = input.value.trim() || 'Hello! I can do **bold** and `code`.';
+    const text = input.value.trim() || 'On it. I do **bold** and `code`.';
     cmd('entity.say', { text, mood: 'happy' });
     input.value = '';
   });
 
-  // ---- pip controls
+  // ---- doto controls
   $('#pg-suggest').addEventListener('click', () => cmd('entity.suggest', { items: [{ id: 'r-explain', label: 'Explain this page', hint: 'from entity.suggest' }, { id: 'r-joke', label: 'Tell me something nice' }] }));
   $('#pg-center').addEventListener('click', () => cmd('entity.move', { to: 'center' }));
   $('#pg-cursor').addEventListener('click', () => cmd('entity.move', { to: 'cursor' }));
@@ -146,7 +148,7 @@ try {
   $('#pg-stream').addEventListener('click', () => { cmd('chat.open'); streamReply('Here is a **streamed** reply, chunk by chunk, with a cursor while it streams.\n```js\nconst answer = 42;\n```\nDone.'); });
   $('#pg-toast').addEventListener('click', () => cmd('ui.toast', { text: 'A toast from "Claude"', level: 'ok' }));
 
-  setStatus('Pip is live on an offline loopback: nothing leaves this page.', 'ok');
+  setStatus('Doto is rolling on an offline loopback: nothing leaves this page.', 'ok');
 } catch (err) {
   console.error('[playground]', err);
   setStatus(`The shell could not start: ${err?.message || err}`, 'err');

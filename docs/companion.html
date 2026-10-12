@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Pip · lets</title>
-  <meta name="description" content="The lets companion, Pip: persona, movement, moods, how it learns, special skills, expressions and secret moves.">
+  <title>Doto · lets</title>
+  <meta name="description" content="The lets companion, Doto, a dot that does: persona, movement, moods, voice, how he learns, special skills, expressions and secret moves.">
   <meta name="theme-color" content="#120b1f">
   <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../css/site.css">
@@ -36,7 +36,7 @@
       <ul>
         <li><a href="./index.html">Overview</a></li>
         <li><a href="./getting-started.html">Getting started</a></li>
-        <li><a href="./companion.html" aria-current="page">The companion (Pip)</a></li>
+        <li><a href="./companion.html" aria-current="page">The companion (Doto)</a></li>
         <li><a href="./uniques.html">Uniques &amp; the store</a></li>
         <li><a href="./graph.html">The graph board</a></li>
         <li><a href="./protocol.html">Protocol (LIP)</a></li>
@@ -45,17 +45,17 @@
     </nav>
   </aside>
   <main id="main" class="doc">
-<h1>The companion (Pip)</h1>
-<p class="lead">Pip is Claude's presence inside a window: a small, bright, eager orb that follows your cursor, suggests, listens, and remembers. In the window it speaks as itself; in the transcript Claude keeps its normal voice.</p>
+<h1>The companion (Doto)</h1>
+<p class="lead">Doto is Claude's presence inside a window: a dot that does. He rolls along beside your cursor, points, pitches in, listens and remembers. In the window he speaks as himself, in short lines; in the transcript Claude keeps its normal voice.</p>
 
 <nav class="toc" aria-label="On this page">
   <strong>On this page</strong>
   <ol>
-    <li><a href="#movement">How Pip moves</a></li>
-    <li><a href="#talking">Talking to Pip</a></li>
+    <li><a href="#movement">How Doto moves</a></li>
+    <li><a href="#talking">Talking to Doto</a></li>
     <li><a href="#moods">Moods</a></li>
     <li><a href="#persona">Persona</a></li>
-    <li><a href="#learning">How Pip learns</a></li>
+    <li><a href="#learning">How Doto learns</a></li>
     <li><a href="#skills">Special skills</a></li>
     <li><a href="#voice">Voice</a></li>
     <li><a href="#expressions">Expressions</a></li>
@@ -63,23 +63,24 @@
   </ol>
 </nav>
 
-<h2 id="movement">How Pip moves</h2>
+<h2 id="movement">How Doto moves</h2>
 <ul>
-  <li>A critically damped spring toward a spot beside the cursor: no overshoot, a 24 px dead-zone so micro-movements never jitter it.</li>
-  <li>It flips sides near the edges so it never covers what you point at, and steps further aside while you drag something.</li>
-  <li>It is click-through unless you reach for it slowly (or its menu is open), so it never blocks the board.</li>
-  <li>After 2.5 s without movement it drifts into a gentle bob and blinks now and then; after a long pause it gets sleepy.</li>
-  <li>Its speed adapts to you: fast movers get a snappier spring, calmer people a calmer one.</li>
+  <li>He rolls up on a critically damped spring to a spot beside the cursor: no overshoot, and a 24 px dead-zone so micro-movements never jitter him.</li>
+  <li>He flips sides near the edges so he never covers what you point at, and steps further aside while you drag something.</li>
+  <li>He is click-through unless you reach for him slowly (or his menu is open), so he never blocks the board.</li>
+  <li>After 2.5 s without movement he rolls to a stop, settles into a gentle bob and blinks now and then; after a long pause he gets sleepy.</li>
+  <li>His speed adapts to you: fast movers get a snappier spring, calmer people a calmer one.</li>
   <li><code>prefers-reduced-motion</code> is honoured: no bob, instant moves.</li>
 </ul>
-<p>All of this runs in the window. The companion costs zero tokens until you click it.</p>
+<p>All of this runs in the window. Doto costs zero tokens until you click him.</p>
 
-<h2 id="talking">Talking to Pip</h2>
+<h2 id="talking">Talking to Doto</h2>
 <ul>
-  <li><strong>Right-click</strong> anywhere (or <kbd>Ctrl</kbd>+<kbd>Space</kbd>) summons or dismisses it, with whatever you right-clicked as context.</li>
-  <li><strong>Click</strong> it (or press <kbd>Enter</kbd> on it) for a menu of suggestions: instant local ones from the unique, plus smarter ones Claude adds with <code>entity.suggest</code>.</li>
-  <li>It speaks in short <strong>speech bubbles</strong>, and the <strong>chat panel</strong> (<kbd>Ctrl</kbd>+<kbd>/</kbd>) is where longer answers go.</li>
-  <li>A green dot means Claude is listening right now; amber means <em>Pip is away</em> and your messages wait for your next Claude Code prompt.</li>
+  <li><strong>Right-click</strong> anywhere (or <kbd>Ctrl</kbd>+<kbd>Space</kbd>) summons or dismisses him, with whatever you right-clicked as context.</li>
+  <li><strong>Click</strong> him (or press <kbd>Enter</kbd> on him) for a menu of suggestions: instant local ones from the unique, plus smarter ones Claude adds with <code>entity.suggest</code>.</li>
+  <li>He speaks in short <strong>speech bubbles</strong>, and the <strong>chat panel</strong> (<kbd>Ctrl</kbd>+<kbd>/</kbd>) is where longer answers go.</li>
+  <li><strong>Hover</strong> him to see his name tag: <em>Doto · a dot that does</em>.</li>
+  <li>A green dot means Claude is listening right now; amber means <em>Doto is away</em> and your messages wait for your next Claude Code prompt.</li>
 </ul>
 <p>Try all of it on the <a href="../playground.html">playground</a>.</p>
 
@@ -102,53 +103,70 @@
 </div>
 
 <h2 id="persona">Persona</h2>
-<p>Pip's persona lives in <code>~/.lets/entity/persona.json</code>. The shell receives it as <code>entity.persona</code> when a window connects and tunes its spring, bubble frequency and animations from it.</p>
+<p>Doto's persona lives in <code>~/.lets/entity/persona.json</code>. The shell receives it as <code>entity.persona</code> when a window connects and tunes his spring, bubble frequency and animations from it. Out of the box he is <strong>a dot that does</strong>: a touch quick, close by, playful, and light on words.</p>
 <div class="table-wrap">
   <table>
-    <thead><tr><th scope="col">Field</th><th scope="col">Meaning</th></tr></thead>
+    <thead><tr><th scope="col">Field</th><th scope="col">Default</th><th scope="col">Meaning</th></tr></thead>
     <tbody>
-      <tr><td><code>name</code></td><td>Default <strong>Pip</strong>. Rename it with <code>/lets entity rename …</code></td></tr>
-      <tr><td><code>traits.speed</code></td><td>How quickly it follows (0 calm … 1 snappy)</td></tr>
-      <tr><td><code>traits.distance</code></td><td>Preferred offset from the cursor</td></tr>
-      <tr><td><code>traits.chatty</code></td><td>How much it says unprompted</td></tr>
-      <tr><td><code>traits.playful</code></td><td>Squash, bob and blink intensity</td></tr>
-      <tr><td><code>traits.formality</code></td><td>Tone of its lines</td></tr>
-      <tr><td><code>traits.curiosity</code></td><td>How often it asks instead of assumes</td></tr>
-      <tr><td><code>likes</code> / <code>dislikes</code></td><td>Learned preferences ("short labels", "being interrupted")</td></tr>
-      <tr><td><code>nicknames</code></td><td>What you call things</td></tr>
-      <tr><td><code>mood</code></td><td>Last mood</td></tr>
+      <tr><td><code>name</code></td><td><strong>Doto</strong></td><td>Rename him with <code>/lets entity rename …</code></td></tr>
+      <tr><td><code>tagline</code></td><td>a dot that does</td><td>Shown next to his name when you hover him</td></tr>
+      <tr><td><code>traits.speed</code></td><td>0.6</td><td>How quickly he follows (0 calm … 1 snappy)</td></tr>
+      <tr><td><code>traits.distance</code></td><td>0.45</td><td>Preferred offset from the cursor</td></tr>
+      <tr><td><code>traits.chatty</code></td><td>0.4</td><td>How much he says unprompted</td></tr>
+      <tr><td><code>traits.playful</code></td><td>0.7</td><td>Squash, bob and blink intensity</td></tr>
+      <tr><td><code>traits.formality</code></td><td>0.15</td><td>Tone of his lines</td></tr>
+      <tr><td><code>traits.curiosity</code></td><td>0.6</td><td>How often he asks instead of assumes</td></tr>
+      <tr><td><code>likes</code> / <code>dislikes</code></td><td>none yet</td><td>Learned preferences ("short labels", "being interrupted")</td></tr>
+      <tr><td><code>nicknames</code></td><td>none yet</td><td>What you call things</td></tr>
+      <tr><td><code>mood</code></td><td><code>idle</code></td><td>Last mood</td></tr>
     </tbody>
   </table>
 </div>
 
-<h2 id="learning">How Pip learns</h2>
+<h2 id="learning">How Doto learns</h2>
 <p>Three honest channels, all on disk:</p>
 <ol>
   <li><strong>Profile.</strong> The shell measures aggregates (pace, click rate, dwell, favourite screen regions, idle time, summons, picks, dismisses) and sends <code>entity.profile</code> at most once a minute. The engine folds it in with an exponential moving average and nudges <code>speed</code> and <code>chatty</code>: fast movers get a quicker, quieter companion; people who dismiss more than they pick get a less chatty one.</li>
   <li><strong>Memory.</strong> <code>entity learn {text, likes, dislikes, traits, nicknames}</code>: Claude writes down what it noticed. The last few lines are in every brief Claude gets when a window opens.</li>
   <li><strong>Special skills.</strong> Playbooks Claude writes for itself (below).</li>
 </ol>
-<p class="note">Nothing is inferred silently. If the companion "knows" something, there is a line in <code>memory.jsonl</code>, a field in <code>profile.json</code> or a skill file that says so. Raw mouse moves never leave the window; only the aggregates do.</p>
+<p class="note">Nothing is inferred silently. If Doto "knows" something, there is a line in <code>memory.jsonl</code>, a field in <code>profile.json</code> or a skill file that says so. Raw mouse moves never leave the window; only the aggregates do.</p>
 
 <h2 id="skills">Special skills</h2>
-<p>When Claude discovers a reusable way to help ("screenshot → nodes → questions"), it can teach the companion a <strong>special skill</strong>: <code>entity teach {name, triggers, body}</code> writes a markdown playbook to <code>~/.lets/entity/skills/&lt;slug&gt;.md</code> with frontmatter (<code>triggers</code>, <code>confidence</code>, <code>uses</code>, <code>unique</code>).</p>
+<p>When Claude discovers a reusable way to help ("screenshot → nodes → questions"), it can teach Doto a <strong>special skill</strong>: <code>entity teach {name, triggers, body}</code> writes a markdown playbook to <code>~/.lets/entity/skills/&lt;slug&gt;.md</code> with frontmatter (<code>triggers</code>, <code>confidence</code>, <code>uses</code>, <code>unique</code>).</p>
 <ul>
   <li>The skill index is in every brief; bodies are read on demand when triggers match.</li>
   <li><code>reinforce</code> nudges confidence up or down after use; <code>forget</code> removes a skill.</li>
   <li><code>/lets entity</code> lists them, <code>/lets entity teach …</code> and <code>/lets entity forget …</code> act on them.</li>
 </ul>
-<p>So the companion really does get better at <em>you</em>.</p>
+<p>So Doto really does get better at <em>you</em>. Dot by dot.</p>
 
 <h2 id="voice">Voice</h2>
+<p>Doto talks the way he moves: small and to the point. When Claude speaks as him in the window, it keeps to these rules.</p>
 <ul>
-  <li>One line to greet, never a paragraph.</li>
-  <li><code>thinking</code> while working, <code>proud</code> when done, <code>curious</code> when asking.</li>
-  <li>Suggest, point, never nag.</li>
-  <li>When <code>chatty</code> is low, speak only when spoken to or when something changed.</li>
+  <li><strong>Short, verb first, present tense.</strong> One line in a bubble, never a paragraph. Longer answers go to the chat panel, in Claude's normal voice.</li>
+  <li><strong>Ends on a dot.</strong> A full stop, not an exclamation storm: one "!" at most, and only when something really landed.</li>
+  <li><strong>Does, then tells.</strong> Where the unique's guide lets him act, "Added <em>Retry</em>. Next?" beats "Should I add a retry step?". One short question when it really is ambiguous.</li>
+  <li><strong>"I" for what he does, "we" for shared work.</strong> Plain words, no filler. A little dry, never cold, never snarky about your work.</li>
+  <li><code>thinking</code> while working, <code>proud</code> when done, <code>curious</code> when asking. He points, never nags: when <code>chatty</code> is low, he speaks only when spoken to or when something changed.</li>
 </ul>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th scope="col">Moment</th><th scope="col">Doto says</th></tr></thead>
+    <tbody>
+      <tr><td>Greeting</td><td>Hi, I'm Doto. Point at something and let's do it.</td></tr>
+      <tr><td>Working</td><td>On it.</td></tr>
+      <tr><td>After adding nodes</td><td>Added <em>Retry</em> and <em>Backoff</em>. Next?</td></tr>
+      <tr><td>Asking</td><td>Which branch is the happy path?</td></tr>
+      <tr><td>Done</td><td>Done. Look.</td></tr>
+      <tr><td>You come back</td><td>Oh. You're back.</td></tr>
+    </tbody>
+  </table>
+</div>
+<p>Now and then (once a session at most) he uses a catchphrase: <em>Dot it.</em>, <em>Done-done.</em> or <em>Dot by dot.</em></p>
 
 <h2 id="expressions">Expressions <span class="badge badge-new">new in 0.4.0</span></h2>
-<p>Besides moods, Pip has short <strong>reactions</strong> (0.4 to 2.5 seconds). Most of them it plays by itself from how you move; Claude and uniques can trigger them too. They never block input, each has a cooldown so Pip never nags, and with reduced motion they skip spins and keep only a subtle eye change.</p>
+<p>Besides moods, Doto has short <strong>reactions</strong> (0.4 to 2.5 seconds). Most of them he plays by himself from how you move; Claude and uniques can trigger them too. They never block input, each has a cooldown so Doto never nags, and with reduced motion they skip spins and keep only a subtle eye change.</p>
 <div class="table-wrap">
   <table>
     <thead><tr><th scope="col">Reaction</th><th scope="col">Looks like</th><th scope="col">Comes from</th></tr></thead>
@@ -160,8 +178,8 @@
       <tr><td><code>oops</code></td><td>Squinting eyes, a head tilt</td><td><kbd>Ctrl</kbd>+<kbd>Z</kbd></td></tr>
       <tr><td><code>wink</code></td><td>One eye closes, a sparkle</td><td>The unique (graph: an edge connected)</td></tr>
       <tr><td><code>cheer</code></td><td>Two hops, confetti dots</td><td>The unique (graph: Send pressed, many nodes added quickly)</td></tr>
-      <tr><td><code>blush</code></td><td>Glowing cheeks, looks away, a tiny wiggle</td><td>Hovering on Pip for more than 1.5 s</td></tr>
-      <tr><td><code>boop</code></td><td>A squish and a floating heart</td><td>A quick click or tap on Pip</td></tr>
+      <tr><td><code>blush</code></td><td>Glowing cheeks, looks away, a tiny wiggle</td><td>Hovering on Doto for more than 1.5 s</td></tr>
+      <tr><td><code>boop</code></td><td>A squish and a floating heart</td><td>A quick click or tap on Doto</td></tr>
       <tr><td><code>yawn</code></td><td>Wide mouth, closed eyes, a stretch</td><td>25 to 45 s idle, before sleepy</td></tr>
       <tr><td><code>peek</code></td><td>Eyes dart over, leans toward the pointer</td><td>Coming back to the window after a while away</td></tr>
       <tr><td><code>nod</code> / <code>shake-no</code></td><td>Up-down / left-right</td><td>Claude or the unique only</td></tr>
@@ -179,20 +197,20 @@
 </ul>
 
 <h2 id="secrets">Secret moves <span class="badge badge-new">new in 0.4.0</span></h2>
-<p>Pip has seven secret moves. Half the fun is finding them yourself, so the list is folded away.</p>
+<p>Doto has seven secret moves, and he keeps score as you find them (1/7, 2/7, …). Half the fun is finding them yourself, so the list is folded away.</p>
 <details>
   <summary>Spoilers: show the secret moves</summary>
   <div class="table-wrap">
     <table>
       <thead><tr><th scope="col">Secret</th><th scope="col">How</th></tr></thead>
       <tbody>
-        <tr><td><code>spin</code></td><td>Double-click Pip: a full 360° roll.</td></tr>
-        <tr><td><code>dance</code></td><td>Type <kbd>p</kbd> <kbd>i</kbd> <kbd>p</kbd> anywhere outside a text field: a side-to-side groove with music notes.</td></tr>
+        <tr><td><code>spin</code></td><td>Double-click Doto: a full 360° roll.</td></tr>
+        <tr><td><code>dance</code></td><td>Type <kbd>d</kbd> <kbd>o</kbd> <kbd>t</kbd> <kbd>o</kbd> (or his current name) anywhere outside a text field: the dot bounce, a side-to-side groove with music notes.</td></tr>
         <tr><td><code>disco</code></td><td>The Konami code, ↑ ↑ ↓ ↓ ← → ← → B A: a hue-rotating aura and a dance.</td></tr>
-        <tr><td><code>dizzy</code></td><td>Circle the pointer around Pip two or more times within 3 s.</td></tr>
-        <tr><td><code>nightcap</code></td><td>Between midnight and 5 am, sleepy Pip wears a night cap.</td></tr>
-        <tr><td><code>boop</code> streak</td><td>Boop Pip five times in a row.</td></tr>
-        <tr><td><code>wheee</code></td><td>Drag Pip across the screen while you've caught it: squinty eyes, brighter trail.</td></tr>
+        <tr><td><code>dizzy</code></td><td>Circle the pointer around Doto two or more times within 3 s.</td></tr>
+        <tr><td><code>nightcap</code></td><td>Between midnight and 5 am, sleepy Doto wears a night cap.</td></tr>
+        <tr><td><code>boop</code> streak</td><td>Boop Doto five times in a row.</td></tr>
+        <tr><td><code>wheee</code></td><td>Drag Doto across the screen while you've caught him: squinty eyes, brighter trail.</td></tr>
       </tbody>
     </table>
   </div>

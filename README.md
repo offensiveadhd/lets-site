@@ -12,7 +12,7 @@ CDN, no web fonts from the network, no analytics.
 ## What is here
 
 ```
-index.html            landing page (hero with Pip, install prompt, screenshots)
+index.html            landing page (hero with Doto, install prompt, screenshots)
 uniques.html          graph + pulse, defaults vs the store
 playground.html       the real lets shell on an offline loopback: moods, reactions, chat
 404.html              self-contained (inline CSS), works at any depth
