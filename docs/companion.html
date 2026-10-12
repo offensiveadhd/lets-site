@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pip · lets</title>
+  <meta name="description" content="The lets companion, Pip: persona, movement, moods, how it learns, special skills, expressions and secret moves.">
+  <meta name="theme-color" content="#120b1f">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../css/site.css">
+  <script type="module" src="../js/site.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../assets/logo.svg" alt="" width="34" height="34">lets</a>
+    <button class="btn btn-sm nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav class="site-nav" id="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="../docs/index.html" aria-current="page">Docs</a></li>
+        <li><a href="../uniques.html">Uniques</a></li>
+        <li><a href="../playground.html">Playground</a></li>
+        <li><a href="../index.html#install">Install</a></li>
+        <li><a href="https://github.com/TikoTikTok/lets">GitHub</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap docs-layout">
+  <aside class="docs-side" aria-label="Documentation">
+    <button class="btn btn-sm docs-nav-toggle" type="button" aria-expanded="false" aria-controls="docs-nav">Docs pages <span aria-hidden="true">▾</span></button>
+    <h2>Documentation</h2>
+    <nav class="docs-nav" id="docs-nav" aria-label="Docs pages">
+      <ul>
+        <li><a href="./index.html">Overview</a></li>
+        <li><a href="./getting-started.html">Getting started</a></li>
+        <li><a href="./companion.html" aria-current="page">The companion (Pip)</a></li>
+        <li><a href="./uniques.html">Uniques &amp; the store</a></li>
+        <li><a href="./graph.html">The graph board</a></li>
+        <li><a href="./protocol.html">Protocol (LIP)</a></li>
+        <li><a href="./architecture.html">Architecture</a></li>
+      </ul>
+    </nav>
+  </aside>
+  <main id="main" class="doc">
+<h1>The companion (Pip)</h1>
+<p class="lead">Pip is Claude's presence inside a window: a small, bright, eager orb that follows your cursor, suggests, listens, and remembers. In the window it speaks as itself; in the transcript Claude keeps its normal voice.</p>
+
+<nav class="toc" aria-label="On this page">
+  <strong>On this page</strong>
+  <ol>
+    <li><a href="#movement">How Pip moves</a></li>
+    <li><a href="#talking">Talking to Pip</a></li>
+    <li><a href="#moods">Moods</a></li>
+    <li><a href="#persona">Persona</a></li>
+    <li><a href="#learning">How Pip learns</a></li>
+    <li><a href="#skills">Special skills</a></li>
+    <li><a href="#voice">Voice</a></li>
+    <li><a href="#expressions">Expressions</a></li>
+    <li><a href="#secrets">Secret moves</a></li>
+  </ol>
+</nav>
+
+<h2 id="movement">How Pip moves</h2>
+<ul>
+  <li>A critically damped spring toward a spot beside the cursor: no overshoot, a 24 px dead-zone so micro-movements never jitter it.</li>
+  <li>It flips sides near the edges so it never covers what you point at, and steps further aside while you drag something.</li>
+  <li>It is click-through unless you reach for it slowly (or its menu is open), so it never blocks the board.</li>
+  <li>After 2.5 s without movement it drifts into a gentle bob and blinks now and then; after a long pause it gets sleepy.</li>
+  <li>Its speed adapts to you: fast movers get a snappier spring, calmer people a calmer one.</li>
+  <li><code>prefers-reduced-motion</code> is honoured: no bob, instant moves.</li>
+</ul>
+<p>All of this runs in the window. The companion costs zero tokens until you click it.</p>
+
+<h2 id="talking">Talking to Pip</h2>
+<ul>
+  <li><strong>Right-click</strong> anywhere (or <kbd>Ctrl</kbd>+<kbd>Space</kbd>) summons or dismisses it, with whatever you right-clicked as context.</li>
+  <li><strong>Click</strong> it (or press <kbd>Enter</kbd> on it) for a menu of suggestions: instant local ones from the unique, plus smarter ones Claude adds with <code>entity.suggest</code>.</li>
+  <li>It speaks in short <strong>speech bubbles</strong>, and the <strong>chat panel</strong> (<kbd>Ctrl</kbd>+<kbd>/</kbd>) is where longer answers go.</li>
+  <li>A green dot means Claude is listening right now; amber means <em>Pip is away</em> and your messages wait for your next Claude Code prompt.</li>
+</ul>
+<p>Try all of it on the <a href="../playground.html">playground</a>.</p>
+
+<h2 id="moods">Moods</h2>
+<p>Claude sets a lasting mood with <code>entity.mood</code>; a mood passed with <code>entity.say</code> lasts only while the bubble shows.</p>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th scope="col">Mood</th><th scope="col">Looks like</th><th scope="col">Used when</th></tr></thead>
+    <tbody>
+      <tr><td><code>idle</code></td><td>Soft smile, violet glow</td><td>Nothing is happening</td></tr>
+      <tr><td><code>happy</code></td><td>Smiling eyes, rosy cheeks, magenta glow, a quicker bob</td><td>An edit landed, a greeting</td></tr>
+      <tr><td><code>curious</code></td><td>One eye bigger, a little "o" mouth, cyan glow</td><td>Claude is asking you something</td></tr>
+      <tr><td><code>thinking</code></td><td>Eyes up and to the side, an orbiting dot</td><td>Claude is working</td></tr>
+      <tr><td><code>busy</code></td><td>Narrowed eyes, a fast orbit</td><td>Something long is running</td></tr>
+      <tr><td><code>proud</code></td><td>Smiling eyes, golden glow</td><td>Done, and pleased about it</td></tr>
+      <tr><td><code>sleepy</code></td><td>Half-closed eyes, a floating "z", slow bob</td><td>You paused for a long while</td></tr>
+      <tr><td><code>alert</code></td><td>Wide eyes, a red pulsing aura</td><td>Something needs your attention</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 id="persona">Persona</h2>
+<p>Pip's persona lives in <code>~/.lets/entity/persona.json</code>. The shell receives it as <code>entity.persona</code> when a window connects and tunes its spring, bubble frequency and animations from it.</p>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th scope="col">Field</th><th scope="col">Meaning</th></tr></thead>
+    <tbody>
+      <tr><td><code>name</code></td><td>Default <strong>Pip</strong>. Rename it with <code>/lets entity rename …</code></td></tr>
+      <tr><td><code>traits.speed</code></td><td>How quickly it follows (0 calm … 1 snappy)</td></tr>
+      <tr><td><code>traits.distance</code></td><td>Preferred offset from the cursor</td></tr>
+      <tr><td><code>traits.chatty</code></td><td>How much it says unprompted</td></tr>
+      <tr><td><code>traits.playful</code></td><td>Squash, bob and blink intensity</td></tr>
+      <tr><td><code>traits.formality</code></td><td>Tone of its lines</td></tr>
+      <tr><td><code>traits.curiosity</code></td><td>How often it asks instead of assumes</td></tr>
+      <tr><td><code>likes</code> / <code>dislikes</code></td><td>Learned preferences ("short labels", "being interrupted")</td></tr>
+      <tr><td><code>nicknames</code></td><td>What you call things</td></tr>
+      <tr><td><code>mood</code></td><td>Last mood</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 id="learning">How Pip learns</h2>
+<p>Three honest channels, all on disk:</p>
+<ol>
+  <li><strong>Profile.</strong> The shell measures aggregates (pace, click rate, dwell, favourite screen regions, idle time, summons, picks, dismisses) and sends <code>entity.profile</code> at most once a minute. The engine folds it in with an exponential moving average and nudges <code>speed</code> and <code>chatty</code>: fast movers get a quicker, quieter companion; people who dismiss more than they pick get a less chatty one.</li>
+  <li><strong>Memory.</strong> <code>entity learn {text, likes, dislikes, traits, nicknames}</code>: Claude writes down what it noticed. The last few lines are in every brief Claude gets when a window opens.</li>
+  <li><strong>Special skills.</strong> Playbooks Claude writes for itself (below).</li>
+</ol>
+<p class="note">Nothing is inferred silently. If the companion "knows" something, there is a line in <code>memory.jsonl</code>, a field in <code>profile.json</code> or a skill file that says so. Raw mouse moves never leave the window; only the aggregates do.</p>
+
+<h2 id="skills">Special skills</h2>
+<p>When Claude discovers a reusable way to help ("screenshot → nodes → questions"), it can teach the companion a <strong>special skill</strong>: <code>entity teach {name, triggers, body}</code> writes a markdown playbook to <code>~/.lets/entity/skills/&lt;slug&gt;.md</code> with frontmatter (<code>triggers</code>, <code>confidence</code>, <code>uses</code>, <code>unique</code>).</p>
+<ul>
+  <li>The skill index is in every brief; bodies are read on demand when triggers match.</li>
+  <li><code>reinforce</code> nudges confidence up or down after use; <code>forget</code> removes a skill.</li>
+  <li><code>/lets entity</code> lists them, <code>/lets entity teach …</code> and <code>/lets entity forget …</code> act on them.</li>
+</ul>
+<p>So the companion really does get better at <em>you</em>.</p>
+
+<h2 id="voice">Voice</h2>
+<ul>
+  <li>One line to greet, never a paragraph.</li>
+  <li><code>thinking</code> while working, <code>proud</code> when done, <code>curious</code> when asking.</li>
+  <li>Suggest, point, never nag.</li>
+  <li>When <code>chatty</code> is low, speak only when spoken to or when something changed.</li>
+</ul>
+
+<h2 id="expressions">Expressions <span class="badge badge-new">new in 0.4.0</span></h2>
+<p>Besides moods, Pip has short <strong>reactions</strong> (0.4 to 2.5 seconds). Most of them it plays by itself from how you move; Claude and uniques can trigger them too. They never block input, each has a cooldown so Pip never nags, and with reduced motion they skip spins and keep only a subtle eye change.</p>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th scope="col">Reaction</th><th scope="col">Looks like</th><th scope="col">Comes from</th></tr></thead>
+    <tbody>
+      <tr><td><code>dizzy</code></td><td>Spinning head, spiral pupils, a wobble</td><td>Very fast pointer movement, or a mouse shake (and one secret way)</td></tr>
+      <tr><td><code>whoa</code></td><td>Big eyes, leans back, aura pulse</td><td>A fast burst of wheel zoom</td></tr>
+      <tr><td><code>startled</code></td><td>Wide eyes, a little jump, a sweat drop</td><td>A click storm (6+ clicks in 1.5 s)</td></tr>
+      <tr><td><code>gasp</code></td><td>"o" mouth, a squish</td><td><kbd>Delete</kbd> / <kbd>Backspace</kbd> outside a text field</td></tr>
+      <tr><td><code>oops</code></td><td>Squinting eyes, a head tilt</td><td><kbd>Ctrl</kbd>+<kbd>Z</kbd></td></tr>
+      <tr><td><code>wink</code></td><td>One eye closes, a sparkle</td><td>The unique (graph: an edge connected)</td></tr>
+      <tr><td><code>cheer</code></td><td>Two hops, confetti dots</td><td>The unique (graph: Send pressed, many nodes added quickly)</td></tr>
+      <tr><td><code>blush</code></td><td>Glowing cheeks, looks away, a tiny wiggle</td><td>Hovering on Pip for more than 1.5 s</td></tr>
+      <tr><td><code>boop</code></td><td>A squish and a floating heart</td><td>A quick click or tap on Pip</td></tr>
+      <tr><td><code>yawn</code></td><td>Wide mouth, closed eyes, a stretch</td><td>25 to 45 s idle, before sleepy</td></tr>
+      <tr><td><code>peek</code></td><td>Eyes dart over, leans toward the pointer</td><td>Coming back to the window after a while away</td></tr>
+      <tr><td><code>nod</code> / <code>shake-no</code></td><td>Up-down / left-right</td><td>Claude or the unique only</td></tr>
+      <tr><td><code>wave</code></td><td>Lifts and waves, with a bubble</td><td>The Send to Claude farewell; the pointer leaving the window</td></tr>
+      <tr><td><code>sparkle</code></td><td>A star burst</td><td>The unique (graph: 5+ nodes connected in 20 s), or Claude being proud</td></tr>
+    </tbody>
+  </table>
+</div>
+<p>For unique authors and Claude:</p>
+<ul>
+  <li><code>shell.entity.react(name, opts?)</code> plays a reaction and returns <code>false</code> for an unknown name.</li>
+  <li>The down-command <code>entity.react {name, ms?}</code> lets Claude or a unique trigger one.</li>
+  <li>The up-event <code>entity.secret {name}</code> is sent once per secret per window, the first time you discover it, so Claude may (rarely) comment. <code>entity.profile</code> gains a <code>secrets</code> count.</li>
+  <li>While a reaction plays, the entity layer carries <code>data-react="&lt;name&gt;"</code> as a CSS hook.</li>
+</ul>
+
+<h2 id="secrets">Secret moves <span class="badge badge-new">new in 0.4.0</span></h2>
+<p>Pip has seven secret moves. Half the fun is finding them yourself, so the list is folded away.</p>
+<details>
+  <summary>Spoilers: show the secret moves</summary>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th scope="col">Secret</th><th scope="col">How</th></tr></thead>
+      <tbody>
+        <tr><td><code>spin</code></td><td>Double-click Pip: a full 360° roll.</td></tr>
+        <tr><td><code>dance</code></td><td>Type <kbd>p</kbd> <kbd>i</kbd> <kbd>p</kbd> anywhere outside a text field: a side-to-side groove with music notes.</td></tr>
+        <tr><td><code>disco</code></td><td>The Konami code, ↑ ↑ ↓ ↓ ← → ← → B A: a hue-rotating aura and a dance.</td></tr>
+        <tr><td><code>dizzy</code></td><td>Circle the pointer around Pip two or more times within 3 s.</td></tr>
+        <tr><td><code>nightcap</code></td><td>Between midnight and 5 am, sleepy Pip wears a night cap.</td></tr>
+        <tr><td><code>boop</code> streak</td><td>Boop Pip five times in a row.</td></tr>
+        <tr><td><code>wheee</code></td><td>Drag Pip across the screen while you've caught it: squinty eyes, brighter trail.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</details>
+
+<nav class="doc-pager" aria-label="Previous and next page"><a class="prev" href="./getting-started.html"><small>← Previous</small>Getting started</a><a class="next" href="./uniques.html"><small>Next →</small>Uniques &amp; the store</a></nav>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div>
+      <div class="footer-brand"><img src="../assets/logo.svg" alt="" width="28" height="28">lets</div>
+      <p>Talk to Claude through windows, not just text.</p>
+      <p>MIT © TikoTikTok · made with Claude Code</p>
+    </div>
+    <div>
+      <h2>Repositories</h2>
+      <ul>
+        <li><a href="https://github.com/TikoTikTok/lets">lets</a> <span class="dim">engine, plugin, SDK, protocol</span></li>
+        <li><a href="https://github.com/TikoTikTok/lets-unique-graph">lets-unique-graph</a> <span class="dim">the graph board</span></li>
+        <li><a href="https://github.com/TikoTikTok/lets-store">lets-store</a> <span class="dim">community store</span></li>
+        <li><a href="https://github.com/TikoTikTok/lets-unique-template">lets-unique-template</a> <span class="dim">pulse template</span></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Site</h2>
+      <ul>
+        <li><a href="../docs/index.html">Docs</a></li>
+        <li><a href="../docs/protocol.html">Protocol (LIP)</a></li>
+        <li><a href="../uniques.html">Uniques</a></li>
+        <li><a href="../playground.html">Playground</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

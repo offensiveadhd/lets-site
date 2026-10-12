@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Graph board · lets</title>
+  <meta name="description" content="The graph unique: a dark-violet node and edge board you draw on while Claude reads, points, suggests and edits the same board.">
+  <meta name="theme-color" content="#120b1f">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../css/site.css">
+  <script type="module" src="../js/site.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../assets/logo.svg" alt="" width="34" height="34">lets</a>
+    <button class="btn btn-sm nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav class="site-nav" id="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="../docs/index.html" aria-current="page">Docs</a></li>
+        <li><a href="../uniques.html">Uniques</a></li>
+        <li><a href="../playground.html">Playground</a></li>
+        <li><a href="../index.html#install">Install</a></li>
+        <li><a href="https://github.com/TikoTikTok/lets">GitHub</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap docs-layout">
+  <aside class="docs-side" aria-label="Documentation">
+    <button class="btn btn-sm docs-nav-toggle" type="button" aria-expanded="false" aria-controls="docs-nav">Docs pages <span aria-hidden="true">▾</span></button>
+    <h2>Documentation</h2>
+    <nav class="docs-nav" id="docs-nav" aria-label="Docs pages">
+      <ul>
+        <li><a href="./index.html">Overview</a></li>
+        <li><a href="./getting-started.html">Getting started</a></li>
+        <li><a href="./companion.html">The companion (Pip)</a></li>
+        <li><a href="./uniques.html">Uniques &amp; the store</a></li>
+        <li><a href="./graph.html" aria-current="page">The graph board</a></li>
+        <li><a href="./protocol.html">Protocol (LIP)</a></li>
+        <li><a href="./architecture.html">Architecture</a></li>
+      </ul>
+    </nav>
+  </aside>
+  <main id="main" class="doc">
+<h1>The graph board</h1>
+<p class="lead"><strong>Talk to Claude in diagrams.</strong> graph is the first unique: a dark-violet node/edge board where you draw the thing you mean while you chat, and the companion (Pip) reads, points, suggests and edits the same board.</p>
+
+<figure class="shot">
+  <img src="../assets/screenshot-graph.jpg" width="800" height="450" loading="lazy"
+    alt="The graph board: an API gateway node connects to an Auth service node, which looks up a Users DB and leads to a 'Token valid?' decision; a sticky note asks 'rate-limit here?'; a minimap sits bottom-left and Pip floats bottom-right.">
+  <figcaption>Two nodes drawn by hand, the rest added by Claude: a data node, a decision, an annotation, a tree layout.</figcaption>
+</figure>
+
+<nav class="toc" aria-label="On this page">
+  <strong>On this page</strong>
+  <ol>
+    <li><a href="#install">Install</a></li>
+    <li><a href="#do">What you can do</a></li>
+    <li><a href="#kinds">Node kinds</a></li>
+    <li><a href="#keys">Mouse &amp; keyboard</a></li>
+    <li><a href="#pip">Pip on the board</a></li>
+    <li><a href="#handoff">Send to Claude &amp; resume</a></li>
+    <li><a href="#events">Events (up)</a></li>
+    <li><a href="#commands">Commands (down)</a></li>
+    <li><a href="#etiquette">Claude's etiquette</a></li>
+  </ol>
+</nav>
+
+<h2 id="install">Install</h2>
+<p>It comes with lets: graph is listed in the engine's <code>defaults.json</code>, so the engine installs it into <code>~/.lets/uniques/graph</code> the first time it runs. Then:</p>
+<pre><code>/lets graph             <span class="c"># or /lets:lets graph without the alias</span></code></pre>
+<p>Manual: <code>/lets store graph</code> (inspect → confirm), or clone <a href="https://github.com/TikoTikTok/lets-unique-graph">the repo</a> into <code>~/.lets/uniques/graph</code>.</p>
+
+<h2 id="do">What you can do</h2>
+<ul>
+  <li>Double-click to add a node; drag from a node's glowing dot (or select one and <kbd>Shift</kbd>+click another) to connect; double-click a label to rename; marquee-select; undo, redo, delete.</li>
+  <li>Toolbar: add per kind, connect mode, tree / grid / radial auto-layout, fit, new, <strong>Send to Claude</strong>, <strong>Ask</strong>, chat, companion, <code>?</code> shortcuts.</li>
+  <li>Paste or drop a screenshot: it becomes an image node and Claude gets the file path. If it shows a sketch or a whiteboard, Claude offers to turn it into connected nodes.</li>
+  <li>Ask a one-line question about the selection (or the whole board) with <strong>Ask</strong>; Claude answers in chat and highlights the nodes it talks about.</li>
+  <li>Everything persists locally per window and survives reloads.</li>
+</ul>
+
+<h2 id="kinds">Node kinds</h2>
+<p>Keys <kbd>1</kbd>–<kbd>5</kbd> change the kind of the selection.</p>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th scope="col">Kind</th><th scope="col">Looks like</th><th scope="col">Use it for</th></tr></thead>
+    <tbody>
+      <tr><td><code>idea</code></td><td>violet</td><td>A thought, a feature</td></tr>
+      <tr><td><code>step</code></td><td>cyan</td><td>Something that happens</td></tr>
+      <tr><td><code>decision</code></td><td>magenta, diamond-ish</td><td>A question with branches</td></tr>
+      <tr><td><code>data</code></td><td>teal</td><td>A store, a document</td></tr>
+      <tr><td><code>note</code></td><td>dim sticky</td><td>A comment; its body is the text</td></tr>
+      <tr><td><code>image</code></td><td>the picture, with a caption</td><td>A pasted or dropped screenshot</td></tr>
+      <tr><td><code>group</code></td><td>dashed frame</td><td>Nodes inside it belong to it</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 id="keys">Mouse &amp; keyboard</h2>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th scope="col">Do</th><th scope="col">How</th></tr></thead>
+    <tbody>
+      <tr><td>Add a node</td><td>Double-click empty space, or the toolbar</td></tr>
+      <tr><td>Connect</td><td>Drag from a node's dot, or select A then <kbd>Shift</kbd>+click B</td></tr>
+      <tr><td>Rename</td><td>Double-click the label</td></tr>
+      <tr><td>Select</td><td>Click, <kbd>Shift</kbd>+click, or drag a marquee on empty space</td></tr>
+      <tr><td>Pan</td><td><kbd>Space</kbd>+drag, middle-drag, or two fingers (right-click belongs to Pip)</td></tr>
+      <tr><td>Zoom</td><td>Wheel, 0.25× to 3×, centred on the cursor</td></tr>
+      <tr><td>Undo / redo</td><td><kbd>Ctrl</kbd>+<kbd>Z</kbd> / <kbd>Ctrl</kbd>+<kbd>Y</kbd> (50 steps)</td></tr>
+      <tr><td>Duplicate / select all</td><td><kbd>Ctrl</kbd>+<kbd>D</kbd> / <kbd>Ctrl</kbd>+<kbd>A</kbd></td></tr>
+      <tr><td>Delete</td><td><kbd>Delete</kbd></td></tr>
+      <tr><td>Change kind</td><td><kbd>1</kbd>–<kbd>5</kbd></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 id="pip">Pip on the board</h2>
+<p>Right-click summons or dismisses Pip. Click it for questions about what you selected or hovered: <em>Explain this</em>, <em>What's missing around …?</em>, <em>Suggest what comes next</em>, <em>Break it into steps</em>, <em>Critique it</em>, <em>Better name?</em>. On empty space it asks about the whole board: <em>What do you see?</em>, <em>Suggest a structure</em>, <em>Review the flow</em>. Each one becomes a <code>graph.ask</code> with the node ids and labels.</p>
+<p>Pip suggests and points; it never nags. It can glide to a node and say one line ("This branch never ends"), and Claude speaks at most once per thing you do. While you are drawing, it stays quiet and waits for <em>Send</em>, <em>Ask</em> or a chat message.</p>
+<p>With 0.4.0 the board also plays a few <a href="./companion.html#expressions">expressions</a>: a wink when you connect two nodes, a cheer on <em>Send to Claude</em>. <span class="badge badge-new">new in 0.4.0</span></p>
+
+<h2 id="handoff">Send to Claude &amp; resume <span class="badge badge-new">new in 0.4.0</span></h2>
+<p><strong>Send to Claude</strong> hands the board over: the engine saves it as a session, the window says goodbye and closes, and Claude answers in the Claude Code chat with a summary, the gaps it sees, and additions you can say yes to. Say <em>continue</em> (or <code>/lets graph resume</code>) and the board comes back as you left it, with Claude's agreed suggestions drawn in.</p>
+<p>The manifest's <code>session</code> block is what lets the engine save and resume boards:</p>
+<pre><code>"session": { "export": "graph.export", "snapshot": "graph.snapshot", "restore": "graph.load" }</code></pre>
+<p>If you set <code>"handoff": "stay"</code> in <code>~/.lets/config.json</code>, the window stays open and Claude reviews right on the board instead.</p>
+
+<h2 id="model">The board's data</h2>
+<pre><code>{ rev, nodes: [{ id, label, kind, x, y, w, h, color?, text?, image?, meta? }],
+       edges: [{ id, from, to, label?, kind? }],
+       viewport: { x, y, zoom } }</code></pre>
+<p><code>x, y</code> is a node's top-left in graph units. Edge kinds: <code>dashed</code>, <code>dotted</code>, <code>bold</code>, <code>muted</code>. Generated ids look like <code>n_ab12c</code> / <code>e_x81qz</code>.</p>
+
+<h2 id="events">Events (up)</h2>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th scope="col">Event</th><th scope="col">When</th></tr></thead>
+    <tbody>
+      <tr><td><code>graph.export {graph}</code></td><td>You pressed <strong>Send to Claude</strong>. With 0.4.0 the engine adds <code>session</code> and the window closes.</td></tr>
+      <tr><td><code>graph.ask {question, selection, labels, graph}</code></td><td>The <strong>Ask</strong> button, or one of Pip's questions.</td></tr>
+      <tr><td><code>graph.node.select {ids, labels}</code></td><td>Selection changed (debounced 150 ms). Ambient context only.</td></tr>
+      <tr><td><code>graph.changed {rev, summary, diff}</code></td><td>Debounced 400 ms; also after Claude's commands, so Claude learns its new node ids.</td></tr>
+      <tr><td><code>graph.node.create</code> · <code>update</code> · <code>delete</code></td><td>Your own node edits (never echoed for Claude's).</td></tr>
+      <tr><td><code>graph.edge.create</code> · <code>delete</code></td><td>Your own edge edits.</td></tr>
+      <tr><td><code>graph.snapshot {graph}</code></td><td>The reply to Claude's <code>graph.snapshot</code> command.</td></tr>
+      <tr><td><code>media.image {path, url, …}</code></td><td>A screenshot was pasted or dropped (sent by the host, placed as an image node).</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 id="commands">Commands (down)</h2>
+<p>Every graph-changing command animates (300 ms) and goes on your undo stack, so you can <kbd>Ctrl</kbd>+<kbd>Z</kbd> anything Claude did.</p>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th scope="col">Command</th><th scope="col">Does</th></tr></thead>
+    <tbody>
+      <tr><td><code>graph.node.add {label, kind?, x?, y?, text?, near?, id?}</code></td><td>Add a node; without x/y it is auto-placed without overlap, <code>near</code> grows it out of that node. An existing <code>id</code> patches.</td></tr>
+      <tr><td><code>graph.node.set {id, patch}</code></td><td>Change a node.</td></tr>
+      <tr><td><code>graph.node.remove {ids}</code></td><td>Remove nodes, with their edges and annotations.</td></tr>
+      <tr><td><code>graph.edge.add {from, to, label?, kind?}</code></td><td>Connect two nodes (same pair again = update).</td></tr>
+      <tr><td><code>graph.edge.remove {ids}</code></td><td>Remove edges.</td></tr>
+      <tr><td><code>graph.annotate {id, text}</code></td><td>A sticky note attached to a node (<code>""</code> removes it).</td></tr>
+      <tr><td><code>graph.highlight {ids, color?, ttl?}</code></td><td>A pulsing glow while Claude talks about something.</td></tr>
+      <tr><td><code>graph.focus {ids}</code></td><td>Pan/zoom to fit those nodes (<code>[]</code> fits everything).</td></tr>
+      <tr><td><code>graph.layout {mode, root?, ids?}</code></td><td>Tree, grid or radial auto-layout.</td></tr>
+      <tr><td><code>graph.load {graph, merge?}</code></td><td>Build a whole diagram at once; without <code>merge</code> it replaces the board. Also the restore command for resume.</td></tr>
+      <tr><td><code>graph.snapshot {}</code></td><td>Ask the board for its current state.</td></tr>
+      <tr><td><code>graph.clear {}</code></td><td>Empty the board.</td></tr>
+    </tbody>
+  </table>
+</div>
+<pre><code><span class="c">// add: omit x/y to auto-place; "near" grows it out of that node</span>
+{<span class="s">"type"</span>:<span class="s">"graph.node.add"</span>,<span class="s">"data"</span>:{<span class="s">"label"</span>:<span class="s">"Validate input"</span>,<span class="s">"kind"</span>:<span class="s">"step"</span>,<span class="s">"near"</span>:<span class="s">"n_ab12c"</span>}}
+{<span class="s">"type"</span>:<span class="s">"graph.edge.add"</span>,<span class="s">"data"</span>:{<span class="s">"from"</span>:<span class="s">"n_a"</span>,<span class="s">"to"</span>:<span class="s">"n_c"</span>,<span class="s">"label"</span>:<span class="s">"no"</span>,<span class="s">"kind"</span>:<span class="s">"dashed"</span>}}
+{<span class="s">"type"</span>:<span class="s">"graph.annotate"</span>,<span class="s">"data"</span>:{<span class="s">"id"</span>:<span class="s">"n_b"</span>,<span class="s">"text"</span>:<span class="s">"Retries need a backoff cap."</span>}}
+{<span class="s">"type"</span>:<span class="s">"graph.highlight"</span>,<span class="s">"data"</span>:{<span class="s">"ids"</span>:[<span class="s">"n_a"</span>,<span class="s">"e_x81qz"</span>],<span class="s">"color"</span>:<span class="s">"#6bf0ff"</span>,<span class="s">"ttl"</span>:4000}}</code></pre>
+<p>Inline cards: <code>component.create</code> with <code>slot:"inline"</code> puts a card on the canvas, beside a node with <code>props.near</code>. An <code>options</code> card next to a decision works well.</p>
+
+<h2 id="etiquette">Claude's etiquette</h2>
+<p>The board's <code>GUIDE.md</code> is what Claude reads when it opens the board. Its promises, in short:</p>
+<ul>
+  <li><strong>Animate, don't teleport.</strong> A few small, visible commands (add, connect, highlight) instead of one silent rewrite.</li>
+  <li><strong>Never rearrange your layout without asking.</strong> That covers auto-layout, moving your nodes, replacing the board and clearing it. Placing <em>new</em> nodes near yours is fine.</li>
+  <li><strong>Labels of six words or fewer.</strong> Detail goes into the node's text or an annotation.</li>
+  <li><strong>Point while talking.</strong> Highlight the nodes it mentions, one idea at a time.</li>
+  <li><strong>Respect undo.</strong> If you undo or delete something Claude added, that's a "no", and it won't re-add it.</li>
+  <li>If something is ambiguous, ask one short question instead of guessing big.</li>
+</ul>
+<p>More: <a href="https://github.com/TikoTikTok/lets-unique-graph">lets-unique-graph</a> has the full <code>GUIDE.md</code>, the build contract (<code>CONTRACT.md</code>) and JSON Schemas for the graph document and messages.</p>
+
+<nav class="doc-pager" aria-label="Previous and next page"><a class="prev" href="./uniques.html"><small>← Previous</small>Uniques &amp; the store</a><a class="next" href="./protocol.html"><small>Next →</small>Protocol (LIP)</a></nav>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div>
+      <div class="footer-brand"><img src="../assets/logo.svg" alt="" width="28" height="28">lets</div>
+      <p>Talk to Claude through windows, not just text.</p>
+      <p>MIT © TikoTikTok · made with Claude Code</p>
+    </div>
+    <div>
+      <h2>Repositories</h2>
+      <ul>
+        <li><a href="https://github.com/TikoTikTok/lets">lets</a> <span class="dim">engine, plugin, SDK, protocol</span></li>
+        <li><a href="https://github.com/TikoTikTok/lets-unique-graph">lets-unique-graph</a> <span class="dim">the graph board</span></li>
+        <li><a href="https://github.com/TikoTikTok/lets-store">lets-store</a> <span class="dim">community store</span></li>
+        <li><a href="https://github.com/TikoTikTok/lets-unique-template">lets-unique-template</a> <span class="dim">pulse template</span></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Site</h2>
+      <ul>
+        <li><a href="../docs/index.html">Docs</a></li>
+        <li><a href="../docs/protocol.html">Protocol (LIP)</a></li>
+        <li><a href="../uniques.html">Uniques</a></li>
+        <li><a href="../playground.html">Playground</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

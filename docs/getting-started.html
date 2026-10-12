@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Getting started · lets</title>
+  <meta name="description" content="Install lets for Claude Code, open your first graph window, and learn listening vs away, Send to Claude and resume.">
+  <meta name="theme-color" content="#120b1f">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../css/site.css">
+  <script type="module" src="../js/site.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../assets/logo.svg" alt="" width="34" height="34">lets</a>
+    <button class="btn btn-sm nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav class="site-nav" id="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="../docs/index.html" aria-current="page">Docs</a></li>
+        <li><a href="../uniques.html">Uniques</a></li>
+        <li><a href="../playground.html">Playground</a></li>
+        <li><a href="../index.html#install">Install</a></li>
+        <li><a href="https://github.com/TikoTikTok/lets">GitHub</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap docs-layout">
+  <aside class="docs-side" aria-label="Documentation">
+    <button class="btn btn-sm docs-nav-toggle" type="button" aria-expanded="false" aria-controls="docs-nav">Docs pages <span aria-hidden="true">▾</span></button>
+    <h2>Documentation</h2>
+    <nav class="docs-nav" id="docs-nav" aria-label="Docs pages">
+      <ul>
+        <li><a href="./index.html">Overview</a></li>
+        <li><a href="./getting-started.html" aria-current="page">Getting started</a></li>
+        <li><a href="./companion.html">The companion (Pip)</a></li>
+        <li><a href="./uniques.html">Uniques &amp; the store</a></li>
+        <li><a href="./graph.html">The graph board</a></li>
+        <li><a href="./protocol.html">Protocol (LIP)</a></li>
+        <li><a href="./architecture.html">Architecture</a></li>
+      </ul>
+    </nav>
+  </aside>
+  <main id="main" class="doc">
+<h1>Getting started</h1>
+<p class="lead">Install the plugin, type <code>/lets graph</code>, and draw. This page covers the install, your first window, what "listening" means, and how a board travels back to Claude and comes back again.</p>
+
+<nav class="toc" aria-label="On this page">
+  <strong>On this page</strong>
+  <ol>
+    <li><a href="#requirements">Requirements</a></li>
+    <li><a href="#agent">Install with your agent</a></li>
+    <li><a href="#manual">Install by hand</a></li>
+    <li><a href="#first-window">Your first window</a></li>
+    <li><a href="#listening">Listening vs away</a></li>
+    <li><a href="#handoff">Send to Claude &amp; resume</a></li>
+    <li><a href="#commands">Commands</a></li>
+    <li><a href="#keys">Keyboard</a></li>
+    <li><a href="#state">Where state lives</a></li>
+    <li><a href="#update">Update &amp; uninstall</a></li>
+  </ol>
+</nav>
+
+<h2 id="requirements">Requirements</h2>
+<ul>
+  <li><strong>Node 18+</strong> and the <strong><code>claude</code> CLI</strong> on your PATH.</li>
+  <li><strong>git</strong> with credentials that can read the repository. While the repos are private, log in with <code>gh auth login</code> and run <code>gh auth setup-git</code>.</li>
+  <li>The Claude desktop app is the nicest home: windows open in its built-in browser pane, right next to the chat. Without a browser pane, Claude opens the window in your system browser.</li>
+</ul>
+
+<h2 id="agent">Install with your agent</h2>
+<p>The easiest way: paste this line into Claude Code. It clones the repo, runs the installer and follows <code>INSTALL.md</code>, which is written for an agent to carry out step by step.</p>
+<div class="copy-box">
+  <pre class="wrap-text" id="install-prompt">Install the `lets` plugin for Claude Code on this machine: clone https://github.com/TikoTikTok/lets (use `gh repo clone TikoTikTok/lets` — it is private, so make sure `gh auth status` is logged in and run `gh auth setup-git`), then run `node install.mjs` inside the clone and follow INSTALL.md in that repo. When done, tell me to restart Claude Code and show me `/lets graph`.</pre>
+  <div>
+    <button class="btn btn-primary" type="button" data-copy="install-prompt">Copy prompt</button>
+    <span class="copy-status" role="status" aria-live="polite"></span>
+  </div>
+</div>
+
+<h2 id="manual">Install by hand</h2>
+<p>One command from a checkout:</p>
+<pre><code>gh repo clone TikoTikTok/lets
+cd lets
+node install.mjs</code></pre>
+<p>The installer adds the <code>lets</code> marketplace from GitHub, installs the <code>lets</code> plugin at user scope, installs the default uniques (graph) into <code>~/.lets/uniques</code>, and installs a personal <code>/lets</code> alias. Restart the app or run <code>/reload-plugins</code> once, and both of these work in any session:</p>
+<pre><code>/lets:lets graph
+/lets graph</code></pre>
+<p>Check that everything is in place with <code>/lets:lets list</code>, which lists the installed uniques.</p>
+
+<h3 id="installer-options">Installer options</h3>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th scope="col">Flag</th><th scope="col">Effect</th></tr></thead>
+    <tbody>
+      <tr><td><code>--local</code></td><td>Use the marketplace from this checkout instead of GitHub.</td></tr>
+      <tr><td><code>--native</code></td><td>Also install the optional <code>lets-native</code> mod (Claude Code 2.1.287+).</td></tr>
+      <tr><td><code>--no-skill</code></td><td>Skip the personal <code>/lets</code> alias.</td></tr>
+      <tr><td><code>--uninstall</code></td><td>Remove what the installer added.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h3 id="plugin-manager">With the plugin manager</h3>
+<p>Inside Claude Code:</p>
+<pre><code>/plugin marketplace add TikoTikTok/lets
+/plugin install lets@lets</code></pre>
+<p>Then run <code>node engine/bin/lets.mjs install-skill</code> from a checkout for the bare <code>/lets</code> alias.</p>
+
+<h2 id="first-window">Your first window</h2>
+<ol>
+  <li><code>/lets graph plan the auth flow</code>. Claude opens the board in the app's browser pane, seeds a few nodes, and the companion greets you.</li>
+  <li>Draw. Double-click a node to rename it, drag from a node's edge to connect, right-click to summon or dismiss the companion, click it for suggestions.</li>
+  <li>Press <strong>Send to Claude</strong>, or just keep chatting: window events reach Claude automatically with your next message.</li>
+  <li>Ask for more. <em>"Open an image uploader"</em> and a paste/drop card appears; paste a screenshot and Claude reads the file. <em>"Give me sliders for the weights"</em> and sliders appear, and every change reaches Claude.</li>
+  <li><code>/lets entity</code> shows who the companion is and what it has learned; <code>/lets store timeline</code> searches the community store.</li>
+</ol>
+<p>Everything the board can do is on <a href="./graph.html">The graph board</a>.</p>
+
+<h2 id="listening">Listening vs away</h2>
+<p>While <code>/lets graph</code> runs, Claude stays in an <strong>attentive loop</strong> and the window shows a <strong>green dot</strong>: everything you do in the window (chat, Ask, Send to Claude, Pip's menu, a pasted image) gets a reaction within seconds.</p>
+<p>When Claude is not in that loop the dot turns <strong>amber</strong> and the chat says <em>Pip is away</em>. Nothing is lost: your messages are kept and delivered with your next prompt in Claude Code, by a prompt hook, at zero tool-call cost.</p>
+<p>In the terminal CLI you can also load the plugin as a channel, and window events then wake Claude directly:</p>
+<pre><code>claude --dangerously-load-development-channels plugin:lets@lets</code></pre>
+
+<h2 id="handoff">Send to Claude, handoff &amp; resume <span class="badge badge-new">new in 0.4.0</span></h2>
+<p>Pressing <strong>Send to Claude</strong> is a handoff. The window has done its job, so it steps out of the way:</p>
+<ol>
+  <li>The engine saves the board as a <strong>session</strong> in <code>~/.lets/sessions/&lt;unique&gt;/&lt;id&gt;.json</code> (one session per window; later sends from the same window update it).</li>
+  <li>Pip waves goodbye (<em>"Sent to Claude ✦ see you in Claude Code"</em>) and the window closes itself. If the browser won't let the tab close, the farewell stays up with a <strong>Keep working</strong> button that brings the window back.</li>
+  <li>Claude answers in your Claude Code chat, not in the window: a short summary of the flow, the gaps it sees, and concrete additions you can say yes to. It also gives the session a short label.</li>
+</ol>
+<p>This works even when Claude is away, because the engine does it, not the model.</p>
+
+<h3 id="resume">Bringing a board back</h3>
+<p>Ask in plain words, <em>"continue the auth board"</em>, or type:</p>
+<pre><code>/lets graph resume</code></pre>
+<p>Claude opens a fresh window, the engine replays the saved board into it (for graph, with <code>graph.load</code>), and Claude draws in the additions you agreed to. Every <code>open</code> lists the five most recent sessions for that unique (id, time, label, summary), so Claude can pick the right one from context.</p>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th scope="col">Where</th><th scope="col">What</th></tr></thead>
+    <tbody>
+      <tr><td><code>sessions</code> tool</td><td><code>{action: list | get | label | remove, unique?, id?, label?}</code>, used by Claude.</td></tr>
+      <tr><td><code>open {unique, resume}</code></td><td><code>resume: "last"</code> or a session id.</td></tr>
+      <tr><td><code>lets sessions</code></td><td>The same list from the command line.</td></tr>
+      <tr><td><code>~/.lets/config.json</code></td><td><code>"handoff": "close"</code> (default) or <code>"stay"</code> to keep windows open after a send.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 id="commands">Commands</h2>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th scope="col">Type</th><th scope="col">Does</th></tr></thead>
+    <tbody>
+      <tr><td><code>/lets graph [intent]</code></td><td>Open a unique. Words after the name are the opening intent: <code>/lets graph plan the auth flow</code>.</td></tr>
+      <tr><td><code>/lets graph resume</code></td><td>Reopen the last board you sent. <span class="badge badge-new">new in 0.4.0</span></td></tr>
+      <tr><td><code>/lets list</code></td><td>List installed uniques and any problems.</td></tr>
+      <tr><td><code>/lets store &lt;query&gt;</code></td><td>Search the store; install only after inspecting and saying yes.</td></tr>
+      <tr><td><code>/lets entity</code></td><td>Who the companion is, what it learned, which special skills it has.</td></tr>
+      <tr><td><code>/lets plan …</code></td><td>Split work into parallel waves and pick a model per task (below).</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h3 id="routing">Model routing</h3>
+<p><code>/lets plan …</code> splits work into parallel waves and picks <code>haiku</code> / <code>sonnet</code> / <code>opus</code> per task from kind priors (format → haiku, architecture → opus …) and a ledger of past outcomes (<code>~/.lets/router/ledger.json</code>). Claude then spawns the waves with its Agent tool and reports back, so trust adjusts with evidence.</p>
+
+<h2 id="keys">Keyboard</h2>
+<p>These work in every unique (they come from the shell):</p>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th scope="col">Key</th><th scope="col">Action</th></tr></thead>
+    <tbody>
+      <tr><td>Right-click / <kbd>Ctrl</kbd>+<kbd>Space</kbd></td><td>Summon or dismiss the companion</td></tr>
+      <tr><td><kbd>Enter</kbd> on the companion</td><td>Open its menu (arrow keys move, <kbd>Esc</kbd> closes)</td></tr>
+      <tr><td><kbd>Ctrl</kbd>+<kbd>/</kbd></td><td>Toggle the chat panel</td></tr>
+      <tr><td><kbd>Enter</kbd> / <kbd>Shift</kbd>+<kbd>Enter</kbd></td><td>Send / new line in chat</td></tr>
+      <tr><td><kbd>Esc</kbd></td><td>Close menus and bubbles</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 id="state">Where state lives</h2>
+<p>Everything lives in <code>~/.lets/</code>: uploads, the companion (persona, profile, memory, skills), the router ledger, installed uniques, logs, and (new in 0.4.0) saved sessions. Delete it to start fresh.</p>
+
+<h2 id="update">Update &amp; uninstall</h2>
+<pre><code>claude plugin update lets@lets     # update
+node install.mjs --uninstall       # from your checkout: remove</code></pre>
+<p class="note">Tip for the app's browser pane: open the window URL once with its <code>#w=…&amp;t=…</code> hash. A hash-only navigation does not reload the page, so after a host restart navigate elsewhere first.</p>
+
+<nav class="doc-pager" aria-label="Previous and next page"><a class="prev" href="./index.html"><small>← Previous</small>Overview</a><a class="next" href="./companion.html"><small>Next →</small>The companion (Pip)</a></nav>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div>
+      <div class="footer-brand"><img src="../assets/logo.svg" alt="" width="28" height="28">lets</div>
+      <p>Talk to Claude through windows, not just text.</p>
+      <p>MIT © TikoTikTok · made with Claude Code</p>
+    </div>
+    <div>
+      <h2>Repositories</h2>
+      <ul>
+        <li><a href="https://github.com/TikoTikTok/lets">lets</a> <span class="dim">engine, plugin, SDK, protocol</span></li>
+        <li><a href="https://github.com/TikoTikTok/lets-unique-graph">lets-unique-graph</a> <span class="dim">the graph board</span></li>
+        <li><a href="https://github.com/TikoTikTok/lets-store">lets-store</a> <span class="dim">community store</span></li>
+        <li><a href="https://github.com/TikoTikTok/lets-unique-template">lets-unique-template</a> <span class="dim">pulse template</span></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Site</h2>
+      <ul>
+        <li><a href="../docs/index.html">Docs</a></li>
+        <li><a href="../docs/protocol.html">Protocol (LIP)</a></li>
+        <li><a href="../uniques.html">Uniques</a></li>
+        <li><a href="../playground.html">Playground</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Uniques &amp; store · lets</title>
+  <meta name="description" content="What a lets unique is, default uniques vs the store, authoring a unique from the pulse template, and the store's verification policy.">
+  <meta name="theme-color" content="#120b1f">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../css/site.css">
+  <script type="module" src="../js/site.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../assets/logo.svg" alt="" width="34" height="34">lets</a>
+    <button class="btn btn-sm nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav class="site-nav" id="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="../docs/index.html" aria-current="page">Docs</a></li>
+        <li><a href="../uniques.html">Uniques</a></li>
+        <li><a href="../playground.html">Playground</a></li>
+        <li><a href="../index.html#install">Install</a></li>
+        <li><a href="https://github.com/TikoTikTok/lets">GitHub</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap docs-layout">
+  <aside class="docs-side" aria-label="Documentation">
+    <button class="btn btn-sm docs-nav-toggle" type="button" aria-expanded="false" aria-controls="docs-nav">Docs pages <span aria-hidden="true">▾</span></button>
+    <h2>Documentation</h2>
+    <nav class="docs-nav" id="docs-nav" aria-label="Docs pages">
+      <ul>
+        <li><a href="./index.html">Overview</a></li>
+        <li><a href="./getting-started.html">Getting started</a></li>
+        <li><a href="./companion.html">The companion (Pip)</a></li>
+        <li><a href="./uniques.html" aria-current="page">Uniques &amp; the store</a></li>
+        <li><a href="./graph.html">The graph board</a></li>
+        <li><a href="./protocol.html">Protocol (LIP)</a></li>
+        <li><a href="./architecture.html">Architecture</a></li>
+      </ul>
+    </nav>
+  </aside>
+  <main id="main" class="doc">
+<h1>Uniques &amp; the store</h1>
+<p class="lead">A unique is a static web app plus a manifest plus a guide. The engine serves it, the shell gives it a companion, chat and components, and LIP carries what you do to Claude and what Claude decides back.</p>
+
+<nav class="toc" aria-label="On this page">
+  <strong>On this page</strong>
+  <ol>
+    <li><a href="#what">What a unique is</a></li>
+    <li><a href="#defaults">Defaults vs the store</a></li>
+    <li><a href="#authoring">Authoring a unique</a></li>
+    <li><a href="#template">Start from the template</a></li>
+    <li><a href="#develop">Develop &amp; validate</a></li>
+    <li><a href="#publish">Publish to a store</a></li>
+    <li><a href="#verified">What "verified" means</a></li>
+    <li><a href="#security">Security model</a></li>
+    <li><a href="#future">Design for the future</a></li>
+  </ol>
+</nav>
+
+<h2 id="what">What a unique is</h2>
+<p>The engine knows nothing about graphs. A unique is a repository with a manifest, a guide and a static UI; the engine serves it, gives it the companion and the protocol, and that is all. Uniques are plain HTML, ES-module JavaScript and CSS: no build step, no CDN, no server-side code. Because the host never executes unique code (it only serves static files and routes JSON envelopes), third-party uniques are safe to install straight from a git URL.</p>
+
+<h2 id="defaults">Defaults vs the store</h2>
+<p><strong><code>defaults.json</code></strong> in the engine repo is the list of uniques <strong>every installation gets</strong>. They are installed from git into <code>~/.lets/uniques</code> the first time the engine runs or the first time you open one; <code>node engine/bin/lets.mjs defaults</code> does it by hand, and <code>LETS_NO_DEFAULTS=1</code> opts out. Defaults are trusted by the list and still validated before they are served. More defaults will be added there as they mature.</p>
+<p>Everything else comes from a <strong>store</strong>: a git repository whose <code>index.json</code> lists uniques by git URL. Install with <code>/lets store &lt;name&gt;</code>: Claude syncs, searches, shows you the inspection (permissions, problems, verified flag), and installs only after you say yes.</p>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th scope="col">Unique</th><th scope="col">Repo</th><th scope="col">Default</th><th scope="col">In lets-store</th></tr></thead>
+    <tbody>
+      <tr><td><strong>graph</strong>: talk in diagrams</td><td><a href="https://github.com/TikoTikTok/lets-unique-graph">lets-unique-graph</a></td><td>yes</td><td>yes, verified</td></tr>
+      <tr><td><strong>pulse</strong>: a dial you talk through (template)</td><td><a href="https://github.com/TikoTikTok/lets-unique-template">lets-unique-template</a></td><td>no</td><td>yes, verified</td></tr>
+    </tbody>
+  </table>
+</div>
+<p>New candidates grow in the store first. Once a unique is solid, propose it for <code>defaults.json</code>. See the <a href="../uniques.html">uniques page</a> for cards.</p>
+
+<h2 id="authoring">Authoring a unique</h2>
+<h3 id="folder">The folder</h3>
+<pre><code>my-unique/
+  unique.json        <span class="c"># manifest (required)</span>
+  GUIDE.md           <span class="c"># instructions for Claude (strongly recommended)</span>
+  icon.svg           <span class="c"># 64×64</span>
+  schemas/*.json     <span class="c"># optional JSON Schemas for your events/commands</span>
+  ui/index.html      <span class="c"># entry (declared in the manifest)</span>
+  ui/app.js
+  ui/style.css</code></pre>
+<p>Rules: <code>name</code> is lowercase kebab (<code>^[a-z][a-z0-9-]{1,31}$</code>); <code>entry</code>, <code>guide</code> and <code>icon</code> stay inside the folder; your <code>domains</code> are yours (<code>lip</code>, <code>session</code>, <code>entity</code>, <code>chat</code>, <code>component</code>, <code>media</code>, <code>ui</code> are reserved); every event and command you declare starts with one of your domains.</p>
+
+<h3 id="manifest">The manifest</h3>
+<p>The full format is in <a href="./protocol.html#manifest">the protocol, §6</a>. Keep <code>summary</code> lines short: they are shown to Claude on <code>open</code>. Declare <code>capabilities</code> honestly (the shell only enables paste/upload when <code>media.image</code> or <code>clipboard</code> is listed) and <code>permissions</code> (<code>fs.write: ["uploads"]</code> is the only write a unique can ask for). Declare permissions even when empty: <code>"fs.write": []</code> means "writes nothing".</p>
+<p>The optional <code>session</code> block <span class="badge badge-new">new in 0.4.0</span> names which of your types are the <em>export</em> ("Send to Claude"), the <em>snapshot</em> (reply to a state query) and the <em>restore</em> command, so the engine can save and resume your windows. Without it the host assumes <code>&lt;domain&gt;.export</code>, <code>&lt;domain&gt;.snapshot</code> and <code>&lt;domain&gt;.load</code>.</p>
+<pre><code>"session": { "export": "graph.export", "snapshot": "graph.snapshot", "restore": "graph.load" }</code></pre>
+
+<h3 id="ui">The UI</h3>
+<p>Inside a unique the host serves the SDK at <code>/sdk/…</code>, so a unique's page imports it like this:</p>
+<pre><code>&lt;body data-unique=&quot;my-unique&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;/sdk/lets-shell.css&quot;&gt;
+&lt;script type=&quot;module&quot; src=&quot;./app.js&quot;&gt;&lt;/script&gt;</code></pre>
+<pre><code><span class="k">import</span> { Lets } <span class="k">from</span> <span class="s">'/sdk/lets-client.js'</span>;
+<span class="k">import</span> { Shell } <span class="k">from</span> <span class="s">'/sdk/lets-shell.js'</span>;
+
+<span class="k">const</span> lets = Lets.connect({ unique: <span class="s">'my-unique'</span>, version: <span class="s">'0.1.0'</span>, caps: [<span class="s">'entity'</span>, <span class="s">'chat'</span>, <span class="s">'components'</span>] });
+<span class="k">const</span> shell = Shell.mount(lets, {
+  root: document.body,
+  context: () =&gt; ({ <span class="c">/* what the companion should know when summoned/clicked */</span> }),
+  quickSuggestions: (ctx) =&gt; [{ id: <span class="s">'help'</span>, label: <span class="s">'What can I do here?'</span> }],
+});
+
+lets.on(<span class="s">'my-unique.thing.set'</span>, (data) =&gt; { <span class="c">/* a command from Claude */</span> });
+button.onclick = () =&gt; lets.emit(<span class="s">'my-unique.thing.changed'</span>, { value });</code></pre>
+<p>The shell handles <code>entity.*</code>, <code>chat.*</code>, <code>component.*</code> and <code>ui.*</code> for you; never re-implement them. Use <code>shell.onMedia(cb)</code> to place pasted images, <code>shell.onInline(cb)</code> to place inline components on your canvas, and <code>shell.toast()</code> for feedback. For the theme, use the CSS variables in <code>lets-shell.css</code> (<code>--lets-bg</code>, <code>--lets-accent</code>, …) so your unique matches the companion.</p>
+
+<h3 id="guide">The guide</h3>
+<p><code>GUIDE.md</code> is read by Claude once per open. It is the most important file you write. Write it for a smart colleague:</p>
+<ul>
+  <li>one line per event: what it means and what to do;</li>
+  <li>the commands, with tiny JSON examples;</li>
+  <li>etiquette: animate, do not rearrange what the human made, keep labels short;</li>
+  <li>the companion's role in this medium.</li>
+</ul>
+<p>Keep it under about 1,200 words.</p>
+
+<h2 id="template">Start from the template</h2>
+<p><a href="https://github.com/TikoTikTok/lets-unique-template">lets-unique-template</a> is <strong>pulse</strong>: a full-screen dark-violet mood dial. You drag a ring to set a value from 0 to 100 and pick one of three mode chips (calm / focused / wild); the companion reacts, and Claude can move the dial itself. It demonstrates the whole contract in a handful of files.</p>
+<ol>
+  <li>On GitHub, "Use this template" and name the new repo <code>lets-unique-&lt;name&gt;</code>.</li>
+  <li>Clone it and rename <code>pulse</code> everywhere: manifest <code>name</code>, <code>domains</code>, event and command types, <code>data-unique</code>, <code>Lets.connect</code>.</li>
+  <li>Build. Bump <code>version</code> whenever you change events or commands.</li>
+</ol>
+<p>The reference implementation is <a href="./graph.html">graph</a>: its <code>CONTRACT.md</code>, <code>GUIDE.md</code> and <code>ui/graph.js</code> show every part of the contract in use.</p>
+
+<h2 id="develop">Develop &amp; validate</h2>
+<p>Uniques are served by the lets host, never opened from disk. Put yours where the host looks, then run the host standalone from a lets checkout:</p>
+<pre><code><span class="c"># option a: any folder (point the registry at the PARENT of your unique folders)</span>
+LETS_UNIQUES_DIRS=/path/to/parent node engine/bin/lets.mjs serve --open my-unique --verbose
+<span class="c"># option b: project-local</span>
+mkdir -p .lets/uniques &amp;&amp; ln -s /path/to/my-unique .lets/uniques/my-unique
+<span class="c"># option c: user-wide (where defaults and store installs live)</span>
+cp -r my-unique ~/.lets/uniques/
+
+<span class="c"># validate the manifest</span>
+node engine/bin/lets.mjs validate ./my-unique</code></pre>
+<p><code>--verbose</code> prints every up-event. Use the companion's chat to simulate Claude, or run the real thing: <code>claude --plugin-dir /path/to/lets</code> then <code>/lets:lets my-unique</code>. The quality bar is zero console errors in Chromium and Edge.</p>
+
+<h2 id="publish">Publish to a store</h2>
+<ol>
+  <li>Push your unique to GitHub as its own repo (or a folder in one).</li>
+  <li>Validate it with the engine: <code>node &lt;lets&gt;/engine/bin/lets.mjs validate &lt;your-unique-dir&gt;</code>.</li>
+  <li>Fork <a href="https://github.com/TikoTikTok/lets-store">lets-store</a>, add an entry to <code>index.json</code> (keep entries sorted by <code>name</code>) and update the top-level <code>updated</code> date.</li>
+  <li>Run the store validator: <code>npm run validate</code>.</li>
+  <li>Open a pull request. The checklist in the store's <code>CONTRIBUTING.md</code> must be satisfied; CI runs the validator on every push and PR.</li>
+</ol>
+<p>New entries land unverified. A maintainer reviews the manifest and flips the flag in a follow-up commit.</p>
+<h3 id="index-fields">Index entry fields</h3>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th scope="col">Field</th><th scope="col">Meaning</th></tr></thead>
+    <tbody>
+      <tr><td><code>name</code></td><td>Unique id, <code>^[a-z][a-z0-9-]{1,31}$</code>; must match the manifest <code>name</code>. Unique within the index.</td></tr>
+      <tr><td><code>title</code></td><td>Human title shown in listings.</td></tr>
+      <tr><td><code>description</code></td><td>One line: what the human does with it.</td></tr>
+      <tr><td><code>repo</code></td><td>Git URL the host clones from. Must be <code>https://…</code>, <code>git@…</code> or <code>ssh://…</code>.</td></tr>
+      <tr><td><code>path</code></td><td>Folder inside the repo that holds <code>unique.json</code> (empty string = repo root).</td></tr>
+      <tr><td><code>ref</code></td><td>Branch or tag to track (default <code>main</code>).</td></tr>
+      <tr><td><code>sha</code></td><td>Optional commit pin: the host clones exactly this commit instead of moving with <code>ref</code>.</td></tr>
+      <tr><td><code>manifestSha256</code></td><td>Optional SHA-256 of <code>unique.json</code>, so the host can detect a manifest that changed since review.</td></tr>
+      <tr><td><code>verified</code></td><td><code>true</code> = reviewed by a store maintainer (below).</td></tr>
+      <tr><td><code>tags</code></td><td>Free-form discovery tags.</td></tr>
+      <tr><td><code>author</code></td><td>GitHub handle of the unique's author.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 id="verified">What "verified" means</h2>
+<p>An entry marked <code>"verified": true</code> has had its manifest reviewed by a store maintainer, who checked that:</p>
+<ul>
+  <li>the manifest validates against the LIP unique schema (<code>unique.schema.json</code>);</li>
+  <li>the unique is static-only: HTML/JS/CSS, ES modules, no build step, no executables, no binaries, no network CDN references;</li>
+  <li>every event and command type it declares starts with a domain it owns (none of the reserved <code>lip.*</code>, <code>session.*</code>, <code>entity.*</code>, <code>chat.*</code>, <code>component.*</code>, <code>media.*</code>, <code>ui.*</code>);</li>
+  <li>every permission it needs (<code>fs.write</code>, <code>net</code>) is declared in the manifest, so the host can show you what the unique may do before it is served.</li>
+</ul>
+<p class="note note-warn"><code>verified</code> is a review mark, not a cryptographic guarantee. You still see the manifest and its permissions when you install. Pinning <code>sha</code> (and ideally <code>manifestSha256</code>) freezes the reviewed content, so a later push to the branch cannot silently change what was reviewed.</p>
+
+<h2 id="security">Security model</h2>
+<ul>
+  <li>Uniques are <strong>static</strong>: the host serves files and never executes them server-side.</li>
+  <li>Everything is served from <strong>loopback</strong> with a per-host random token, and pages get a CSP of <code>default-src 'self'</code>: no external CDN, no inline exfiltration.</li>
+  <li>Permissions (<code>fs.write</code>, <code>net</code>) are declared in the manifest, validated before a unique is served, and enforced by the host: uploads land only under <code>~/.lets/uploads/&lt;unique&gt;/</code> and are size-capped.</li>
+  <li>Message types are namespaced by domain; a unique cannot forge another unique's or the shell's messages.</li>
+  <li>Store installs go through <code>inspect</code> (clone to staging, validate, hash check, executable scan) and are copied into <code>~/.lets/uniques/&lt;name&gt;</code> only after you confirm.</li>
+</ul>
+
+<h2 id="future">Design for the future</h2>
+<p>Think in <em>acts</em>, not widgets. Your events should say what the human meant (<code>timeline.span.set</code>, not <code>mouse.drag</code>). Your commands should be idempotent and animatable. If your medium has no pointer (voice, gesture, AR), you still emit <code>entity.summon</code>, <code>component.action</code> and <code>media.*</code>; the shell for that medium decides how those feel.</p>
+
+<nav class="doc-pager" aria-label="Previous and next page"><a class="prev" href="./companion.html"><small>← Previous</small>The companion (Pip)</a><a class="next" href="./graph.html"><small>Next →</small>The graph board</a></nav>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div>
+      <div class="footer-brand"><img src="../assets/logo.svg" alt="" width="28" height="28">lets</div>
+      <p>Talk to Claude through windows, not just text.</p>
+      <p>MIT © TikoTikTok · made with Claude Code</p>
+    </div>
+    <div>
+      <h2>Repositories</h2>
+      <ul>
+        <li><a href="https://github.com/TikoTikTok/lets">lets</a> <span class="dim">engine, plugin, SDK, protocol</span></li>
+        <li><a href="https://github.com/TikoTikTok/lets-unique-graph">lets-unique-graph</a> <span class="dim">the graph board</span></li>
+        <li><a href="https://github.com/TikoTikTok/lets-store">lets-store</a> <span class="dim">community store</span></li>
+        <li><a href="https://github.com/TikoTikTok/lets-unique-template">lets-unique-template</a> <span class="dim">pulse template</span></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Site</h2>
+      <ul>
+        <li><a href="../docs/index.html">Docs</a></li>
+        <li><a href="../docs/protocol.html">Protocol (LIP)</a></li>
+        <li><a href="../uniques.html">Uniques</a></li>
+        <li><a href="../playground.html">Playground</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

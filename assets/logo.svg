@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="40%" r="70%">
+      <stop offset="0%" stop-color="#2b1a55"/>
+      <stop offset="100%" stop-color="#120b1f"/>
+    </radialGradient>
+    <linearGradient id="orb" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#c79bff"/>
+      <stop offset="60%" stop-color="#a66bff"/>
+      <stop offset="100%" stop-color="#6b3fd6"/>
+    </linearGradient>
+    <linearGradient id="edge" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#6bf0ff"/>
+      <stop offset="100%" stop-color="#ff6bd6"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="128" height="128" rx="28" fill="url(#bg)"/>
+  <g stroke="url(#edge)" stroke-width="3" fill="none" filter="url(#glow)" stroke-linecap="round">
+    <path d="M36 88 C 36 60, 64 60, 64 44"/>
+    <path d="M92 88 C 92 60, 64 60, 64 44"/>
+    <path d="M36 88 C 50 96, 78 96, 92 88"/>
+  </g>
+  <circle cx="36" cy="88" r="9" fill="#6bf0ff" filter="url(#glow)"/>
+  <circle cx="92" cy="88" r="9" fill="#ff6bd6" filter="url(#glow)"/>
+  <g filter="url(#glow)">
+    <circle cx="64" cy="40" r="18" fill="url(#orb)"/>
+    <ellipse cx="57" cy="38" rx="3.2" ry="4.2" fill="#120b1f"/>
+    <ellipse cx="71" cy="38" rx="3.2" ry="4.2" fill="#120b1f"/>
+    <circle cx="58" cy="36.5" r="1.1" fill="#fff"/>
+    <circle cx="72" cy="36.5" r="1.1" fill="#fff"/>
+    <path d="M58 46 Q 64 50 70 46" stroke="#120b1f" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+  </g>
+  <circle cx="64" cy="40" r="24" fill="none" stroke="#a66bff" stroke-opacity="0.35" stroke-width="1.5"/>
+</svg>

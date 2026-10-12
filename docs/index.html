@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Docs · lets</title>
+  <meta name="description" content="Documentation for lets: install, the companion Pip, uniques, the graph board, the LIP protocol and the architecture.">
+  <meta name="theme-color" content="#120b1f">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../css/site.css">
+  <script type="module" src="../js/site.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../assets/logo.svg" alt="" width="34" height="34">lets</a>
+    <button class="btn btn-sm nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav class="site-nav" id="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="../docs/index.html" aria-current="page">Docs</a></li>
+        <li><a href="../uniques.html">Uniques</a></li>
+        <li><a href="../playground.html">Playground</a></li>
+        <li><a href="../index.html#install">Install</a></li>
+        <li><a href="https://github.com/TikoTikTok/lets">GitHub</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap docs-layout">
+  <aside class="docs-side" aria-label="Documentation">
+    <button class="btn btn-sm docs-nav-toggle" type="button" aria-expanded="false" aria-controls="docs-nav">Docs pages <span aria-hidden="true">▾</span></button>
+    <h2>Documentation</h2>
+    <nav class="docs-nav" id="docs-nav" aria-label="Docs pages">
+      <ul>
+        <li><a href="./index.html" aria-current="page">Overview</a></li>
+        <li><a href="./getting-started.html">Getting started</a></li>
+        <li><a href="./companion.html">The companion (Pip)</a></li>
+        <li><a href="./uniques.html">Uniques &amp; the store</a></li>
+        <li><a href="./graph.html">The graph board</a></li>
+        <li><a href="./protocol.html">Protocol (LIP)</a></li>
+        <li><a href="./architecture.html">Architecture</a></li>
+      </ul>
+    </nav>
+  </aside>
+  <main id="main" class="doc">
+<h1>Documentation</h1>
+<p class="lead">Install lets, open your first window, meet the companion, build a unique of your own, and read the protocol that ties it all together.</p>
+
+<div class="cards hub-cards">
+  <article class="card">
+    <h2><a class="stretch" href="./getting-started.html">Getting started</a></h2>
+    <p>Install with your agent or by hand, your first <code>/lets graph</code>, listening vs away, and Send to Claude with resume.</p>
+  </article>
+  <article class="card">
+    <h2><a class="stretch" href="./companion.html">The companion (Pip)</a></h2>
+    <p>Persona, moods, how Pip learns you, the special skills it writes for itself, and its expressions and secret moves.</p>
+  </article>
+  <article class="card">
+    <h2><a class="stretch" href="./uniques.html">Uniques &amp; the store</a></h2>
+    <p>What a unique is, defaults vs the store, authoring one from the template, and the store's verification policy.</p>
+  </article>
+  <article class="card">
+    <h2><a class="stretch" href="./graph.html">The graph board</a></h2>
+    <p>The first unique: what you can do on the board, and the events and commands Claude uses to edit it with you.</p>
+  </article>
+  <article class="card">
+    <h2><a class="stretch" href="./protocol.html">Protocol (LIP)</a></h2>
+    <p>The Lets Interaction Protocol: envelope, domains, core messages, transport, security, manifest and versioning.</p>
+  </article>
+  <article class="card">
+    <h2><a class="stretch" href="./architecture.html">Architecture</a></h2>
+    <p>How Claude Code, the engine and the browser window talk, the pieces of the engine, and the life of one window.</p>
+  </article>
+</div>
+
+<h2 id="in-short">lets in one table</h2>
+<p><code>lets</code> is a Claude Code plugin with three layers. Everything that crosses between them is a typed JSON envelope defined by <a href="./protocol.html">LIP</a>, up (human → Claude) and down (Claude → window). LIP is designed for mediums that do not exist yet: a unique for voice, AR or a haptic strip would speak the same envelope.</p>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th scope="col">Layer</th><th scope="col">What it does</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Engine</strong></td><td>A zero-dependency Node MCP server. Hosts windows on loopback, carries the protocol, keeps the companion's memory, routes multi-task work to the cheapest trustworthy model, installs community mediums from git.</td></tr>
+      <tr><td><strong>Uniques</strong></td><td>The interactive mediums: static web apps that speak LIP, each in its own repository. The engine installs the <strong>default</strong> ones from <code>defaults.json</code> on first use. The first one is <a href="./graph.html">graph</a>.</td></tr>
+      <tr><td><strong>Shell + SDK</strong></td><td>What every unique gets for free: the companion entity, chat panel, runtime components (sliders, options, forms, image paste…), toasts and the theme.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 id="words">Words you'll meet</h2>
+<dl>
+  <dt>unique</dt><dd>One interactive medium the engine hosts, like the graph board. A repository with a manifest, a guide for Claude and a static UI.</dd>
+  <dt>window</dt><dd>One open instance of a unique, shown in the app's browser pane. Each window has its own id and token.</dd>
+  <dt>shell</dt><dd>The shared browser layer every unique mounts: companion, chat, components, image paste, toasts, theme.</dd>
+  <dt>companion, Pip</dt><dd>Claude's presence inside the window. Pip is the default name; you can rename it.</dd>
+  <dt>LIP</dt><dd>The Lets Interaction Protocol: the JSON envelopes that cross between window, host and Claude.</dd>
+  <dt>defaults</dt><dd>The uniques every installation gets, listed in the engine's <code>defaults.json</code> (graph today).</dd>
+  <dt>store</dt><dd>A git repository whose <code>index.json</code> lists community uniques by git URL. <a href="https://github.com/TikoTikTok/lets-store">lets-store</a> is the first.</dd>
+  <dt>session <span class="badge badge-new">new in 0.4.0</span></dt><dd>A saved copy of a window's content, written when you press <em>Send to Claude</em>, so the window can be resumed later.</dd>
+</dl>
+
+<p class="note note-new">These docs describe <strong>lets 0.4.0</strong>. Anything marked <span class="badge badge-new">new in 0.4.0</span> is landing with that release.</p>
+
+<nav class="doc-pager" aria-label="Previous and next page"><a class="next" href="./getting-started.html"><small>Next →</small>Getting started</a></nav>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div>
+      <div class="footer-brand"><img src="../assets/logo.svg" alt="" width="28" height="28">lets</div>
+      <p>Talk to Claude through windows, not just text.</p>
+      <p>MIT © TikoTikTok · made with Claude Code</p>
+    </div>
+    <div>
+      <h2>Repositories</h2>
+      <ul>
+        <li><a href="https://github.com/TikoTikTok/lets">lets</a> <span class="dim">engine, plugin, SDK, protocol</span></li>
+        <li><a href="https://github.com/TikoTikTok/lets-unique-graph">lets-unique-graph</a> <span class="dim">the graph board</span></li>
+        <li><a href="https://github.com/TikoTikTok/lets-store">lets-store</a> <span class="dim">community store</span></li>
+        <li><a href="https://github.com/TikoTikTok/lets-unique-template">lets-unique-template</a> <span class="dim">pulse template</span></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Site</h2>
+      <ul>
+        <li><a href="../docs/index.html">Docs</a></li>
+        <li><a href="../docs/protocol.html">Protocol (LIP)</a></li>
+        <li><a href="../uniques.html">Uniques</a></li>
+        <li><a href="../playground.html">Playground</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

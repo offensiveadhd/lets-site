@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Playground · lets</title>
+  <meta name="description" content="Play with Pip: the real lets shell running on an offline loopback, with buttons for moods, speech, suggestions, reactions and an echoing chat.">
+  <meta name="theme-color" content="#120b1f">
+  <link rel="icon" href="./assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./css/site.css">
+  <link rel="stylesheet" href="./sdk/lets-shell.css">
+  <script type="module" src="./js/playground.js"></script>
+  <script type="module" src="./js/site.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="./index.html"><img src="./assets/logo.svg" alt="" width="34" height="34">lets</a>
+    <button class="btn btn-sm nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav class="site-nav" id="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="./docs/index.html">Docs</a></li>
+        <li><a href="./uniques.html">Uniques</a></li>
+        <li><a href="./playground.html" aria-current="page">Playground</a></li>
+        <li><a href="./index.html#install">Install</a></li>
+        <li><a href="https://github.com/TikoTikTok/lets">GitHub</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<section class="page-head" aria-labelledby="pg-title">
+  <div class="wrap">
+    <span class="eyebrow">Playground</span>
+    <h1 id="pg-title">Play with Pip</h1>
+    <p>This is the real shell from <code>lets/sdk</code>, running on an offline loopback: no host, no Claude, nothing leaves this page. <strong>Right-click anywhere</strong> to summon or dismiss Pip, and click it for suggestions.</p>
+    <p><span class="pg-status" id="pg-status" role="status">Starting the shell…</span></p>
+  </div>
+</section>
+
+<div class="wrap pg-layout">
+  <section class="pg-panel" aria-labelledby="pg-controls-title">
+    <h2 id="pg-controls-title">Be Claude for a minute</h2>
+    <p>Each button sends the same LIP command Claude would send to a real window.</p>
+
+    <div class="pg-group">
+      <h3 id="pg-moods-h">Moods <span class="dim" style="text-transform:none;letter-spacing:0">(<code>entity.mood</code>)</span></h3>
+      <div class="btn-row" role="group" aria-labelledby="pg-moods-h" id="pg-moods"></div>
+    </div>
+
+    <div class="pg-group">
+      <h3 id="pg-say-h">Make Pip say something <span class="dim" style="text-transform:none;letter-spacing:0">(<code>entity.say</code>)</span></h3>
+      <form class="pg-say" id="pg-say" aria-labelledby="pg-say-h">
+        <label class="sr-only" for="pg-say-text">What Pip says</label>
+        <input id="pg-say-text" type="text" maxlength="200" placeholder="Hello! **bold** and `code` work" autocomplete="off">
+        <button class="btn btn-primary btn-sm" type="submit">Say it</button>
+      </form>
+    </div>
+
+    <div class="pg-group">
+      <h3 id="pg-pip-h">Pip</h3>
+      <div class="btn-row" role="group" aria-labelledby="pg-pip-h">
+        <button class="btn btn-sm" type="button" id="pg-suggest">Suggest</button>
+        <button class="btn btn-sm" type="button" id="pg-center">Move to centre</button>
+        <button class="btn btn-sm" type="button" id="pg-cursor">Follow the cursor</button>
+        <button class="btn btn-sm" type="button" id="pg-show">Show</button>
+        <button class="btn btn-sm" type="button" id="pg-hide">Hide</button>
+      </div>
+      <p class="pg-hint">Suggest adds items to Pip's click menu (a dot appears on Pip). Click Pip to see them.</p>
+    </div>
+
+    <div class="pg-group">
+      <h3 id="pg-react-h">Reactions <span class="badge badge-new" style="text-transform:none;letter-spacing:0">new in 0.4.0</span></h3>
+      <div class="btn-row" role="group" aria-labelledby="pg-react-h" id="pg-reactions"></div>
+      <p class="pg-hint" id="pg-react-note">Short expressions, played by <code>shell.entity.react(name)</code>.</p>
+    </div>
+
+    <div class="pg-group">
+      <h3 id="pg-chat-h">Chat</h3>
+      <div class="btn-row" role="group" aria-labelledby="pg-chat-h">
+        <button class="btn btn-sm" type="button" id="pg-chat">Open chat</button>
+        <button class="btn btn-sm" type="button" id="pg-stream">Stream a reply</button>
+        <button class="btn btn-sm" type="button" id="pg-toast">Toast</button>
+      </div>
+      <p class="pg-hint">Type in the chat panel (<kbd>Ctrl</kbd>+<kbd>/</kbd>): the playground echoes like a tiny fake Claude.</p>
+    </div>
+  </section>
+
+  <aside class="pg-panel" aria-labelledby="pg-log-title">
+    <h2 id="pg-log-title">The wire</h2>
+    <p><span aria-hidden="true">↓</span> commands "Claude" sent, <span aria-hidden="true">↑</span> events the window would send to Claude. Pointer moves never appear here: only meaning crosses.</p>
+    <pre class="pg-log" id="pg-log" aria-live="off">(nothing yet)</pre>
+    <div class="pg-group" style="margin-top:16px">
+      <h3>Try</h3>
+      <ul class="dim" style="margin:0;padding-left:1.1em;font-size:.92rem">
+        <li>Right-click or <kbd>Ctrl</kbd>+<kbd>Space</kbd>: summon / dismiss</li>
+        <li>Click Pip, or <kbd>Tab</kbd> to it and press <kbd>Enter</kbd>: suggestions</li>
+        <li><kbd>Ctrl</kbd>+<kbd>/</kbd>: chat · <kbd>Esc</kbd>: close menus</li>
+        <li>Reach for Pip slowly to catch it</li>
+      </ul>
+    </div>
+  </aside>
+</div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div>
+      <div class="footer-brand"><img src="./assets/logo.svg" alt="" width="28" height="28">lets</div>
+      <p>Talk to Claude through windows, not just text.</p>
+      <p>MIT © TikoTikTok · made with Claude Code</p>
+    </div>
+    <div>
+      <h2>Repositories</h2>
+      <ul>
+        <li><a href="https://github.com/TikoTikTok/lets">lets</a> <span class="dim">engine, plugin, SDK, protocol</span></li>
+        <li><a href="https://github.com/TikoTikTok/lets-unique-graph">lets-unique-graph</a> <span class="dim">the graph board</span></li>
+        <li><a href="https://github.com/TikoTikTok/lets-store">lets-store</a> <span class="dim">community store</span></li>
+        <li><a href="https://github.com/TikoTikTok/lets-unique-template">lets-unique-template</a> <span class="dim">pulse template</span></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Site</h2>
+      <ul>
+        <li><a href="./docs/index.html">Docs</a></li>
+        <li><a href="./docs/protocol.html">Protocol (LIP)</a></li>
+        <li><a href="./uniques.html">Uniques</a></li>
+        <li><a href="./playground.html">Playground</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

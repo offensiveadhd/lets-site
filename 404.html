@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Not found · lets</title>
+  <meta name="theme-color" content="#120b1f">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 rx=%2214%22 fill=%22%23120b1f%22/%3E%3Ccircle cx=%2232%22 cy=%2232%22 r=%2216%22 fill=%22%23a66bff%22/%3E%3C/svg%3E">
+  <!--
+    GitHub Pages serves this file for a missing path at ANY depth
+    (e.g. /lets-site/a/b/c), so relative stylesheet or image links would break.
+    This page is therefore self-contained: inline styles, an inline SVG, and a
+    tiny script that turns the "home" link into the right number of "../".
+  -->
+  <style>
+    :root { --bg: #120b1f; --bg2: #1a1030; --line: #3a2a63; --fg: #ece6ff; --dim: #a99cd0; --accent: #a66bff; --cyan: #6bf0ff; --link: #c9a6ff; color-scheme: dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 24px 16px; background-color: var(--bg); background-image: radial-gradient(circle at 1px 1px, #2a1b4d 1px, transparent 1.6px); background-size: 24px 24px; color: var(--fg); font: 16px/1.6 ui-sans-serif, "Segoe UI", Inter, system-ui, sans-serif; text-align: center; }
+    main { max-width: 32rem; }
+    svg { width: 132px; height: 132px; filter: drop-shadow(0 10px 18px rgba(5, 2, 14, .55)); }
+    .bob { animation: bob 5.5s ease-in-out infinite; transform-origin: center; }
+    .z { animation: z 2.6s ease-out infinite; }
+    h1 { margin: 8px 0 4px; font-size: clamp(2.6rem, 12vw, 4.5rem); line-height: 1.1; }
+    p { color: var(--dim); margin: 0 0 22px; }
+    a.home { display: inline-flex; align-items: center; min-height: 44px; padding: 10px 20px; border-radius: 12px; background: linear-gradient(135deg, #7f48f5, #6a3be0); color: #fff; font-weight: 600; text-decoration: none; box-shadow: 0 0 22px rgba(166, 107, 255, .35); }
+    a.home:hover { box-shadow: 0 0 30px rgba(166, 107, 255, .55); }
+    a:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
+    @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+    @keyframes z { 0% { opacity: 0; transform: translate(0, 0); } 30% { opacity: .9; } 100% { opacity: 0; transform: translate(6px, -10px); } }
+    @media (prefers-reduced-motion: reduce) { .bob, .z { animation: none; } }
+  </style>
+</head>
+<body>
+<main>
+  <svg viewBox="-32 -32 64 64" role="img" aria-label="Pip, dozing">
+    <defs>
+      <radialGradient id="a"><stop offset="0" stop-color="#6d5aa8" stop-opacity=".55"/><stop offset="1" stop-color="#6d5aa8" stop-opacity="0"/></radialGradient>
+      <radialGradient id="b" cx="38%" cy="30%" r="75%"><stop offset="0" stop-color="#b892ff"/><stop offset=".55" stop-color="#4a2a8e"/><stop offset="1" stop-color="#120a26"/></radialGradient>
+      <linearGradient id="r" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6bf0ff"/><stop offset="1" stop-color="#ff6bd6"/></linearGradient>
+    </defs>
+    <circle r="31" fill="url(#a)"/>
+    <g class="bob">
+      <path d="M0-21C14-21 23-11 22 2 21 15 12 21 0 21S-21 15-22 2C-23-11-14-21 0-21Z" fill="url(#b)" stroke="url(#r)" stroke-width="1.3"/>
+      <ellipse cx="-8" cy="-12" rx="7" ry="3.4" transform="rotate(-24 -8 -12)" fill="#fff" opacity=".16"/>
+      <path d="M-11.5 0Q-8 2.5-4.5 0M4.5 0Q8 2.5 11.5 0" fill="none" stroke="#f7f3ff" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M-3 10.5H3" stroke="#f7f3ff" stroke-width="1.5" stroke-linecap="round" opacity=".85"/>
+      <text class="z" x="13" y="-15" fill="#a99cd0" font-size="8" font-weight="700" font-family="ui-sans-serif, system-ui, sans-serif">z</text>
+    </g>
+  </svg>
+  <h1>404</h1>
+  <p>This page wandered off. Pip looked everywhere, then took a nap.</p>
+  <a class="home" id="home" href="./index.html">Take me home</a>
+</main>
+<script>
+  // Make the home link relative to the site root, whatever depth this 404 is served at.
+  // Project sites live at <user>.github.io/<repo>/, so the first path segment is the repo.
+  (function () {
+    var a = document.getElementById('home');
+    if (!/\.github\.io$/.test(location.hostname)) return;
+    var parts = location.pathname.split('/');          // ['', 'lets-site', 'a', 'b', 'c']
+    var depth = Math.max(0, parts.length - 3);         // folders below the repo root
+    var up = '';
+    for (var i = 0; i < depth; i++) up += '../';
+    a.setAttribute('href', (up || './') + 'index.html');
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Uniques · lets</title>
+  <meta name="description" content="The lets uniques: graph, installed by default, and pulse, the template. Defaults vs the community store, and how to propose a unique.">
+  <meta name="theme-color" content="#120b1f">
+  <link rel="icon" href="./assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./css/site.css">
+  <script type="module" src="./js/site.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="./index.html"><img src="./assets/logo.svg" alt="" width="34" height="34">lets</a>
+    <button class="btn btn-sm nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav class="site-nav" id="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="./docs/index.html">Docs</a></li>
+        <li><a href="./uniques.html" aria-current="page">Uniques</a></li>
+        <li><a href="./playground.html">Playground</a></li>
+        <li><a href="./index.html#install">Install</a></li>
+        <li><a href="https://github.com/TikoTikTok/lets">GitHub</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<section class="page-head" aria-labelledby="u-title">
+  <div class="wrap">
+    <span class="eyebrow">Uniques</span>
+    <h1 id="u-title">Windows you talk through</h1>
+    <p>A unique is one interactive medium: a static web app that speaks LIP, lives in its own repository, and gets the companion, chat and components from the shell for free.</p>
+  </div>
+</section>
+
+<section class="section" style="padding-top:24px" aria-label="Available uniques">
+  <div class="wrap">
+    <div class="cards">
+      <article class="card unique-card">
+        <img src="./assets/graph-icon.svg" alt="" width="64" height="64">
+        <div class="body">
+          <h2>graph <span class="badge badge-ok">default</span></h2>
+          <p><strong>Talk to Claude in diagrams.</strong> A dark-violet node/edge board where you draw the thing you mean while you chat, and the companion reads, points, suggests and edits the same board.</p>
+          <div class="meta"><span class="badge">installed with lets</span><span class="badge">verified in lets-store</span><span class="badge">reference implementation</span></div>
+          <ul>
+            <li>Nodes in seven kinds, edges, auto-layouts, undo for everything.</li>
+            <li>Paste a screenshot: it becomes a node and Claude reads the file.</li>
+            <li>Send to Claude hands the board over; "continue" brings it back. <span class="badge badge-new">new in 0.4.0</span></li>
+          </ul>
+          <div class="btn-row">
+            <a class="btn btn-sm" href="./docs/graph.html">Docs</a>
+            <a class="btn btn-sm" href="https://github.com/TikoTikTok/lets-unique-graph">Repository</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card unique-card">
+        <img src="./assets/pulse-icon.svg" alt="" width="64" height="64">
+        <div class="body">
+          <h2>pulse <span class="badge">template</span></h2>
+          <p><strong>A dial you talk through.</strong> A full-screen mood dial: drag the violet ring to set a value from 0 to 100 and pick a mode chip (calm, focused, wild); the companion reacts, and Claude can move the dial itself.</p>
+          <div class="meta"><span class="badge">not a default</span><span class="badge">verified in lets-store</span><span class="badge">start here to build</span></div>
+          <ul>
+            <li>The whole unique contract in a handful of files.</li>
+            <li>Events <code>pulse.value</code>, <code>pulse.mode</code>; commands <code>pulse.set</code>, <code>pulse.glow</code>.</li>
+            <li>Use it as a GitHub template, rename <code>pulse</code>, build yours.</li>
+          </ul>
+          <div class="btn-row">
+            <a class="btn btn-sm" href="./docs/uniques.html#template">Authoring guide</a>
+            <a class="btn btn-sm" href="https://github.com/TikoTikTok/lets-unique-template">Template repository</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt" aria-labelledby="dvs-title">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="dvs-title">Defaults vs the store</h2>
+      <p>Two lists, two jobs.</p>
+    </div>
+    <div class="cards">
+      <article class="card">
+        <h3><span class="card-icon" aria-hidden="true">✦</span><code>defaults.json</code></h3>
+        <p>The list of uniques <strong>every installation gets</strong>, kept in the engine repo. The engine clones them into <code>~/.lets/uniques</code> the first time it runs, or the first time you open one. Today that list is <strong>graph</strong>. Defaults are trusted by the list and still validated before they are served; <code>LETS_NO_DEFAULTS=1</code> opts out.</p>
+      </article>
+      <article class="card">
+        <h3><span class="card-icon" aria-hidden="true">⌂</span>The store</h3>
+        <p>Where <strong>community uniques live</strong>. <a href="https://github.com/TikoTikTok/lets-store">lets-store</a> is a git repository whose <code>index.json</code> points at uniques by git URL. Install with <code>/lets store &lt;name&gt;</code>: you see the permissions and the verified flag, and nothing installs until you say yes.</p>
+        <p><a class="more" href="./docs/uniques.html#verified">What "verified" means →</a></p>
+      </article>
+    </div>
+    <p class="dim" style="margin-top:18px">New candidates grow in the store first; once a unique is solid it can be proposed for <code>defaults.json</code>.</p>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="propose-title">
+  <div class="wrap">
+    <div class="cta-band">
+      <div>
+        <h2 id="propose-title">Propose a unique</h2>
+        <p>Built something? Validate it with <code>node engine/bin/lets.mjs validate</code>, then open a pull request to lets-store adding your entry to <code>index.json</code>. A maintainer reviews the manifest and marks it verified.</p>
+      </div>
+      <div class="btn-row">
+        <a class="btn btn-primary" href="https://github.com/TikoTikTok/lets-store">Open lets-store</a>
+        <a class="btn" href="./docs/uniques.html#publish">How to publish</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div>
+      <div class="footer-brand"><img src="./assets/logo.svg" alt="" width="28" height="28">lets</div>
+      <p>Talk to Claude through windows, not just text.</p>
+      <p>MIT © TikoTikTok · made with Claude Code</p>
+    </div>
+    <div>
+      <h2>Repositories</h2>
+      <ul>
+        <li><a href="https://github.com/TikoTikTok/lets">lets</a> <span class="dim">engine, plugin, SDK, protocol</span></li>
+        <li><a href="https://github.com/TikoTikTok/lets-unique-graph">lets-unique-graph</a> <span class="dim">the graph board</span></li>
+        <li><a href="https://github.com/TikoTikTok/lets-store">lets-store</a> <span class="dim">community store</span></li>
+        <li><a href="https://github.com/TikoTikTok/lets-unique-template">lets-unique-template</a> <span class="dim">pulse template</span></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Site</h2>
+      <ul>
+        <li><a href="./docs/index.html">Docs</a></li>
+        <li><a href="./docs/protocol.html">Protocol (LIP)</a></li>
+        <li><a href="./uniques.html">Uniques</a></li>
+        <li><a href="./playground.html">Playground</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

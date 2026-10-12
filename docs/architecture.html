@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Architecture · lets</title>
+  <meta name="description" content="How lets is built: Claude Code, the zero-dependency Node engine and the browser window, the pieces of the engine, and the lifecycle of /lets graph.">
+  <meta name="theme-color" content="#120b1f">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../css/site.css">
+  <script type="module" src="../js/site.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../assets/logo.svg" alt="" width="34" height="34">lets</a>
+    <button class="btn btn-sm nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav class="site-nav" id="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="../docs/index.html" aria-current="page">Docs</a></li>
+        <li><a href="../uniques.html">Uniques</a></li>
+        <li><a href="../playground.html">Playground</a></li>
+        <li><a href="../index.html#install">Install</a></li>
+        <li><a href="https://github.com/TikoTikTok/lets">GitHub</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap docs-layout">
+  <aside class="docs-side" aria-label="Documentation">
+    <button class="btn btn-sm docs-nav-toggle" type="button" aria-expanded="false" aria-controls="docs-nav">Docs pages <span aria-hidden="true">▾</span></button>
+    <h2>Documentation</h2>
+    <nav class="docs-nav" id="docs-nav" aria-label="Docs pages">
+      <ul>
+        <li><a href="./index.html">Overview</a></li>
+        <li><a href="./getting-started.html">Getting started</a></li>
+        <li><a href="./companion.html">The companion (Pip)</a></li>
+        <li><a href="./uniques.html">Uniques &amp; the store</a></li>
+        <li><a href="./graph.html">The graph board</a></li>
+        <li><a href="./protocol.html">Protocol (LIP)</a></li>
+        <li><a href="./architecture.html" aria-current="page">Architecture</a></li>
+      </ul>
+    </nav>
+  </aside>
+  <main id="main" class="doc">
+<h1>Architecture</h1>
+<p class="lead">Three processes, one protocol. Claude Code talks to the engine over MCP; the engine talks to the browser window over loopback HTTP; the window is a static unique with the shell mounted on top.</p>
+
+<figure class="diagram" aria-labelledby="arch-cap">
+<pre role="img" aria-label="Diagram: Claude Code (the /lets skill and the prompt hook) talks to the lets engine over MCP stdio with 10 tools, and the prompt hook reads from the engine with GET /drain. The engine (host, bus, entity, router, store) talks to the browser window (unique, shell, companion) with Server-Sent Events down and POST up, over loopback with a token. The engine keeps its state in ~/.lets/.">┌──────────────┐   MCP (stdio)   ┌───────────────────────┐   SSE ↓ / POST ↑   ┌──────────────────┐
+│ Claude Code  │ ◄─────────────► │  lets engine (Node)   │ ◄────────────────► │ Browser window   │
+│  /lets skill │   10 tools      │  host · bus · entity  │   loopback + token │  unique + shell  │
+│  prompt hook │ ──GET /drain──► │  router · store       │                    │  companion       │
+└──────────────┘                 └───────────────────────┘                    └──────────────────┘
+                                          │
+                                   ~/.lets/ (state)</pre>
+<figcaption id="arch-cap">Claude Code ↔ engine over MCP; engine ↔ window over SSE and POST on loopback, guarded by a per-host token. On narrow screens the diagram scrolls sideways.</figcaption>
+</figure>
+
+<h2 id="pieces">Pieces</h2>
+<div class="piece">
+  <h3>engine/src/mcp.mjs</h3>
+  <p>JSON-RPC 2.0 over newline-delimited stdio: <code>initialize</code>, <code>tools/list</code>, <code>tools/call</code>, <code>ping</code>. No SDK, so the plugin installs with zero <code>npm install</code>.</p>
+</div>
+<div class="piece">
+  <h3>engine/src/host.mjs</h3>
+  <p>An <code>http.Server</code> bound to 127.0.0.1 on a free port. Routes: <code>/u/&lt;unique&gt;/…</code> (static, CSP), <code>/sdk/…</code>, <code>/uploads/…</code>, <code>/lip/stream</code> (SSE down), <code>/lip/event</code> (POST up), <code>/lip/upload</code> (blobs → disk → <code>media.*</code> event with a path), <code>/lip/drain</code> (named cursor read for hooks), <code>/lip/persona</code>. A run file <code>~/.lets/run/host-&lt;pid&gt;.json</code> publishes port and token for the hook.</p>
+</div>
+<div class="piece">
+  <h3>engine/src/bus.mjs</h3>
+  <p>One ring buffer of up-events with named cursors (<code>claude</code>, <code>hook</code>, ad-hoc query cursors), long-poll waiters, per-window SSE client sets with pending queues (commands sent before the window connects are delivered on attach, unless their <code>ttl</code> expired), ack tracking, and coalescing of chatty types (<code>graph.changed</code>, <code>entity.profile</code>) that no reader has seen.</p>
+</div>
+<div class="piece">
+  <h3>engine/src/registry.mjs</h3>
+  <p>Discovers uniques in <code>uniques/</code> (bundled, empty), <code>~/.lets/uniques</code> (defaults and store installs), <code>LETS_UNIQUES_DIRS</code> (extra folders) and <code>&lt;project&gt;/.lets/uniques</code> (local); validates <code>unique.json</code> against <code>protocol/schemas/unique.schema.json</code> plus the safety rules (entry inside the folder, no reserved domains, declared domains only).</p>
+</div>
+<div class="piece">
+  <h3>engine/src/defaults.mjs</h3>
+  <p>The uniques every installation gets (<code>defaults.json</code>: graph today). Missing ones are cloned into <code>~/.lets/uniques</code> in the background when the engine starts, on demand when <code>open</code> names one, by <code>lets defaults</code>, and by <code>install.mjs</code>. Trusted by the list, still validated.</p>
+</div>
+<div class="piece">
+  <h3>engine/src/entity.mjs</h3>
+  <p>Persona, profile, memory and skills on disk. <code>brief()</code> is what Claude sees on every <code>open</code> (kept small on purpose). <code>absorbProfile()</code> folds the shell's aggregate stats into the learned profile and nudges the persona's traits. <code>teach()</code> writes a special skill.</p>
+</div>
+<div class="piece">
+  <h3>engine/src/sessions.mjs <span class="badge badge-new">new in 0.4.0</span></h3>
+  <p>Handoff. When a unique's <em>export</em> event arrives ("Send to Claude"), the payload is saved under <code>~/.lets/sessions/&lt;unique&gt;/</code>, the event is marked <code>data.session = {id, handoff:true}</code> and the window gets <code>session.close</code>; Claude answers in the transcript. <code>open {resume}</code> queues the unique's <em>restore</em> command with the saved payload, so the board comes back. Which types play which role comes from the manifest's <code>session</code> block (<code>&lt;domain&gt;.export / .snapshot / .load</code> by default).</p>
+</div>
+<div class="piece">
+  <h3>engine/src/router.mjs</h3>
+  <p>Kind priors → complexity and risk → tier; a ledger of outcomes per <code>(kind, tier)</code> bumps tiers with poor trust and allows safe demotions; <code>plan()</code> builds topological waves for parallel Agent spawns.</p>
+</div>
+<div class="piece">
+  <h3>engine/src/store.mjs</h3>
+  <p>Git stores (<code>index.json</code>) → <code>inspect</code> (clone to staging, validate, hash check, executable scan) → <code>install</code> (copy to <code>~/.lets/uniques/&lt;name&gt;</code>, record the sha). Only after a human confirms.</p>
+</div>
+<div class="piece">
+  <h3>sdk/lets-client.js · sdk/lets-shell.js</h3>
+  <p>The browser transport, and the shell: the companion, chat, components, media and toasts.</p>
+</div>
+<div class="piece">
+  <h3>hooks/drain.mjs</h3>
+  <p><code>UserPromptSubmit</code>: pulls the <code>hook</code> cursor from every live host and prints the events as context. Window events therefore reach Claude with your next message at zero tool-call cost.</p>
+</div>
+
+<h2 id="why">Why these choices</h2>
+<dl>
+  <dt>A browser window, not a native pane</dt>
+  <dd>The Claude Code mod API draws a constrained element tree; a graph board with a flying companion, clipboard paste and drag needs a real DOM. The app's built-in browser pane makes it feel native anyway.</dd>
+  <dt>SSE + POST, not WebSocket</dt>
+  <dd>Zero dependencies, trivially debuggable, works through any proxy, and the engine must install from git with no build.</dd>
+  <dt>Events are semantic</dt>
+  <dd>Pointer moves never cross to the model; the shell turns behaviour into aggregates (<code>entity.profile</code>). Tokens are spent on meaning.</dd>
+  <dt>Static uniques</dt>
+  <dd>Community mediums are HTML/JS served under CSP from loopback with a per-host token. The host runs none of their code. The manifest declares domains, capabilities and permissions up front, and the store pins commits and manifest hashes.</dd>
+  <dt>The guide is data</dt>
+  <dd>Each unique ships <code>GUIDE.md</code>; the engine hands it to Claude on <code>open</code>. New mediums teach Claude how to behave without changing the engine or the skill.</dd>
+  <dt>The companion is persistent and honest</dt>
+  <dd>Learning is explicit (<code>learn</code>, <code>teach</code>, <code>reinforce</code>) and inspectable on disk; nothing is "learned" that the model did not write down.</dd>
+</dl>
+
+<h2 id="lifecycle">Lifecycle of <code>/lets graph</code></h2>
+<ol>
+  <li>The skill calls <code>open</code>. The engine registers a window id, mints the URL (<code>/u/graph/#w=…&amp;t=…</code>) and returns the guide and the entity brief.</li>
+  <li>Claude opens the URL in the browser pane. The page loads <code>lets-client.js</code>, connects SSE, receives <code>lip.hello</code> and <code>entity.persona</code>, and emits <code>lip.ready</code>.</li>
+  <li>The human draws. The board emits <code>graph.*</code>; the shell emits <code>entity.*</code>, <code>chat.*</code>, <code>component.*</code>, <code>media.*</code>.</li>
+  <li>On the human's next prompt the hook drains those events into context, or Claude calls <code>listen</code> / <code>query</code> explicitly.</li>
+  <li>Claude reacts with <code>send</code> / <code>say</code>: nodes appear animated, the companion speaks, a component card shows up.</li>
+  <li><strong>Send to Claude</strong> <span class="badge badge-new">new in 0.4.0</span>: the host saves the board as a session and closes the window; Claude reviews it in the transcript and labels the session. <code>/lets graph</code> with "continue …" resumes it (<code>open {resume}</code>).</li>
+  <li>Before leaving, Claude writes what it learned (<code>entity learn</code> / <code>teach</code>).</li>
+</ol>
+
+<h2 id="future">Future mediums</h2>
+<p>A unique may be anything the LIP envelope can carry. A voice ring would emit <code>chat.message</code> from transcription and <code>entity.summon</code> on a wake word; an AR overlay would emit <code>component.action</code> from gestures. The shell contract (entity, chat, components, media) is the stable surface; the engine, the skill and the store need no change for a new medium.</p>
+
+<nav class="doc-pager" aria-label="Previous and next page"><a class="prev" href="./protocol.html"><small>← Previous</small>Protocol (LIP)</a></nav>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div>
+      <div class="footer-brand"><img src="../assets/logo.svg" alt="" width="28" height="28">lets</div>
+      <p>Talk to Claude through windows, not just text.</p>
+      <p>MIT © TikoTikTok · made with Claude Code</p>
+    </div>
+    <div>
+      <h2>Repositories</h2>
+      <ul>
+        <li><a href="https://github.com/TikoTikTok/lets">lets</a> <span class="dim">engine, plugin, SDK, protocol</span></li>
+        <li><a href="https://github.com/TikoTikTok/lets-unique-graph">lets-unique-graph</a> <span class="dim">the graph board</span></li>
+        <li><a href="https://github.com/TikoTikTok/lets-store">lets-store</a> <span class="dim">community store</span></li>
+        <li><a href="https://github.com/TikoTikTok/lets-unique-template">lets-unique-template</a> <span class="dim">pulse template</span></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Site</h2>
+      <ul>
+        <li><a href="../docs/index.html">Docs</a></li>
+        <li><a href="../docs/protocol.html">Protocol (LIP)</a></li>
+        <li><a href="../uniques.html">Uniques</a></li>
+        <li><a href="../playground.html">Playground</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

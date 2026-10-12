@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Protocol · lets</title>
+  <meta name="description" content="LIP, the Lets Interaction Protocol v1: envelope, domains, core messages, transport, security, queues, manifest and versioning.">
+  <meta name="theme-color" content="#120b1f">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../css/site.css">
+  <script type="module" src="../js/site.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../assets/logo.svg" alt="" width="34" height="34">lets</a>
+    <button class="btn btn-sm nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav class="site-nav" id="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="../docs/index.html" aria-current="page">Docs</a></li>
+        <li><a href="../uniques.html">Uniques</a></li>
+        <li><a href="../playground.html">Playground</a></li>
+        <li><a href="../index.html#install">Install</a></li>
+        <li><a href="https://github.com/TikoTikTok/lets">GitHub</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap docs-layout">
+  <aside class="docs-side" aria-label="Documentation">
+    <button class="btn btn-sm docs-nav-toggle" type="button" aria-expanded="false" aria-controls="docs-nav">Docs pages <span aria-hidden="true">▾</span></button>
+    <h2>Documentation</h2>
+    <nav class="docs-nav" id="docs-nav" aria-label="Docs pages">
+      <ul>
+        <li><a href="./index.html">Overview</a></li>
+        <li><a href="./getting-started.html">Getting started</a></li>
+        <li><a href="./companion.html">The companion (Pip)</a></li>
+        <li><a href="./uniques.html">Uniques &amp; the store</a></li>
+        <li><a href="./graph.html">The graph board</a></li>
+        <li><a href="./protocol.html" aria-current="page">Protocol (LIP)</a></li>
+        <li><a href="./architecture.html">Architecture</a></li>
+      </ul>
+    </nav>
+  </aside>
+  <main id="main" class="doc">
+<h1>LIP: the Lets Interaction Protocol <span class="badge">v1</span></h1>
+<p class="lead">The contract between Claude, the host and the window. Everything that crosses a boundary is a JSON message envelope; uniques are static web apps that only ever speak LIP, and the host never executes unique code server-side. That is what makes third-party uniques safe to install from git.</p>
+
+<nav class="toc" aria-label="On this page">
+  <strong>On this page</strong>
+  <ol>
+    <li><a href="#parties">Parties</a></li>
+    <li><a href="#envelope">1. Envelope</a></li>
+    <li><a href="#domains">2. Domains</a></li>
+    <li><a href="#messages">3. Core messages</a></li>
+    <li><a href="#transport">4. Transport &amp; security</a></li>
+    <li><a href="#queues">5. Queues &amp; cursors</a></li>
+    <li><a href="#manifest">6. Unique manifest</a></li>
+    <li><a href="#guide">7. Guide</a></li>
+    <li><a href="#versioning">8. Versioning</a></li>
+    <li><a href="#future">9. Future mediums</a></li>
+  </ol>
+</nav>
+
+<h2 id="parties">Parties</h2>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th scope="col">Party</th><th scope="col">Role</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Claude</strong> (the model, through the <code>lets</code> MCP tools)</td><td>reasons, reacts, drives</td></tr>
+      <tr><td><strong>Host</strong> (the <code>lets</code> engine, a local Node process)</td><td>routes, persists, protects</td></tr>
+      <tr><td><strong>Window</strong> (a <em>unique</em>: a web UI opened in a browser pane)</td><td>shows, listens, lets the human point</td></tr>
+    </tbody>
+  </table>
+</div>
+<p>The protocol is designed for mediums that do not exist yet: a unique can be a graph board today, a 3D scene, a voice ring, a haptic strip or an AR overlay tomorrow. Nothing in LIP assumes a screen, only <em>events the human produced</em> and <em>commands the model issues</em>, both carried as typed, versioned JSON.</p>
+
+<h2 id="envelope">1. Envelope</h2>
+<pre><code>{
+  <span class="s">"lip"</span>: 1,
+  <span class="s">"id"</span>: <span class="s">"ev_01J9Q0Z8M3K7X4N2"</span>,
+  <span class="s">"ts"</span>: 1760000000000,
+  <span class="s">"dir"</span>: <span class="s">"up"</span>,
+  <span class="s">"from"</span>: <span class="s">"unique:graph#w1"</span>,
+  <span class="s">"type"</span>: <span class="s">"graph.node.select"</span>,
+  <span class="s">"data"</span>: { <span class="s">"ids"</span>: [<span class="s">"n3"</span>] },
+  <span class="s">"re"</span>: <span class="s">"cm_01J9Q0Z7..."</span>,
+  <span class="s">"ttl"</span>: 30000
+}</code></pre>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th scope="col">Field</th><th scope="col">Req</th><th scope="col">Meaning</th></tr></thead>
+    <tbody>
+      <tr><td><code>lip</code></td><td>yes</td><td>Protocol major version. A receiver that does not speak the major MUST answer <code>lip.error{code:"unsupported"}</code>.</td></tr>
+      <tr><td><code>id</code></td><td>yes</td><td>Unique id (<code>ev_</code> for events, <code>cm_</code> for commands, <code>ak_</code> acks). Time-sortable.</td></tr>
+      <tr><td><code>ts</code></td><td>yes</td><td>Unix ms at the sender.</td></tr>
+      <tr><td><code>dir</code></td><td>yes</td><td><code>"up"</code> = window → host → Claude (an <strong>event</strong>). <code>"down"</code> = Claude → host → window (a <strong>command</strong>).</td></tr>
+      <tr><td><code>from</code></td><td>yes</td><td><code>unique:&lt;name&gt;#&lt;windowId&gt;</code>, <code>claude</code>, <code>host</code>, or <code>hook</code>.</td></tr>
+      <tr><td><code>type</code></td><td>yes</td><td>Dotted <code>&lt;domain&gt;.&lt;noun&gt;[.&lt;verb&gt;]</code>, lowercase, <code>a-z0-9_</code>.</td></tr>
+      <tr><td><code>data</code></td><td>no</td><td>The payload, any JSON. Keep it small; put blobs on disk and send paths.</td></tr>
+      <tr><td><code>re</code></td><td>no</td><td>Id of the message this one answers (ack, reply, stream chunk).</td></tr>
+      <tr><td><code>ttl</code></td><td>no</td><td>Ms the message stays meaningful. The host drops expired commands instead of delivering them late.</td></tr>
+      <tr><td><code>to</code></td><td>no</td><td>(down only) <code>windowId</code> or <code>unique:&lt;name&gt;</code>; default = every window of the unique the command belongs to.</td></tr>
+      <tr><td><code>seq</code></td><td>no</td><td>(down, streams) chunk index; <code>done:true</code> closes the stream.</td></tr>
+    </tbody>
+  </table>
+</div>
+<p>Batches: a JSON array of envelopes is accepted anywhere a single envelope is.</p>
+
+<h2 id="domains">2. Domains</h2>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th scope="col">Domain</th><th scope="col">Owner</th><th scope="col">Purpose</th></tr></thead>
+    <tbody>
+      <tr><td><code>lip.*</code></td><td>protocol</td><td>hello / ready / ack / error / ping</td></tr>
+      <tr><td><code>session.*</code></td><td>host + shell</td><td>Window lifecycle (<code>opened</code>, <code>closed</code>, <code>focus</code>, <code>blur</code>, <code>listening</code>) and handoff (<code>close</code>, <code>closing</code>, <code>stay</code>)</td></tr>
+      <tr><td><code>entity.*</code></td><td>shell</td><td>The companion ("you"): summon, dismiss, click, say, mood, suggest, move, profile</td></tr>
+      <tr><td><code>chat.*</code></td><td>shell</td><td>Chat view: open, close, message, say (stream)</td></tr>
+      <tr><td><code>component.*</code></td><td>shell</td><td>Dynamic components: create, update, remove, action</td></tr>
+      <tr><td><code>media.*</code></td><td>shell</td><td>Images / files produced by the human (paste, drop, upload)</td></tr>
+      <tr><td><code>ui.*</code></td><td>shell</td><td>Toast, theme, layout hints</td></tr>
+      <tr><td><code>&lt;unique&gt;.*</code></td><td>the unique</td><td>e.g. <code>graph.*</code>. Declared in the unique's manifest.</td></tr>
+    </tbody>
+  </table>
+</div>
+<p>Reserved domains cannot be redeclared by a unique. A unique MAY emit shell-domain events through the shell SDK, never by forging envelopes.</p>
+
+<h2 id="messages">3. Core messages</h2>
+<h3 id="m-protocol">3.1 Protocol</h3>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th scope="col">Type</th><th scope="col">Dir</th><th scope="col">Data</th></tr></thead>
+    <tbody>
+      <tr><td><code>lip.hello</code></td><td>down</td><td><code>{windowId, unique, version, caps[], hostVersion}</code>: first message on an SSE stream</td></tr>
+      <tr><td><code>lip.ready</code></td><td>up</td><td><code>{unique, version, caps[], viewport:{w,h}, ua}</code>: the window finished booting</td></tr>
+      <tr><td><code>lip.ack</code></td><td>both</td><td><code>{ok, error?}</code>, <code>re</code> = acked id. Commands flagged <code>ack:true</code> are acked by the window</td></tr>
+      <tr><td><code>lip.error</code></td><td>both</td><td><code>{code, message, re?}</code></td></tr>
+      <tr><td><code>lip.ping</code> / <code>lip.pong</code></td><td>both</td><td>Liveness</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h3 id="m-session">3.1b Session: lifecycle and handoff</h3>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th scope="col">Type</th><th scope="col">Dir</th><th scope="col">Data</th></tr></thead>
+    <tbody>
+      <tr><td><code>session.opened</code> / <code>session.closed</code></td><td>up (host)</td><td><code>{windowId, unique}</code>: a window connected for the first time / went away for good</td></tr>
+      <tr><td><code>session.focus</code> / <code>session.blur</code></td><td>up</td><td><code>{}</code>: the tab became visible / hidden</td></tr>
+      <tr><td><code>session.listening</code></td><td>down (host)</td><td><code>{on, at}</code>: whether Claude is blocked in <code>listen</code> right now (the shell shows "listening" vs "away")</td></tr>
+      <tr><td><code>session.close</code> <span class="badge badge-new">0.4.0</span></td><td>down</td><td><code>{reason:"handoff"|"idle"|"claude", text?, ms?}</code>: the window should say goodbye and close itself. Sent by the <strong>host</strong> after an <em>export</em> event, or by Claude.</td></tr>
+      <tr><td><code>session.closing</code> <span class="badge badge-new">0.4.0</span></td><td>up (shell)</td><td><code>{reason}</code>: the farewell started</td></tr>
+      <tr><td><code>session.stay</code> <span class="badge badge-new">0.4.0</span></td><td>up (shell)</td><td><code>{}</code>: the human pressed <em>Keep working</em>; the window stays</td></tr>
+    </tbody>
+  </table>
+</div>
+<p><strong>Handoff.</strong> <span class="badge badge-new">new in 0.4.0</span> A unique's manifest names which of its types are the <em>export</em> (the human pressed "Send to Claude"), the <em>snapshot</em> (reply to a state query) and the <em>restore</em> command. When an export event reaches the host it is saved as a <strong>session</strong> (<code>~/.lets/sessions/&lt;unique&gt;/&lt;id&gt;.json</code>), its <code>data</code> gains <code>session: {id, handoff: true, saved: true, summary}</code> as the first key, and the window receives <code>session.close</code>. Claude then answers in the transcript, not in the window. <code>open {resume: "last" | id}</code> later queues the restore command with the saved payload, so the window comes back as it was sent. Snapshot events update the saved session silently. <code>~/.lets/config.json</code> <code>"handoff": "stay"</code> keeps windows open instead.</p>
+
+<h3 id="m-entity">3.2 Entity (the companion)</h3>
+<p>Events (up):</p>
+<ul>
+  <li><code>entity.summon {x,y,context?}</code>: right click / hotkey; <code>context</code> is whatever the unique attaches (e.g. the node under the cursor).</li>
+  <li><code>entity.dismiss {}</code></li>
+  <li><code>entity.click {x,y,context?}</code>: the human clicked the companion. The shell shows local quick-suggestions instantly; Claude may add smarter ones with <code>entity.suggest</code>.</li>
+  <li><code>entity.pick {id, label}</code>: the human picked a suggestion.</li>
+  <li><code>entity.profile {pace, clickRate, dwell, regions, idleMs, sessionMs, …}</code>: aggregated interaction stats, emitted at most every 60 s and on close. Never raw mouse moves.</li>
+  <li><code>entity.secret {name}</code> <span class="badge badge-new">0.4.0</span>: the human discovered one of the companion's secret moves (once per window per move).</li>
+</ul>
+<p>Commands (down):</p>
+<ul>
+  <li><code>entity.say {text, mood?, ttl?}</code>: speech bubble.</li>
+  <li><code>entity.mood {mood}</code>: <code>idle|happy|curious|thinking|busy|proud|sleepy|alert</code>.</li>
+  <li><code>entity.suggest {items:[{id,label,hint?}], replace?}</code>: populate the click menu.</li>
+  <li><code>entity.move {x,y}</code> or <code>{to:"cursor"|"center"|"&lt;selector&gt;"}</code>: the shell eases there; never teleports.</li>
+  <li><code>entity.show {}</code> / <code>entity.hide {}</code></li>
+  <li><code>entity.persona {name, traits}</code>: applied look and behaviour (speed, distance) from the persisted persona.</li>
+  <li><code>entity.react {name, ms?}</code> <span class="badge badge-new">0.4.0</span>: play a short expression (<code>dizzy</code>, <code>whoa</code>, <code>startled</code>, <code>gasp</code>, <code>oops</code>, <code>wink</code>, <code>cheer</code>, <code>blush</code>, <code>boop</code>, <code>yawn</code>, <code>peek</code>, <code>nod</code>, <code>shake-no</code>, <code>wave</code>, <code>spin</code>, <code>dance</code>, <code>disco</code>, <code>sparkle</code>). Most of these the shell also plays by itself from how the human moves; see <a href="./companion.html#expressions">the companion</a>.</li>
+</ul>
+
+<h3 id="m-chat">3.3 Chat</h3>
+<ul>
+  <li>up <code>chat.message {text, attachments?:[{path,mime}]}</code></li>
+  <li>down <code>chat.open {}</code> / <code>chat.close {}</code> / <code>chat.say {text, seq?, done?}</code> (stream with the same <code>re</code>) / <code>chat.typing {on}</code></li>
+</ul>
+
+<h3 id="m-components">3.4 Components (anything the model invents at runtime)</h3>
+<ul>
+  <li>down <code>component.create {id, type, props, slot?:"dock"|"float"|"panel"|"inline", at?:{x,y}}</code></li>
+  <li>down <code>component.update {id, props}</code> / <code>component.remove {id}</code></li>
+  <li>up <code>component.action {id, action, value?}</code></li>
+</ul>
+<p>Built-in component types every shell MUST provide: <code>note</code>, <code>options</code>, <code>slider</code>, <code>toggle</code>, <code>form</code>, <code>image-drop</code>, <code>progress</code>, <code>code</code>. Unknown types fall back to <code>note</code> with the raw props shown, so a future type never breaks an old shell.</p>
+
+<h3 id="m-media">3.5 Media</h3>
+<ul>
+  <li>up <code>media.image {path, w, h, mime, bytes, source:"paste"|"drop"|"file", componentId?}</code>: the shell POSTs the blob to <code>/lip/upload</code>; the host stores it under <code>~/.lets/uploads/&lt;unique&gt;/</code> and the event carries the <strong>path</strong>, so Claude reads the file with its own tools. Base64 never crosses to the model.</li>
+</ul>
+
+<h3 id="m-ui">3.6 UI</h3>
+<ul>
+  <li>down <code>ui.toast {text, level?:"info"|"ok"|"warn"|"error", ttl?}</code></li>
+  <li>down <code>ui.theme {name?, vars?}</code>: CSS variable overrides.</li>
+</ul>
+
+<h2 id="transport">4. Transport &amp; security</h2>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th scope="col">Leg</th><th scope="col">Mechanism</th></tr></thead>
+    <tbody>
+      <tr><td>Window → Host</td><td><code>POST /lip/event</code> (envelope or array). Header <code>x-lets-token</code>. 202 on accept.</td></tr>
+      <tr><td>Host → Window</td><td><code>GET /lip/stream?w=&lt;windowId&gt;</code>: Server-Sent Events, <code>data:</code> = envelope JSON. Heartbeat comment every 15 s.</td></tr>
+      <tr><td>Window → Host (blobs)</td><td><code>POST /lip/upload?w=&amp;source=&amp;component=</code> raw body, <code>content-type</code> = mime. Returns <code>{path,w?,h?,bytes,mime}</code>.</td></tr>
+      <tr><td>Claude ↔ Host</td><td>MCP (stdio). <code>listen</code> long-polls the up-queue; <code>send</code> enqueues down-commands.</td></tr>
+      <tr><td>Hooks → Host</td><td><code>GET /lip/drain?cursor=&lt;name&gt;</code> returns and advances a named cursor; used by the <code>UserPromptSubmit</code> hook so events reach Claude without a tool call.</td></tr>
+    </tbody>
+  </table>
+</div>
+<p class="note"><strong>Security.</strong> Loopback only; a per-host random token is required on every request (query <code>t</code>, header, or the window's URL fragment at open); CSP on served pages is <code>default-src 'self'</code>; uploads are size-capped (default 25 MB) and written only under the uploads dir; manifests are schema-validated before a unique is served.</p>
+
+<h2 id="queues">5. Queues &amp; cursors</h2>
+<p>The host keeps one ring buffer of up-events (default 2000). Readers hold <strong>cursors</strong>: <code>claude</code> (the <code>listen</code> tool), <code>hook</code> (the prompt hook), plus any named cursor. <code>listen</code> returns events after its cursor and advances it; it blocks up to <code>wait_ms</code> when nothing is pending. Noise is coalesced before it reaches the buffer: pointer moves never enter it, and repeated <code>graph.changed</code> within 400 ms collapse to the latest.</p>
+
+<h2 id="manifest">6. Unique manifest (<code>unique.json</code>)</h2>
+<pre><code>{
+  <span class="s">"lip"</span>: 1,
+  <span class="s">"name"</span>: <span class="s">"graph"</span>,
+  <span class="s">"version"</span>: <span class="s">"0.1.0"</span>,
+  <span class="s">"title"</span>: <span class="s">"Graph — talk in diagrams"</span>,
+  <span class="s">"description"</span>: <span class="s">"Draw flows and ideas; the companion and Claude read them."</span>,
+  <span class="s">"entry"</span>: <span class="s">"ui/index.html"</span>,
+  <span class="s">"guide"</span>: <span class="s">"GUIDE.md"</span>,
+  <span class="s">"icon"</span>: <span class="s">"icon.svg"</span>,
+  <span class="s">"domains"</span>: [<span class="s">"graph"</span>],
+  <span class="s">"capabilities"</span>: [<span class="s">"entity"</span>, <span class="s">"chat"</span>, <span class="s">"components"</span>, <span class="s">"media.image"</span>, <span class="s">"clipboard"</span>],
+  <span class="s">"events"</span>: { <span class="s">"graph.node.select"</span>: { <span class="s">"summary"</span>: <span class="s">"User selected nodes"</span>, <span class="s">"schema"</span>: <span class="s">"schemas/node.select.json"</span> } },
+  <span class="s">"commands"</span>: { <span class="s">"graph.node.add"</span>: { <span class="s">"summary"</span>: <span class="s">"Add a node"</span>, <span class="s">"schema"</span>: <span class="s">"schemas/node.add.json"</span> } },
+  <span class="s">"permissions"</span>: { <span class="s">"fs.write"</span>: [<span class="s">"uploads"</span>], <span class="s">"net"</span>: [] },
+  <span class="s">"session"</span>: { <span class="s">"export"</span>: <span class="s">"graph.export"</span>, <span class="s">"snapshot"</span>: <span class="s">"graph.snapshot"</span>, <span class="s">"restore"</span>: <span class="s">"graph.load"</span> },
+  <span class="s">"author"</span>: { <span class="s">"name"</span>: <span class="s">"…"</span>, <span class="s">"url"</span>: <span class="s">"…"</span> },
+  <span class="s">"license"</span>: <span class="s">"MIT"</span>,
+  <span class="s">"repository"</span>: <span class="s">"https://github.com/…"</span>
+}</code></pre>
+<p>Rules the host enforces:</p>
+<ol>
+  <li><code>name</code> is <code>^[a-z][a-z0-9-]{1,31}$</code>, unique across registries.</li>
+  <li><code>entry</code> resolves inside the unique folder; nothing outside it is ever served.</li>
+  <li><code>domains</code> may not include reserved ones.</li>
+  <li>Every event/command type a unique declares starts with one of its domains.</li>
+  <li>Unknown top-level keys are kept (forward compatibility) but ignored.</li>
+  <li><code>lip</code> major must match the host's.</li>
+  <li><code>session</code> (optional, <span class="badge badge-new">0.4.0</span>) names the export / snapshot / restore types for handoff (§3.1b); each must start with one of the unique's domains. Without it the host assumes <code>&lt;domain&gt;.export</code>, <code>&lt;domain&gt;.snapshot</code>, <code>&lt;domain&gt;.load</code>.</li>
+</ol>
+
+<h2 id="guide">7. Guide (<code>GUIDE.md</code>)</h2>
+<p>Prose for Claude: what each event means and how to react, what commands exist, and the unique's etiquette. The <code>open</code> tool returns it; the <code>lets</code> skill tells Claude to obey it for the window's lifetime. Keep guides under about 1,500 words.</p>
+
+<h2 id="versioning">8. Versioning</h2>
+<ul>
+  <li><code>lip</code> major bumps only on envelope-incompatible changes.</li>
+  <li>New message types are additive and ignorable: a receiver MUST ignore types it does not know (and MAY log them), never fail.</li>
+  <li>Uniques pin the minimum host version in <code>engine: "&gt;=0.1.0"</code> (optional).</li>
+</ul>
+
+<h2 id="future">9. Future mediums</h2>
+<p>A unique for a medium without a pointer (voice, gesture, AR, neural) still emits <code>entity.summon</code>, <code>component.action</code>, <code>media.*</code>: the <em>meaning</em> of an act, not its mechanics. New domains are free to add; shells for new mediums implement §3 semantics in whatever way the medium affords. The envelope never changes shape.</p>
+<p class="dim">Source of truth: <a href="https://github.com/TikoTikTok/lets/blob/main/protocol/LIP.md"><code>protocol/LIP.md</code></a> and the JSON schemas next to it in the lets repo.</p>
+
+<nav class="doc-pager" aria-label="Previous and next page"><a class="prev" href="./graph.html"><small>← Previous</small>The graph board</a><a class="next" href="./architecture.html"><small>Next →</small>Architecture</a></nav>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div>
+      <div class="footer-brand"><img src="../assets/logo.svg" alt="" width="28" height="28">lets</div>
+      <p>Talk to Claude through windows, not just text.</p>
+      <p>MIT © TikoTikTok · made with Claude Code</p>
+    </div>
+    <div>
+      <h2>Repositories</h2>
+      <ul>
+        <li><a href="https://github.com/TikoTikTok/lets">lets</a> <span class="dim">engine, plugin, SDK, protocol</span></li>
+        <li><a href="https://github.com/TikoTikTok/lets-unique-graph">lets-unique-graph</a> <span class="dim">the graph board</span></li>
+        <li><a href="https://github.com/TikoTikTok/lets-store">lets-store</a> <span class="dim">community store</span></li>
+        <li><a href="https://github.com/TikoTikTok/lets-unique-template">lets-unique-template</a> <span class="dim">pulse template</span></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Site</h2>
+      <ul>
+        <li><a href="../docs/index.html">Docs</a></li>
+        <li><a href="../docs/protocol.html">Protocol (LIP)</a></li>
+        <li><a href="../uniques.html">Uniques</a></li>
+        <li><a href="../playground.html">Playground</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
