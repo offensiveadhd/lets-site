@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Doto's home (den) · lets</title>
+  <meta name="description" content="The den unique, Doto's home: see what the companion learned about you and edit or forget any of it by pointing: persona, traits, likes, nicknames, memory, special skills and the secret moves you found.">
+  <meta name="theme-color" content="#120b1f">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../css/site.css">
+  <script type="module" src="../js/site.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../assets/logo.svg" alt="" width="34" height="34">lets</a>
+    <button class="btn btn-sm nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav class="site-nav" id="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="../docs/index.html" aria-current="page">Docs</a></li>
+        <li><a href="../uniques.html">Uniques</a></li>
+        <li><a href="../playground.html">Playground</a></li>
+        <li><a href="../index.html#install">Install</a></li>
+        <li><a href="https://github.com/TikoTikTok/lets">GitHub</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap docs-layout">
+  <aside class="docs-side" aria-label="Documentation">
+    <button class="btn btn-sm docs-nav-toggle" type="button" aria-expanded="false" aria-controls="docs-nav">Docs pages <span aria-hidden="true">▾</span></button>
+    <h2>Documentation</h2>
+    <nav class="docs-nav" id="docs-nav" aria-label="Docs pages">
+      <ul>
+        <li><a href="./index.html">Overview</a></li>
+        <li><a href="./getting-started.html">Getting started</a></li>
+        <li><a href="./companion.html">The companion (Doto)</a></li>
+        <li><a href="./uniques.html">Uniques &amp; the store</a></li>
+        <li><a href="./graph.html">The graph board</a></li>
+        <li><a href="./den.html" aria-current="page">Doto's home (den)</a></li>
+        <li><a href="./protocol.html">Protocol (LIP)</a></li>
+        <li><a href="./architecture.html">Architecture</a></li>
+      </ul>
+    </nav>
+  </aside>
+  <main id="main" class="doc">
+<h1>Doto's home (den) <span class="badge badge-new">new in 0.6.0</span></h1>
+<div class="unique-card" style="margin-bottom:1.6em">
+  <img src="../assets/den-icon.svg" width="64" height="64" alt="The den icon: a glowing house outline with Doto, a small violet dot, at home inside it.">
+  <div class="body">
+    <p class="lead" style="margin:0"><strong>See what Doto learned about you, and edit or forget any of it by pointing.</strong> den is the second default unique, next to graph: one calm page that shows everything the companion keeps about you.</p>
+  </div>
+</div>
+
+<nav class="toc" aria-label="On this page">
+  <strong>On this page</strong>
+  <ol>
+    <li><a href="#what">What it is</a></li>
+    <li><a href="#install">Install</a></li>
+    <li><a href="#do">What you can do</a></li>
+    <li><a href="#keys">Mouse &amp; keyboard</a></li>
+    <li><a href="#edits">You edit, Claude confirms</a></li>
+    <li><a href="#doto">Doto at home</a></li>
+    <li><a href="#handoff">Send to Claude &amp; resume</a></li>
+    <li><a href="#data">Where the data comes from</a></li>
+    <li><a href="#events">Events (up)</a></li>
+    <li><a href="#commands">Commands (down)</a></li>
+    <li><a href="#etiquette">Claude's etiquette</a></li>
+    <li><a href="#layout">Repository layout</a></li>
+  </ol>
+</nav>
+
+<h2 id="what">What it is</h2>
+<p>Doto learns you through three honest channels: a profile of how you work, memory lines Claude writes down, and the special skills he writes for himself (see <a href="./companion.html#learning">How Doto learns</a>). All of it lives on disk in <code>~/.lets/entity/</code>, and <code>/lets entity</code> lists it in the chat.</p>
+<p>den puts it on one page: his persona and traits, the likes, dislikes and nicknames he picked up, his memory lines, his special skills, the secret moves you found, and your interaction profile. Every row can be changed or forgotten right where it sits; Claude applies the change and Doto says one short line about it. Nothing is inferred silently in lets, and den is where you can check that for yourself.</p>
+
+<h2 id="install">Install</h2>
+<p>It comes with lets 0.6.0: den is listed next to graph in the engine's <code>defaults.json</code>, so the engine installs it into <code>~/.lets/uniques/den</code> the first time it runs. Then:</p>
+<pre><code>/lets den               <span class="c"># or /lets:lets den without the alias</span></code></pre>
+<p>Manual: <code>/lets store den</code> (inspect → confirm), or clone <a href="https://github.com/TikoTikTok/lets-unique-den">the repo</a> into <code>~/.lets/uniques/den</code>. den needs engine 0.6.0 or later (<code>"engine": "&gt;=0.6.0"</code>) because it reads the companion's state from the new <code>GET /lip/entity</code>. It asks for no permissions: <code>"fs.write": []</code>, <code>"net": []</code>.</p>
+
+<h2 id="do">What you can do</h2>
+<p>A toolbar sits on top: the listening dot, <strong>Refresh</strong>, <strong>Ask</strong>, <strong>Send to Claude</strong>, chat, Doto and <code>?</code> for shortcuts. Below it, nine cards, top to bottom:</p>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th scope="col">Card</th><th scope="col">You see</th><th scope="col">You can do</th></tr></thead>
+    <tbody>
+      <tr><td><strong>persona</strong></td><td>His name and tagline, "born … · <em>n</em> sessions · mood …", six colour swatches</td><td>Click the name or tagline to edit it in place (name 1 to 24 characters, tagline up to 120). Pick a colour, or <em>default</em>. <strong>Reset to defaults</strong> asks "Sure?" first, then puts name, tagline, colour and traits back; everything he learned stays.</td></tr>
+      <tr><td><strong>traits</strong></td><td>Six sliders with their live value and a two-word meaning at each end: speed <em>calm ↔ snappy</em>, distance <em>close ↔ far</em>, chatty <em>quiet ↔ talks</em>, playful <em>still ↔ bouncy</em>, formality <em>casual ↔ formal</em>, curiosity <em>assumes ↔ asks</em></td><td>Drag a slider. The value goes to Claude once the slider settles.</td></tr>
+      <tr><td><strong>likes</strong>, <strong>dislikes</strong></td><td>Chips</td><td>× forgets one. Type in the add field and press <kbd>Enter</kbd> to add one (up to 60 characters).</td></tr>
+      <tr><td><strong>nicknames</strong></td><td>Rows: what you call a thing → what it is</td><td>× forgets one; the add row has two fields.</td></tr>
+      <tr><td><strong>memory</strong></td><td>Up to 60 lines, newest first: a kind badge (<code>note</code>, <code>preference</code>, <code>habit</code>, <code>request</code>, <code>style</code>, <code>secret</code>, <code>skill</code>), how long ago (hover for the exact time) and the text</td><td>× forgets a line. Filter chips show one kind at a time.</td></tr>
+      <tr><td><strong>skills</strong></td><td>Each special skill: title, name, trigger chips, a confidence bar, uses and the unique it came from; the playbook folds open</td><td>Thumbs up or thumbs down rates it; × forgets it.</td></tr>
+      <tr><td><strong>secrets</strong></td><td>Seven dots and a count ("2 of 7"): found moves are lit and named, the rest show "?"</td><td>Nothing to edit, and no hints. Finding them is the point.</td></tr>
+      <tr><td><strong>profile</strong></td><td>How you work: pace (px/s), clicks per minute, dwell, idle, summons · picks · dismisses, sessions seen, last seen, and a 3×3 grid of your favourite screen regions</td><td>Read only. A value not measured yet shows "—".</td></tr>
+    </tbody>
+  </table>
+</div>
+<p>An empty card says so ("Nothing yet. Open graph and do something he can notice."). <strong>Ask</strong>, or a question from Doto's menu, asks Claude about the row you are hovering or have focused; the answer comes in the chat and Claude highlights the rows it cites. Collapsed cards and the memory filter are remembered in this browser; everything else lives on the host.</p>
+
+<h2 id="keys">Mouse &amp; keyboard</h2>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th scope="col">Do</th><th scope="col">How</th></tr></thead>
+    <tbody>
+      <tr><td>Rename him, edit the tagline</td><td>Click it; <kbd>Enter</kbd> saves, <kbd>Esc</kbd> cancels</td></tr>
+      <tr><td>Forget a chip, nickname, memory line or skill</td><td>Click its ×, or focus the × and press <kbd>Delete</kbd> / <kbd>Backspace</kbd></td></tr>
+      <tr><td>Add a like, dislike or nickname</td><td>Type in the add field, then <kbd>Enter</kbd></td></tr>
+      <tr><td>Undo your own edit</td><td><kbd>Ctrl</kbd>+<kbd>Z</kbd> (20 steps)</td></tr>
+      <tr><td>Shortcuts</td><td><kbd>?</kbd> opens the overlay; <kbd>Esc</kbd> closes it and any inline editor</td></tr>
+    </tbody>
+  </table>
+</div>
+<p>Every row is reachable with the keyboard and has an accessible name. Under reduced motion, scrolling to a card is instant.</p>
+
+<h2 id="edits">You edit, Claude confirms</h2>
+<ol>
+  <li>You change a row. den updates it at once and marks it <em>waiting for Claude</em>: dimmed, with a small pulsing dot.</li>
+  <li>den sends the matching event (<a href="#events">below</a>).</li>
+  <li>Claude applies it with the <code>entity</code> tool, refreshes den, and Doto says one short line. The mark clears.</li>
+</ol>
+<p>If Claude is not listening right now, den tells you (at most every 30 seconds): <em>"Doto is away. Claude applies this with your next message in Claude Code."</em> The mark stays until Claude catches up; the prompt hook delivers your edits with your next message.</p>
+<p><kbd>Ctrl</kbd>+<kbd>Z</kbd> undoes your own edits by sending the opposite event: a forgotten like is added back, a slider returns to its previous value. Claude treats an undo as a "no" and applies it quietly.</p>
+
+<h2 id="doto">Doto at home</h2>
+<p>This is his home. Click him for questions about the row under your pointer: <em>What do you know about me?</em>, <em>Why this?</em>, <em>Forget this</em> (den does that one itself) and <em>Open chat</em>. <em>What do you know about me?</em> gets a short, honest summary in the chat, counts included: <em>"Four likes, two dislikes, two of seven secrets."</em></p>
+<p>He reacts once per thing you do, at most: a <a href="./companion.html#expressions">wink</a> after you forget something, a blush when you edit his name or tagline, a nod when Claude's refresh lands after your edit. Claude may also roll him over to a memory line and have him say why he wrote it.</p>
+
+<h2 id="handoff">Send to Claude &amp; resume</h2>
+<p><strong>Send to Claude</strong> hands den over for a <strong>memory review</strong>. The engine saves it as a session and closes the window, and Claude answers in the Claude Code chat, not in the window: in three to six lines it sums up what Doto knows about you (from the memory lines, likes and dislikes, skills and secrets), flags lines that look stale or contradict each other, and proposes a short cleanup list you can say yes to. The session gets a label such as "doto memory review".</p>
+<p>Say <em>continue</em> (or <code>/lets den resume</code>) and den comes back <strong>live</strong>: it fetches the current state again instead of replaying the saved snapshot, so it shows what Doto knows now.</p>
+<p>The manifest's <code>session</code> block names the roles:</p>
+<pre><code>"session": { "export": "den.export", "snapshot": "den.snapshot", "restore": "den.load" }</code></pre>
+
+<h2 id="data">Where the data comes from</h2>
+<p>den reads everything from the engine with <code>GET /lip/entity</code> <span class="badge badge-new">new in 0.6.0</span>, token-protected like <code>/lip/persona</code>: once when it opens, and again on <code>den.refresh</code>. The payload, in short:</p>
+<pre><code>{ persona: { name, tagline, born, color, mood, sessions,
+             traits: { speed, distance, chatty, playful, formality, curiosity },
+             likes: [], dislikes: [], nicknames: { "what you call it": "what it is" } },
+  profile: { pace, clickRate, dwell, idleMs, regions: { tl, tr, bl, br, c },
+             sessionsSeen, summons, picks, dismisses, lastSeen,
+             secrets: [ <span class="c">/* names found, in order of discovery */</span> ] },
+  skills:  [{ name, title, triggers, confidence, uses, unique, learned, updated, body }],
+  memory:  [{ ts, kind, text, weight }],   <span class="c">// oldest → newest, the last 60 lines</span>
+  secretsAll: [ <span class="c">/* all seven */</span> ],
+  defaults: { name, tagline, color, traits },
+  at }</code></pre>
+<p><code>memory[].ts</code> is a memory line's id. <code>pace</code> is in px/s, <code>clickRate</code> in clicks per minute, <code>dwell</code> and <code>idleMs</code> in milliseconds. Any field may be <code>null</code> until something was measured. <code>profile.secrets</code> is new in 0.6.0: when you find a secret move, the engine records its name, once.</p>
+
+<h3 id="entity-tool">The <code>entity</code> tool</h3>
+<p>Claude applies your edits with the <code>entity</code> MCP tool. Version 0.6.0 adds five actions:</p>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th scope="col">Action</th><th scope="col">Does</th></tr></thead>
+    <tbody>
+      <tr><td><code>full {}</code></td><td>The same payload as <code>GET /lip/entity</code>.</td></tr>
+      <tr><td><code>set {name?, tagline?, traits?, color?}</code></td><td>Sets the persona directly (not the moving average that <code>learn</code> uses), clamps traits to 0 to 1, and updates every open window.</td></tr>
+      <tr><td><code>unlearn {likes?, dislikes?, nicknames?, memory?}</code></td><td>Removes exactly those: likes and dislikes by text, nicknames by key, memory lines by <code>ts</code> (from <code>memory.jsonl</code>). Reports what it removed.</td></tr>
+      <tr><td><code>memory {n?}</code></td><td>The last <em>n</em> memory lines with their <code>ts</code> (default 30).</td></tr>
+      <tr><td><code>reset {}</code></td><td>Name, tagline, colour and traits back to the defaults. Likes, dislikes, nicknames, memory and skills stay.</td></tr>
+    </tbody>
+  </table>
+</div>
+<p>den's edits also use the existing actions: <code>learn</code> (adds likes, dislikes and nicknames), <code>forget</code> and <code>reinforce</code> (special skills), <code>rename</code> and <code>brief</code>.</p>
+
+<h2 id="events">Events (up)</h2>
+<p>Each event says what you meant, not what you clicked.</p>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th scope="col">Event</th><th scope="col">When</th></tr></thead>
+    <tbody>
+      <tr><td><code>den.persona.set {name?, tagline?, traits?, color?}</code></td><td>You renamed him, edited the tagline, let a trait slider settle (debounced 250 ms) or picked a colour.</td></tr>
+      <tr><td><code>den.persona.reset {}</code></td><td>You pressed <strong>Reset to defaults</strong> and confirmed.</td></tr>
+      <tr><td><code>den.like.add {text}</code> · <code>den.like.forget {text}</code></td><td>You added a like / pressed × on one.</td></tr>
+      <tr><td><code>den.dislike.add {text}</code> · <code>den.dislike.forget {text}</code></td><td>The same for dislikes.</td></tr>
+      <tr><td><code>den.nickname.set {key, value}</code> · <code>den.nickname.forget {key}</code></td><td>You added or edited a nickname / removed one.</td></tr>
+      <tr><td><code>den.memory.forget {ts, text}</code></td><td>You pressed × on a memory line. <code>text</code> is an 80-character preview, so Claude can say what it forgot.</td></tr>
+      <tr><td><code>den.skill.forget {name}</code></td><td>You removed a special skill.</td></tr>
+      <tr><td><code>den.skill.rate {name, ok}</code></td><td>Thumbs up (<code>ok: true</code>) or thumbs down on a skill.</td></tr>
+      <tr><td><code>den.ask {question, about, entity}</code></td><td><strong>Ask</strong>, or a question from Doto's menu. <code>about</code> is the section and row you were looking at.</td></tr>
+      <tr><td><code>den.export {entity}</code></td><td>You pressed <strong>Send to Claude</strong>: the handoff.</td></tr>
+      <tr><td><code>den.snapshot {entity}</code></td><td>The reply to Claude's <code>den.snapshot</code> command.</td></tr>
+    </tbody>
+  </table>
+</div>
+<p>Section names, as used in <code>about</code>, <code>den.highlight</code> and <code>den.focus</code>: <code>persona</code>, <code>traits</code>, <code>likes</code>, <code>dislikes</code>, <code>nicknames</code>, <code>memory</code>, <code>skills</code>, <code>secrets</code>, <code>profile</code>.</p>
+
+<h2 id="commands">Commands (down)</h2>
+<p>Commands are idempotent and animate (300 ms); nothing teleports. Every command accepts <code>ack: true</code>.</p>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th scope="col">Command</th><th scope="col">Does</th></tr></thead>
+    <tbody>
+      <tr><td><code>den.load {entity, merge?}</code></td><td>Render this payload; <code>merge: true</code> patches only the sections present. The restore command on resume, and one way Claude confirms edits: rows that now match lose their pending mark.</td></tr>
+      <tr><td><code>den.refresh {}</code></td><td>Fetch <code>GET /lip/entity</code> again and render; clears every pending mark.</td></tr>
+      <tr><td><code>den.highlight {section, id?, color?, ttl?}</code></td><td>A glow on a whole card or one row (<code>id</code> = like or dislike text, nickname key, memory <code>ts</code>, skill name or secret name). <code>ttl</code> defaults to 4000 ms, <code>0</code> keeps it, <code>section: ""</code> clears.</td></tr>
+      <tr><td><code>den.focus {section}</code></td><td>Scroll that card into view.</td></tr>
+      <tr><td><code>den.snapshot {}</code></td><td>Reply with a <code>den.snapshot</code> event carrying the current payload.</td></tr>
+    </tbody>
+  </table>
+</div>
+<p>A round trip, as the guide describes it: <code>den.like.forget {text}</code> → <code>entity {action: "unlearn", likes: [text]}</code> → <code>den.refresh</code> → Doto: <em>"Forgot it. Three likes left."</em></p>
+<pre><code><span class="c">// point at the memory line Claude is talking about</span>
+{<span class="s">"type"</span>:<span class="s">"den.highlight"</span>,<span class="s">"data"</span>:{<span class="s">"section"</span>:<span class="s">"memory"</span>,<span class="s">"id"</span>:1791573980436,<span class="s">"ttl"</span>:4000}}
+{<span class="s">"type"</span>:<span class="s">"den.focus"</span>,<span class="s">"data"</span>:{<span class="s">"section"</span>:<span class="s">"skills"</span>}}
+{<span class="s">"type"</span>:<span class="s">"den.refresh"</span>,<span class="s">"data"</span>:{}}</code></pre>
+
+<h2 id="etiquette">Claude's etiquette</h2>
+<p>den's <code>GUIDE.md</code> is what Claude reads when it opens the page. Its promises, in short:</p>
+<ul>
+  <li><strong>Only what you asked about.</strong> Claude never edits a memory line you did not ask about.</li>
+  <li><strong>An undo is a "no".</strong> Claude applies it quietly.</li>
+  <li><strong>Reset asks first.</strong> One short question in the chat before <code>reset</code>.</li>
+  <li><strong>Point at what it cites.</strong> Answers to <em>Ask</em> come in the chat (two to six lines), drawn from the memory lines and the profile, with the cited rows highlighted.</li>
+  <li><strong>One line per thing you do.</strong> Short, verb first, ending on a dot; here he counts things. <code>thinking</code> while applying, <code>proud</code> when done, <code>curious</code> when asking.</li>
+  <li><strong>Quiet while you read.</strong></li>
+</ul>
+
+<h2 id="layout">Repository layout</h2>
+<pre><code>lets-unique-den/
+  unique.json            <span class="c"># manifest: domain den, engine &gt;=0.6.0, no permissions</span>
+  GUIDE.md               <span class="c"># what Claude reads on open</span>
+  CONTRACT.md            <span class="c"># the unique's behaviour spec</span>
+  README.md  CHANGELOG.md  LICENSE  icon.svg
+  package.json           <span class="c"># npm run validate</span>
+  scripts/validate.mjs   <span class="c"># zero-dependency manifest check</span>
+  schemas/               <span class="c"># unique.schema.json, entity.json and message schemas</span>
+  .github/workflows/validate.yml
+  ui/index.html  ui/den.js  ui/style.css</code></pre>
+<p>Plain HTML, ES modules and CSS: no build step, no CDN, no inline script. MIT licensed. More: <a href="https://github.com/TikoTikTok/lets-unique-den">lets-unique-den</a> has the full <code>GUIDE.md</code>, the behaviour contract (<code>CONTRACT.md</code>) and JSON Schemas for the payload and messages.</p>
+
+<nav class="doc-pager" aria-label="Previous and next page"><a class="prev" href="./graph.html"><small>← Previous</small>The graph board</a><a class="next" href="./protocol.html"><small>Next →</small>Protocol (LIP)</a></nav>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div>
+      <div class="footer-brand"><img src="../assets/logo.svg" alt="" width="28" height="28">lets</div>
+      <p>Talk to Claude through windows, not just text.</p>
+      <p>MIT © TikoTikTok · made with Claude Code</p>
+    </div>
+    <div>
+      <h2>Repositories</h2>
+      <ul>
+        <li><a href="https://github.com/TikoTikTok/lets">lets</a> <span class="dim">engine, plugin, SDK, protocol</span></li>
+        <li><a href="https://github.com/TikoTikTok/lets-unique-graph">lets-unique-graph</a> <span class="dim">the graph board</span></li>
+        <li><a href="https://github.com/TikoTikTok/lets-unique-den">lets-unique-den</a> <span class="dim">Doto's home</span></li>
+        <li><a href="https://github.com/TikoTikTok/lets-store">lets-store</a> <span class="dim">community store</span></li>
+        <li><a href="https://github.com/TikoTikTok/lets-unique-template">lets-unique-template</a> <span class="dim">pulse template</span></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Site</h2>
+      <ul>
+        <li><a href="../docs/index.html">Docs</a></li>
+        <li><a href="../docs/protocol.html">Protocol (LIP)</a></li>
+        <li><a href="../uniques.html">Uniques</a></li>
+        <li><a href="../playground.html">Playground</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

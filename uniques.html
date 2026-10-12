@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Uniques · lets</title>
-  <meta name="description" content="The lets uniques: graph, installed by default, and pulse, the template. Defaults vs the community store, and how to propose a unique.">
+  <meta name="description" content="The lets uniques: graph and den (Doto's home), installed by default, and pulse, the template. Defaults vs the community store, and how to propose a unique.">
   <meta name="theme-color" content="#120b1f">
   <link rel="icon" href="./assets/logo.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./css/site.css">
@@ -59,14 +59,32 @@
       </article>
 
       <article class="card unique-card">
+        <img src="./assets/den-icon.svg" alt="" width="64" height="64">
+        <div class="body">
+          <h2>den <span class="badge badge-ok">default</span></h2>
+          <p><strong>Doto's home.</strong> One calm page that shows what the companion has learned about you, where you edit or forget any of it by pointing.</p>
+          <div class="meta"><span class="badge">installed with lets</span><span class="badge">verified in lets-store</span><span class="badge badge-new">new in 0.6.0</span></div>
+          <ul>
+            <li>Persona, six trait sliders, likes, dislikes, nicknames, memory lines and special skills: change or forget each one where it sits.</li>
+            <li>The seven secret moves (found ones lit, the rest a "?") and how you work: pace, clicks per minute, dwell, favourite regions.</li>
+            <li>Send to Claude hands it over for a memory review in the chat; "continue" brings it back live.</li>
+          </ul>
+          <div class="btn-row">
+            <a class="btn btn-sm" href="./docs/den.html">Docs</a>
+            <a class="btn btn-sm" href="https://github.com/TikoTikTok/lets-unique-den">Repository</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card unique-card">
         <img src="./assets/pulse-icon.svg" alt="" width="64" height="64">
         <div class="body">
           <h2>pulse <span class="badge">template</span></h2>
           <p><strong>A dial you talk through.</strong> A full-screen mood dial: drag the violet ring to set a value from 0 to 100 and pick a mode chip (calm, focused, wild); the companion reacts, and Claude can move the dial itself.</p>
           <div class="meta"><span class="badge">not a default</span><span class="badge">verified in lets-store</span><span class="badge">start here to build</span></div>
           <ul>
-            <li>The whole unique contract in a handful of files.</li>
-            <li>Events <code>pulse.value</code>, <code>pulse.mode</code>; commands <code>pulse.set</code>, <code>pulse.glow</code>.</li>
+            <li>The whole unique contract in a handful of files: events <code>pulse.value</code>, <code>pulse.mode</code>; commands <code>pulse.set</code>, <code>pulse.glow</code>.</li>
+            <li>A keyboard-accessible dial, Send to Claude / resume demonstrated with a <code>session</code> block, and validate scaffolding. <span class="badge badge-new">new in 0.2.0</span></li>
             <li>Use it as a GitHub template, rename <code>pulse</code>, build yours.</li>
           </ul>
           <div class="btn-row">
@@ -88,7 +106,7 @@
     <div class="cards">
       <article class="card">
         <h3><span class="card-icon" aria-hidden="true">✦</span><code>defaults.json</code></h3>
-        <p>The list of uniques <strong>every installation gets</strong>, kept in the engine repo. The engine clones them into <code>~/.lets/uniques</code> the first time it runs, or the first time you open one. Today that list is <strong>graph</strong>. Defaults are trusted by the list and still validated before they are served; <code>LETS_NO_DEFAULTS=1</code> opts out.</p>
+        <p>The list of uniques <strong>every installation gets</strong>, kept in the engine repo. The engine clones them into <code>~/.lets/uniques</code> the first time it runs, or the first time you open one. Today that list is <strong>graph</strong> and <strong>den</strong>. Defaults are trusted by the list and still validated before they are served; <code>LETS_NO_DEFAULTS=1</code> opts out.</p>
       </article>
       <article class="card">
         <h3><span class="card-icon" aria-hidden="true">⌂</span>The store</h3>
@@ -97,6 +115,7 @@
       </article>
     </div>
     <p class="dim" style="margin-top:18px">New candidates grow in the store first; once a unique is solid it can be proposed for <code>defaults.json</code>.</p>
+    <p class="dim">Proposed next: <a href="https://github.com/TikoTikTok/lets/issues/15"><strong>waves</strong></a> (a board for <code>/lets plan</code>), <a href="https://github.com/TikoTikTok/lets/issues/16"><strong>triage</strong></a> (a card stack for verdicts) and <a href="https://github.com/TikoTikTok/lets/issues/17"><strong>pins</strong></a> (point at a screenshot), open as unique proposals in the <a href="https://github.com/TikoTikTok/lets/issues?q=label%3Aunique-proposal">lets issues</a>. Ideas, not promises.</p>
   </div>
 </section>
 
@@ -128,6 +147,7 @@
       <ul>
         <li><a href="https://github.com/TikoTikTok/lets">lets</a> <span class="dim">engine, plugin, SDK, protocol</span></li>
         <li><a href="https://github.com/TikoTikTok/lets-unique-graph">lets-unique-graph</a> <span class="dim">the graph board</span></li>
+        <li><a href="https://github.com/TikoTikTok/lets-unique-den">lets-unique-den</a> <span class="dim">Doto's home</span></li>
         <li><a href="https://github.com/TikoTikTok/lets-store">lets-store</a> <span class="dim">community store</span></li>
         <li><a href="https://github.com/TikoTikTok/lets-unique-template">lets-unique-template</a> <span class="dim">pulse template</span></li>
       </ul>

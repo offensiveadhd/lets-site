@@ -39,6 +39,7 @@
         <li><a href="./companion.html" aria-current="page">The companion (Doto)</a></li>
         <li><a href="./uniques.html">Uniques &amp; the store</a></li>
         <li><a href="./graph.html">The graph board</a></li>
+        <li><a href="./den.html">Doto's home (den)</a></li>
         <li><a href="./protocol.html">Protocol (LIP)</a></li>
         <li><a href="./architecture.html">Architecture</a></li>
       </ul>
@@ -131,6 +132,7 @@
   <li><strong>Special skills.</strong> Playbooks Claude writes for itself (below).</li>
 </ol>
 <p class="note">Nothing is inferred silently. If Doto "knows" something, there is a line in <code>memory.jsonl</code>, a field in <code>profile.json</code> or a skill file that says so. Raw mouse moves never leave the window; only the aggregates do.</p>
+<p>To see all of it in one place, open <a href="./den.html">den, Doto's home</a> with <code>/lets den</code> <span class="badge badge-new">new in 0.6.0</span>. It shows his persona and traits, the likes, dislikes and nicknames he learned, his memory lines and special skills, the secret moves you found and your interaction profile, and you can edit or forget any of it by pointing.</p>
 
 <h2 id="skills">Special skills</h2>
 <p>When Claude discovers a reusable way to help ("screenshot → nodes → questions"), it can teach Doto a <strong>special skill</strong>: <code>entity teach {name, triggers, body}</code> writes a markdown playbook to <code>~/.lets/entity/skills/&lt;slug&gt;.md</code> with frontmatter (<code>triggers</code>, <code>confidence</code>, <code>uses</code>, <code>unique</code>).</p>
@@ -232,6 +234,7 @@
       <ul>
         <li><a href="https://github.com/TikoTikTok/lets">lets</a> <span class="dim">engine, plugin, SDK, protocol</span></li>
         <li><a href="https://github.com/TikoTikTok/lets-unique-graph">lets-unique-graph</a> <span class="dim">the graph board</span></li>
+        <li><a href="https://github.com/TikoTikTok/lets-unique-den">lets-unique-den</a> <span class="dim">Doto's home</span></li>
         <li><a href="https://github.com/TikoTikTok/lets-store">lets-store</a> <span class="dim">community store</span></li>
         <li><a href="https://github.com/TikoTikTok/lets-unique-template">lets-unique-template</a> <span class="dim">pulse template</span></li>
       </ul>

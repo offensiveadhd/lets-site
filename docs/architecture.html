@@ -39,6 +39,7 @@
         <li><a href="./companion.html">The companion (Doto)</a></li>
         <li><a href="./uniques.html">Uniques &amp; the store</a></li>
         <li><a href="./graph.html">The graph board</a></li>
+        <li><a href="./den.html">Doto's home (den)</a></li>
         <li><a href="./protocol.html">Protocol (LIP)</a></li>
         <li><a href="./architecture.html" aria-current="page">Architecture</a></li>
       </ul>
@@ -66,7 +67,7 @@
 </div>
 <div class="piece">
   <h3>engine/src/host.mjs</h3>
-  <p>An <code>http.Server</code> bound to 127.0.0.1 on a free port. Routes: <code>/u/&lt;unique&gt;/…</code> (static, CSP), <code>/sdk/…</code>, <code>/uploads/…</code>, <code>/lip/stream</code> (SSE down), <code>/lip/event</code> (POST up), <code>/lip/upload</code> (blobs → disk → <code>media.*</code> event with a path), <code>/lip/drain</code> (named cursor read for hooks), <code>/lip/persona</code>. A run file <code>~/.lets/run/host-&lt;pid&gt;.json</code> publishes port and token for the hook.</p>
+  <p>An <code>http.Server</code> bound to 127.0.0.1 on a free port. Routes: <code>/u/&lt;unique&gt;/…</code> (static, CSP), <code>/sdk/…</code>, <code>/uploads/…</code>, <code>/lip/stream</code> (SSE down), <code>/lip/event</code> (POST up), <code>/lip/upload</code> (blobs → disk → <code>media.*</code> event with a path), <code>/lip/drain</code> (named cursor read for hooks), <code>/lip/persona</code>, <code>/lip/entity</code> (the companion's full state for den, token-protected; <span class="badge badge-new">new in 0.6.0</span>). A run file <code>~/.lets/run/host-&lt;pid&gt;.json</code> publishes port and token for the hook.</p>
 </div>
 <div class="piece">
   <h3>engine/src/bus.mjs</h3>
@@ -78,11 +79,11 @@
 </div>
 <div class="piece">
   <h3>engine/src/defaults.mjs</h3>
-  <p>The uniques every installation gets (<code>defaults.json</code>: graph today). Missing ones are cloned into <code>~/.lets/uniques</code> in the background when the engine starts, on demand when <code>open</code> names one, by <code>lets defaults</code>, and by <code>install.mjs</code>. Trusted by the list, still validated.</p>
+  <p>The uniques every installation gets (<code>defaults.json</code>: graph and den today). Missing ones are cloned into <code>~/.lets/uniques</code> in the background when the engine starts, on demand when <code>open</code> names one, by <code>lets defaults</code>, and by <code>install.mjs</code>. Trusted by the list, still validated.</p>
 </div>
 <div class="piece">
   <h3>engine/src/entity.mjs</h3>
-  <p>Persona, profile, memory and skills on disk. <code>brief()</code> is what Claude sees on every <code>open</code> (kept small on purpose). <code>absorbProfile()</code> folds the shell's aggregate stats into the learned profile and nudges the persona's traits. <code>teach()</code> writes a special skill.</p>
+  <p>Persona, profile, memory and skills on disk. <code>brief()</code> is what Claude sees on every <code>open</code> (kept small on purpose). <code>absorbProfile()</code> folds the shell's aggregate stats into the learned profile and nudges the persona's traits. <code>teach()</code> writes a special skill. Since 0.6.0 the <code>entity</code> tool can also <code>set</code> the persona directly, <code>unlearn</code> likes, dislikes, nicknames and memory lines, list <code>memory</code>, return the <code>full</code> state and <code>reset</code> the persona to its defaults: what den uses to apply your edits.</p>
 </div>
 <div class="piece">
   <h3>engine/src/sessions.mjs <span class="badge badge-new">new in 0.4.0</span></h3>
@@ -151,6 +152,7 @@
       <ul>
         <li><a href="https://github.com/TikoTikTok/lets">lets</a> <span class="dim">engine, plugin, SDK, protocol</span></li>
         <li><a href="https://github.com/TikoTikTok/lets-unique-graph">lets-unique-graph</a> <span class="dim">the graph board</span></li>
+        <li><a href="https://github.com/TikoTikTok/lets-unique-den">lets-unique-den</a> <span class="dim">Doto's home</span></li>
         <li><a href="https://github.com/TikoTikTok/lets-store">lets-store</a> <span class="dim">community store</span></li>
         <li><a href="https://github.com/TikoTikTok/lets-unique-template">lets-unique-template</a> <span class="dim">pulse template</span></li>
       </ul>
