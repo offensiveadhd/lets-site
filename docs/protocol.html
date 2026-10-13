@@ -215,12 +215,15 @@
       <tr><td>Window → Host</td><td><code>POST /lip/event</code> (envelope or array). Header <code>x-lets-token</code>. 202 on accept.</td></tr>
       <tr><td>Host → Window</td><td><code>GET /lip/stream?w=&lt;windowId&gt;</code>: Server-Sent Events, <code>data:</code> = envelope JSON. Heartbeat comment every 15 s.</td></tr>
       <tr><td>Window → Host (blobs)</td><td><code>POST /lip/upload?w=&amp;source=&amp;component=</code> raw body, <code>content-type</code> = mime. Returns <code>{path,w?,h?,bytes,mime}</code>.</td></tr>
+      <tr><td>Window → Host (runner info) <span class="badge badge-new">0.7.0</span></td><td><code>GET /lip/run/info?w=&lt;windowId&gt;</code>. Header <code>x-lets-token</code>. Returns whether the runner is enabled, whether this window's unique is allowed on this machine, the languages the manifest declares in <code>permissions.exec</code>, which of them this machine can run and with which sandbox, and the limits.</td></tr>
+      <tr><td>Window → Host (runner consent) <span class="badge badge-new">0.7.0</span></td><td><code>POST /lip/run/consent?w=&lt;windowId&gt;</code> body <code>{"allow": true}</code>. Records (or, with <code>false</code>, revokes) the human's consent for the window's unique on this machine. Returns <code>{"allowed": true}</code>.</td></tr>
+      <tr><td>Window → Host (run) <span class="badge badge-new">0.7.0</span></td><td><code>POST /lip/run?w=&lt;windowId&gt;</code> body <code>{lang, code, stdin?, timeoutMs?, run?}</code>. Streams the run as NDJSON (<code>application/x-ndjson</code>): one object per line with <code>stream</code> = <code>system</code>, <code>stdout</code> or <code>stderr</code>, then a last line with <code>done:true, exit, ms, timedOut, killed, sandbox</code>. Failures before the process starts are plain JSON with a 4xx status (<code>consent</code>, <code>disabled</code>, <code>not-declared</code>, <code>unavailable</code>, <code>busy</code>, <code>bad-request</code>). See <a href="https://github.com/TikoTikTok/lets/blob/main/docs/RUNNER.md"><code>docs/RUNNER.md</code></a>.</td></tr>
       <tr><td>Claude ↔ Host</td><td>MCP (stdio). <code>listen</code> long-polls the up-queue; <code>send</code> enqueues down-commands.</td></tr>
       <tr><td>Hooks → Host</td><td><code>GET /lip/drain?cursor=&lt;name&gt;</code> returns and advances a named cursor; used by the <code>UserPromptSubmit</code> hook so events reach Claude without a tool call.</td></tr>
     </tbody>
   </table>
 </div>
-<p class="note"><strong>Security.</strong> Loopback only; a per-host random token is required on every request (query <code>t</code>, header, or the window's URL fragment at open); CSP on served pages is <code>default-src 'self'</code>; uploads are size-capped (default 25 MB) and written only under the uploads dir; manifests are schema-validated before a unique is served.</p>
+<p class="note"><strong>Security.</strong> Loopback only; a per-host random token is required on every request (query <code>t</code>, header, or the window's URL fragment at open); CSP on served pages is <code>default-src 'self'</code>; uploads are size-capped (default 25 MB) and written only under the uploads dir; manifests are schema-validated before a unique is served. The runner (<code>/lip/run</code>) only runs after the human allowed that unique on that machine.</p>
 
 <h2 id="queues">5. Queues &amp; cursors</h2>
 <p>The host keeps one ring buffer of up-events (default 2000). Readers hold <strong>cursors</strong>: <code>claude</code> (the <code>listen</code> tool), <code>hook</code> (the prompt hook), plus any named cursor. <code>listen</code> returns events after its cursor and advances it; it blocks up to <code>wait_ms</code> when nothing is pending. Noise is coalesced before it reaches the buffer: pointer moves never enter it, and repeated <code>graph.changed</code> within 400 ms collapse to the latest.</p>
@@ -239,7 +242,7 @@
   <span class="s">"capabilities"</span>: [<span class="s">"entity"</span>, <span class="s">"chat"</span>, <span class="s">"components"</span>, <span class="s">"media.image"</span>, <span class="s">"clipboard"</span>],
   <span class="s">"events"</span>: { <span class="s">"graph.node.select"</span>: { <span class="s">"summary"</span>: <span class="s">"User selected nodes"</span>, <span class="s">"schema"</span>: <span class="s">"schemas/node.select.json"</span> } },
   <span class="s">"commands"</span>: { <span class="s">"graph.node.add"</span>: { <span class="s">"summary"</span>: <span class="s">"Add a node"</span>, <span class="s">"schema"</span>: <span class="s">"schemas/node.add.json"</span> } },
-  <span class="s">"permissions"</span>: { <span class="s">"fs.write"</span>: [<span class="s">"uploads"</span>], <span class="s">"net"</span>: [] },
+  <span class="s">"permissions"</span>: { <span class="s">"fs.write"</span>: [<span class="s">"uploads"</span>], <span class="s">"net"</span>: [], <span class="s">"exec"</span>: [] },
   <span class="s">"session"</span>: { <span class="s">"export"</span>: <span class="s">"graph.export"</span>, <span class="s">"snapshot"</span>: <span class="s">"graph.snapshot"</span>, <span class="s">"restore"</span>: <span class="s">"graph.load"</span> },
   <span class="s">"author"</span>: { <span class="s">"name"</span>: <span class="s">"…"</span>, <span class="s">"url"</span>: <span class="s">"…"</span> },
   <span class="s">"license"</span>: <span class="s">"MIT"</span>,
@@ -254,6 +257,7 @@
   <li>Unknown top-level keys are kept (forward compatibility) but ignored.</li>
   <li><code>lip</code> major must match the host's.</li>
   <li><code>session</code> (optional, <span class="badge badge-new">0.4.0</span>) names the export / snapshot / restore types for handoff (§3.1b); each must start with one of the unique's domains. Without it the host assumes <code>&lt;domain&gt;.export</code>, <code>&lt;domain&gt;.snapshot</code>, <code>&lt;domain&gt;.load</code>.</li>
+  <li><code>permissions.exec</code> (optional, <span class="badge badge-new">0.7.0</span>) lists the languages the unique may ask the host to run, for example <code>["python", "javascript"]</code>. The host refuses <code>/lip/run</code> for any other language, and for a unique without <code>exec</code>.</li>
 </ol>
 
 <h2 id="guide">7. Guide (<code>GUIDE.md</code>)</h2>

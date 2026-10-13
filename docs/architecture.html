@@ -69,7 +69,8 @@
 </div>
 <div class="piece">
   <h3>engine/src/host.mjs</h3>
-  <p>An <code>http.Server</code> bound to 127.0.0.1 on a free port. Routes: <code>/u/&lt;unique&gt;/…</code> (static, CSP), <code>/sdk/…</code>, <code>/uploads/…</code>, <code>/lip/stream</code> (SSE down), <code>/lip/event</code> (POST up), <code>/lip/upload</code> (blobs → disk → <code>media.*</code> event with a path), <code>/lip/drain</code> (named cursor read for hooks), <code>/lip/persona</code>, <code>/lip/entity</code> (the companion's full state for den, token-protected; <span class="badge badge-new">new in 0.6.0</span>). A run file <code>~/.lets/run/host-&lt;pid&gt;.json</code> publishes port and token for the hook.</p>
+  <p>An <code>http.Server</code> bound to 127.0.0.1 on a free port. Routes: <code>/u/&lt;unique&gt;/…</code> (static, CSP), <code>/sdk/…</code>, <code>/uploads/…</code>, <code>/lip/stream</code> (SSE down), <code>/lip/event</code> (POST up), <code>/lip/upload</code> (blobs → disk → <code>media.*</code> event with a path), <code>/lip/drain</code> (named cursor read for hooks), <code>/lip/persona</code>, <code>/lip/entity</code> (the companion's full state for den, token-protected; <span class="badge badge-new">new in 0.6.0</span>), and <code>/lip/run/info</code>, <code>/lip/run/consent</code>, <code>/lip/run</code> (the runner, below). A run file <code>~/.lets/run/host-&lt;pid&gt;.json</code> publishes port and token for the hook.</p>
+  <p>The runner <span class="badge badge-new">new in 0.7.0</span> runs the program a window holds in a sandboxed subprocess in a throwaway job folder (Python under an audit hook, JavaScript and TypeScript under Node's permission model), only after the human allowed that unique on this machine, and streams the output back as NDJSON; Claude gets a matching <code>run</code> tool.</p>
 </div>
 <div class="piece">
   <h3>engine/src/bus.mjs</h3>
@@ -117,7 +118,7 @@
   <dt>Events are semantic</dt>
   <dd>Pointer moves never cross to the model; the shell turns behaviour into aggregates (<code>entity.profile</code>). Tokens are spent on meaning.</dd>
   <dt>Static uniques</dt>
-  <dd>Community mediums are HTML/JS served under CSP from loopback with a per-host token. The host runs none of their code. The manifest declares domains, capabilities and permissions up front, and the store pins commits and manifest hashes.</dd>
+  <dd>Community mediums are HTML/JS served under CSP from loopback with a per-host token. The host runs none of their code (the runner executes the program a window holds, never the unique itself). The manifest declares domains, capabilities and permissions up front, and the store pins commits and manifest hashes.</dd>
   <dt>The guide is data</dt>
   <dd>Each unique ships <code>GUIDE.md</code>; the engine hands it to Claude on <code>open</code>. New mediums teach Claude how to behave without changing the engine or the skill.</dd>
   <dt>The companion is persistent and honest</dt>
