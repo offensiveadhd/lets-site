@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-label="mors">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="42%" r="70%">
+      <stop offset="0" stop-color="#2b1a52"/>
+      <stop offset="1" stop-color="#120b1f"/>
+    </radialGradient>
+    <radialGradient id="orb" cx="38%" cy="32%" r="75%">
+      <stop offset="0" stop-color="#e3ccff"/>
+      <stop offset=".45" stop-color="#a66bff"/>
+      <stop offset="1" stop-color="#5a2fb0"/>
+    </radialGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2.2" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="64" height="64" rx="15" fill="url(#bg)"/>
+  <rect x=".75" y=".75" width="62.5" height="62.5" rx="14.25" fill="none" stroke="#5a44a0" stroke-opacity=".6" stroke-width="1.5"/>
+  <!-- the tape: two faint tracks -->
+  <g fill="#a66bff" fill-opacity=".07">
+    <rect x="4" y="17.5" width="56" height="14" rx="7"/>
+    <rect x="4" y="35" width="56" height="14" rx="7"/>
+  </g>
+  <!-- the human's signal: dot, dash, dot in cyan -->
+  <g filter="url(#glow)" fill="#6bf0ff">
+    <circle cx="9.5" cy="24.5" r="3.5"/>
+    <rect x="17" y="21" width="13" height="7" rx="3.5"/>
+    <circle cx="37.5" cy="24.5" r="3.5"/>
+  </g>
+  <!-- Claude's reply: dash, dot in magenta -->
+  <g filter="url(#glow)" fill="#ff6bd6">
+    <rect x="6" y="38.5" width="13" height="7" rx="3.5"/>
+    <circle cx="26.5" cy="42" r="3.5"/>
+  </g>
+  <!-- Doto, just after the last dot -->
+  <g filter="url(#glow)">
+    <circle cx="51" cy="24" r="6" fill="url(#orb)"/>
+  </g>
+  <circle cx="49.15" cy="21.9" r="1.5" fill="#fff" fill-opacity=".75"/>
+  <circle cx="48.9" cy="24.6" r=".98" fill="#120b1f"/>
+  <circle cx="53.1" cy="24.6" r=".98" fill="#120b1f"/>
+</svg>
