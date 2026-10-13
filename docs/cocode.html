@@ -179,7 +179,7 @@
   <li>streams stdout and stderr into the entry, and always closes it with the exit code and the time it took;</li>
   <li>says one Doto line: <em>"Ran it. Exit 0, 3 lines."</em> or <em>"Failed on line 4. See Output."</em> If it failed because your intent was unclear, Claude says what it assumed and offers the fix as a ghost or a note on the line, not a rewrite.</li>
 </ol>
-<p>If the host is not connected, Run shows a toast and does nothing. If Claude is away, the entry still opens and a toast says <em>"Doto is away. The run starts with your next message in Claude Code."</em> (at most once every 30 seconds). A run with no output for 60 seconds shows <em>no answer yet</em> (status <code>lost</code>) until output arrives.</p>
+<p>If the host is not connected, Run shows a toast and does nothing. If Claude is away, the entry still opens and a toast says <em>"Doto is away. The run starts with your next message in Claude Code."</em> (at most once every 30 seconds). A run with no output for 60 seconds shows <em>no answer yet</em>; output that arrives later puts it back to <em>running</em>, and <code>done: true</code> closes it as usual.</p>
 
 <h2 id="talk">Talking in code</h2>
 <p>In cocode, the code is the message. There are three ways to talk:</p>
