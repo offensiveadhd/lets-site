@@ -208,7 +208,7 @@
 
 <h2 id="handoff">Send to Claude &amp; resume</h2>
 <p><strong>Send to Claude</strong> is a handoff. The window sends <code>cocode.export</code>: your code, its language, the caret and selection, the latest build, the last three runs (output tails of 2,000 characters), the notes and the ghost stats. The engine saves it as a session and closes the window, with a cheer from Doto. Claude answers in the Claude Code chat, not in the window.</p>
-<p>The window names the session after your first non-empty line and the language, such as <code>for each user in users · pseudo</code>; Claude then labels it in three to six words. Say <em>continue</em> (or <code>/lets cocode resume</code>) and the window comes back with <code>cocode.load</code>: your text, language, build, runs, notes and caret, with no ghost or accept events. Claude carries on with ghosts and builds. If the tab also kept a draft, a load in the first 8 seconds wins over it.</p>
+<p>The window names the session after your first non-empty line and the language, such as <code>for each user in users · pseudo</code>; Claude then labels it in three to six words. Say <em>continue</em> (or <code>/lets cocode resume</code>) and the window comes back with <code>cocode.load</code>: your text, language, build, runs, notes and caret, with no ghost or accept events. Claude carries on with ghosts and builds. If the tab also kept a draft, the load replaces it.</p>
 <p>The manifest's <code>session</code> block names the roles:</p>
 <pre><code>"session": { "export": "cocode.export", "snapshot": "cocode.snapshot", "restore": "cocode.load" }</code></pre>
 
