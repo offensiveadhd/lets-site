@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Docs · lets</title>
-  <meta name="description" content="Documentation for lets: install, the companion Doto, uniques, the graph board, den (Doto's home), cocode (talk in code), the LIP protocol and the architecture.">
+  <meta name="description" content="Documentation for lets: install, the companion Doto, uniques, the graph board, den (Doto's home), cocode (talk in code), mors (talk in Morse), the LIP protocol and the architecture.">
   <meta name="theme-color" content="#120b1f">
   <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../css/site.css">
@@ -41,6 +41,7 @@
         <li><a href="./graph.html">The graph board</a></li>
         <li><a href="./den.html">Doto's home (den)</a></li>
         <li><a href="./cocode.html">Talk in code (cocode)</a></li>
+        <li><a href="./mors.html">Talk in Morse (mors)</a></li>
         <li><a href="./protocol.html">Protocol (LIP)</a></li>
         <li><a href="./architecture.html">Architecture</a></li>
       </ul>
@@ -76,6 +77,10 @@
     <p>The first store-only unique: an editor for any language, where Claude predicts your next lines and runs the real program. <span class="badge badge-new">new</span></p>
   </article>
   <article class="card">
+    <h2><a class="stretch" href="./mors.html">Talk in Morse (mors)</a></h2>
+    <p>A store-only unique: one key, one tape. Key your message in dots and dashes; Claude reads it as a prompt and can answer in Morse. <span class="badge badge-new">new</span></p>
+  </article>
+  <article class="card">
     <h2><a class="stretch" href="./protocol.html">Protocol (LIP)</a></h2>
     <p>The Lets Interaction Protocol: envelope, domains, core messages, transport, security, manifest and versioning.</p>
   </article>
@@ -92,7 +97,7 @@
     <thead><tr><th scope="col">Layer</th><th scope="col">What it does</th></tr></thead>
     <tbody>
       <tr><td><strong>Engine</strong></td><td>A zero-dependency Node MCP server. Hosts windows on loopback, carries the protocol, keeps the companion's memory, routes multi-task work to the cheapest trustworthy model, installs community mediums from git.</td></tr>
-      <tr><td><strong>Uniques</strong></td><td>The interactive mediums: static web apps that speak LIP, each in its own repository. The engine installs the <strong>default</strong> ones from <code>defaults.json</code> on first use. Today they are <a href="./graph.html">graph</a> and <a href="./den.html">den</a>, Doto's home. The store holds the rest, starting with <a href="./cocode.html">cocode</a>, a code window you talk through.</td></tr>
+      <tr><td><strong>Uniques</strong></td><td>The interactive mediums: static web apps that speak LIP, each in its own repository. The engine installs the <strong>default</strong> ones from <code>defaults.json</code> on first use. Today they are <a href="./graph.html">graph</a> and <a href="./den.html">den</a>, Doto's home. The store holds the rest, starting with <a href="./cocode.html">cocode</a>, a code window you talk through, and <a href="./mors.html">mors</a>, a Morse key you talk through.</td></tr>
       <tr><td><strong>Shell + SDK</strong></td><td>What every unique gets for free: the companion entity, chat panel, runtime components (sliders, options, forms, image paste…), toasts and the theme.</td></tr>
     </tbody>
   </table>
@@ -130,6 +135,7 @@
         <li><a href="https://github.com/TikoTikTok/lets-unique-graph">lets-unique-graph</a> <span class="dim">the graph board</span></li>
         <li><a href="https://github.com/TikoTikTok/lets-unique-den">lets-unique-den</a> <span class="dim">Doto's home</span></li>
         <li><a href="https://github.com/TikoTikTok/lets-unique-cocode">lets-unique-cocode</a> <span class="dim">talk in code</span></li>
+        <li><a href="https://github.com/TikoTikTok/lets-unique-mors">lets-unique-mors</a> <span class="dim">talk in Morse</span></li>
         <li><a href="https://github.com/TikoTikTok/lets-store">lets-store</a> <span class="dim">community store</span></li>
         <li><a href="https://github.com/TikoTikTok/lets-unique-template">lets-unique-template</a> <span class="dim">pulse template</span></li>
       </ul>

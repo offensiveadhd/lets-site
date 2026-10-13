@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Uniques · lets</title>
-  <meta name="description" content="The lets uniques: graph and den (Doto's home), installed by default, cocode (talk in code) from the store, and pulse, the template. Defaults vs the community store, and how to propose a unique.">
+  <meta name="description" content="The lets uniques: graph and den (Doto's home), installed by default, cocode (talk in code) and mors (talk in Morse) from the store, and pulse, the template. Defaults vs the community store, and how to propose a unique.">
   <meta name="theme-color" content="#120b1f">
   <link rel="icon" href="./assets/logo.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./css/site.css">
@@ -95,6 +95,24 @@
       </article>
 
       <article class="card unique-card">
+        <img src="./assets/mors-icon.svg" alt="" width="64" height="64">
+        <div class="body">
+          <h2>mors <span class="badge">in the store</span></h2>
+          <p><strong>Talk in Morse.</strong> One key, one tape. You key your message in dots and dashes and send it to Claude, who reads it as a prompt: one line saying what it read, then it does what the message asks.</p>
+          <div class="meta"><span class="badge">not a default</span><span class="badge">verified in lets-store</span><span class="badge badge-new">new</span></div>
+          <ul>
+            <li>Hold <kbd>Space</kbd> or the key: a short press is a dot, a long one a dash. A pause closes the letter, a longer one the word. With <em>auto</em> on, the speed follows your hand.</li>
+            <li>It assumes you know Morse: just the key, the tape and Send to Claude. Only Doto helps, from his menu: read it back, spell a word (<kbd>Tab</kbd> keys a letter for you), check what you keyed, the chart, a full controller.</li>
+            <li>Claude can answer in Morse on a second track of the tape, with its own lamp and a lower tone.</li>
+          </ul>
+          <div class="btn-row">
+            <a class="btn btn-sm" href="./docs/mors.html">Docs</a>
+            <a class="btn btn-sm" href="https://github.com/TikoTikTok/lets-unique-mors">Repository</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card unique-card">
         <img src="./assets/pulse-icon.svg" alt="" width="64" height="64">
         <div class="body">
           <h2>pulse <span class="badge">template</span></h2>
@@ -128,7 +146,7 @@
       </article>
       <article class="card">
         <h3><span class="card-icon" aria-hidden="true">⌂</span>The store</h3>
-        <p>Where <strong>community uniques live</strong>. <a href="https://github.com/TikoTikTok/lets-store">lets-store</a> is a git repository whose <code>index.json</code> points at uniques by git URL. Install with <code>/lets store &lt;name&gt;</code>: you see the permissions and the verified flag, and nothing installs until you say yes. <a href="./docs/cocode.html"><strong>cocode</strong></a> is the first store-only unique by the maintainers.</p>
+        <p>Where <strong>community uniques live</strong>. <a href="https://github.com/TikoTikTok/lets-store">lets-store</a> is a git repository whose <code>index.json</code> points at uniques by git URL. Install with <code>/lets store &lt;name&gt;</code>: you see the permissions and the verified flag, and nothing installs until you say yes. <a href="./docs/cocode.html"><strong>cocode</strong></a> and <a href="./docs/mors.html"><strong>mors</strong></a> are the first store-only uniques by the maintainers.</p>
         <p><a class="more" href="./docs/uniques.html#verified">What "verified" means →</a></p>
       </article>
     </div>
@@ -167,6 +185,7 @@
         <li><a href="https://github.com/TikoTikTok/lets-unique-graph">lets-unique-graph</a> <span class="dim">the graph board</span></li>
         <li><a href="https://github.com/TikoTikTok/lets-unique-den">lets-unique-den</a> <span class="dim">Doto's home</span></li>
         <li><a href="https://github.com/TikoTikTok/lets-unique-cocode">lets-unique-cocode</a> <span class="dim">talk in code</span></li>
+        <li><a href="https://github.com/TikoTikTok/lets-unique-mors">lets-unique-mors</a> <span class="dim">talk in Morse</span></li>
         <li><a href="https://github.com/TikoTikTok/lets-store">lets-store</a> <span class="dim">community store</span></li>
         <li><a href="https://github.com/TikoTikTok/lets-unique-template">lets-unique-template</a> <span class="dim">pulse template</span></li>
       </ul>
