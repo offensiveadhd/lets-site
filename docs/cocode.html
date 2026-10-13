@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Talk in code (cocode) · lets</title>
+  <meta name="description" content="The cocode unique: an editor for any language, even one that doesn't exist. Claude predicts your next lines as a ghost you accept with Tab, prepares the real program in the background so Run is instant, and reads what you send as a question, a task or a note.">
+  <meta name="theme-color" content="#120b1f">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../css/site.css">
+  <script type="module" src="../js/site.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../assets/logo.svg" alt="" width="34" height="34">lets</a>
+    <button class="btn btn-sm nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav class="site-nav" id="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="../docs/index.html" aria-current="page">Docs</a></li>
+        <li><a href="../uniques.html">Uniques</a></li>
+        <li><a href="../playground.html">Playground</a></li>
+        <li><a href="../index.html#install">Install</a></li>
+        <li><a href="https://github.com/TikoTikTok/lets">GitHub</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap docs-layout">
+  <aside class="docs-side" aria-label="Documentation">
+    <button class="btn btn-sm docs-nav-toggle" type="button" aria-expanded="false" aria-controls="docs-nav">Docs pages <span aria-hidden="true">▾</span></button>
+    <h2>Documentation</h2>
+    <nav class="docs-nav" id="docs-nav" aria-label="Docs pages">
+      <ul>
+        <li><a href="./index.html">Overview</a></li>
+        <li><a href="./getting-started.html">Getting started</a></li>
+        <li><a href="./companion.html">The companion (Doto)</a></li>
+        <li><a href="./uniques.html">Uniques &amp; the store</a></li>
+        <li><a href="./graph.html">The graph board</a></li>
+        <li><a href="./den.html">Doto's home (den)</a></li>
+        <li><a href="./cocode.html" aria-current="page">Talk in code (cocode)</a></li>
+        <li><a href="./protocol.html">Protocol (LIP)</a></li>
+        <li><a href="./architecture.html">Architecture</a></li>
+      </ul>
+    </nav>
+  </aside>
+  <main id="main" class="doc">
+<h1>Talk in code (cocode) <span class="badge badge-new">new</span></h1>
+<div class="unique-card" style="margin-bottom:1.6em">
+  <img src="../assets/cocode-icon.svg" width="64" height="64" alt="The cocode icon: two angle brackets around two written lines and a dim, blurred cyan ghost line, with Doto, a small violet dot, at the caret.">
+  <div class="body">
+    <p class="lead" style="margin:0"><strong>Type in any language, even one that doesn't exist.</strong> Claude predicts your next lines, prepares the real program while you type so Run is instant, and reads what you send as a message written in code. cocode lives in the store: it is not a default.</p>
+  </div>
+</div>
+
+<nav class="toc" aria-label="On this page">
+  <strong>On this page</strong>
+  <ol>
+    <li><a href="#what">What it is</a></li>
+    <li><a href="#install">Install</a></li>
+    <li><a href="#do">What you can do</a></li>
+    <li><a href="#keys">Mouse &amp; keyboard</a></li>
+    <li><a href="#ghost">The ghost</a></li>
+    <li><a href="#build">Build ahead &amp; Run</a></li>
+    <li><a href="#talk">Talking in code</a></li>
+    <li><a href="#handoff">Send to Claude &amp; resume</a></li>
+    <li><a href="#events">Events (up)</a></li>
+    <li><a href="#commands">Commands (down)</a></li>
+    <li><a href="#etiquette">Claude's etiquette</a></li>
+    <li><a href="#layout">Repository layout</a></li>
+  </ol>
+</nav>
+
+<h2 id="what">What it is</h2>
+<p>You type in any language: a real one, one you made up, or plain pseudo-code. The window never judges it. Three things happen around what you type:</p>
+<ol>
+  <li><strong>Prediction.</strong> Claude reads each settled change and offers the next lines as a <em>ghost</em>: dim, italic, slightly blurred text at the caret. It is not in the document until you press <kbd>Tab</kbd>. When Claude is away, a small local predictor offers weaker ghosts, so the page still feels alive.</li>
+  <li><strong>The build.</strong> While you type, Claude prepares the real program (Python, JavaScript, …) for the current revision and puts it in the Build pane. <strong>Run</strong> then executes that build at once instead of starting from zero, and the output streams into the Output pane.</li>
+  <li><strong>Talking in code.</strong> <strong>Ask</strong> and <strong>Send to Claude</strong> carry the code as the message. Claude works out what you mean with it (a question, something to explain, something to do, a bug, a note) and answers in that register.</li>
+</ol>
+<p>An empty editor shows <em>seeds</em>: starting points Claude draws from memory and your saved sessions. cocode stores nothing on the host. The document lives in the window, and in a saved session after Send to Claude.</p>
+
+<h2 id="install">Install</h2>
+<p>cocode is not in the engine's <code>defaults.json</code>. It lives in <a href="https://github.com/TikoTikTok/lets-store">lets-store</a>, so you install it once:</p>
+<pre><code>/lets store cocode      <span class="c"># inspect → confirm</span>
+/lets cocode            <span class="c"># open it</span></code></pre>
+<p>Claude shows you the inspection (permissions, problems, the verified flag) and copies it into <code>~/.lets/uniques/cocode</code> only after you say yes. Manual: clone <a href="https://github.com/TikoTikTok/lets-unique-cocode">the repo</a> into <code>~/.lets/uniques/cocode</code>.</p>
+<p>cocode needs engine 0.4.0 or later (<code>"engine": "&gt;=0.4.0"</code>) for handoff sessions; it needs no new engine endpoint. It asks for no permissions: <code>"fs.write": []</code>, <code>"net": []</code>. The window writes nothing and runs nothing itself: Claude runs your program with its own tools (<a href="#build">below</a>).</p>
+<p class="note note-new">This page describes <strong>cocode 0.1.0</strong> (2026-10-13). Like the other lets repositories, its repository is private for now.</p>
+
+<h2 id="do">What you can do</h2>
+<p>A toolbar sits on top. Below it, the editor on the left and a rail on the right with two panes, <strong>Build</strong> and <strong>Output</strong>.</p>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th scope="col">Part</th><th scope="col">You see</th><th scope="col">You can do</th></tr></thead>
+    <tbody>
+      <tr><td><strong>toolbar</strong></td><td>The status dot, "cocode", the language chip, <strong>Suggest</strong>, <strong>Run</strong>, <strong>Ask</strong>, the intent select and <strong>Send to Claude</strong>; at the right end Undo, Redo, Build, Output, chat, Doto and <code>?</code></td><td>Click the language chip to type a language name: <kbd>Enter</kbd> sets it, <kbd>Esc</kbd> cancels, an empty name goes back to the detected one.</td></tr>
+      <tr><td><strong>editor</strong></td><td>A gutter with line numbers and note markers, your code with syntax colours, the current line tinted. Monospace 13 px, no wrapping (long lines scroll sideways), tab size 4.</td><td>Type in any language. The chip detects <code>python</code>, <code>javascript</code>, <code>typescript</code>, <code>go</code>, <code>rust</code>, <code>bash</code>, <code>sql</code>, <code>c</code>, <code>cpp</code>, <code>java</code>, <code>ruby</code>, <code>html</code>, <code>css</code> and <code>json</code>, and shows <code>pseudo</code> when nothing fits. A name you type works too: 1 to 24 characters, lowercase, <code>a-z0-9+#.-_</code> (<code>my-lang</code>).</td></tr>
+      <tr><td><strong>ghost</strong></td><td>The next lines Claude predicts: the first one inline after the caret, the rest in a small floating block under the caret line, in cyan, italic, slightly blurred and a little tilted. The status line says whose it is.</td><td><kbd>Tab</kbd> accepts it, <kbd>Ctrl</kbd>+<kbd>→</kbd> takes one word, <kbd>Esc</kbd> dismisses it, <kbd>Alt</kbd>+<kbd>]</kbd> / <kbd>Alt</kbd>+<kbd>[</kbd> cycle the alternatives. <strong>Suggest</strong> (<kbd>Alt</kbd>+<kbd>\</kbd>) asks for one now.</td></tr>
+      <tr><td><strong>Build pane</strong></td><td>The real program for one revision: its language, rev and status (building, ready, failed, or <em>stale for rev N</em> once you typed past it), the code with the same highlighting, and Claude's notes under it</td><td>Pick a target (<code>auto</code>, <code>python</code>, <code>javascript</code>, <code>typescript</code>, <code>bash</code>, <code>go</code>, <code>rust</code>, or type a name), press <strong>Prepare</strong> to ask for a build, <strong>Copy</strong> the code.</td></tr>
+      <tr><td><strong>Output pane</strong></td><td>Runs, newest first: id, language, rev, duration, an exit pill, then stdout and stderr (stderr in a dim red). Under them, <em>Notes</em>: every note Claude pinned to a line.</td><td>Read. The window keeps the last 10 runs.</td></tr>
+      <tr><td><strong>Ask</strong></td><td>A one-line form under the toolbar, with a chip naming what the question is about (<em>line 3</em>, <em>lines 2–7</em>)</td><td><kbd>Ctrl</kbd>+<kbd>K</kbd> opens it, <kbd>Enter</kbd> asks. Or type a line that starts with <code>??</code> and press <kbd>Enter</kbd>: it asks without the form. The answer comes in the chat.</td></tr>
+      <tr><td><strong>Send to Claude</strong></td><td>The intent select next to the button: <em>you decide</em> (the default), <em>a question</em>, <em>explain this</em>, <em>do this</em>, <em>fix this</em>, <em>review this</em>, <em>just a note</em></td><td>Pick an intent or leave it to Claude, then press the button (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Enter</kbd>). The window closes and Claude answers in the Claude Code chat.</td></tr>
+    </tbody>
+  </table>
+</div>
+<p>The status line under the editor reads like this: <code>Ln 3, Col 16 · 12 lines · rev 12 · ghost: claude · build: ready rev 11</code>. The ghost part says <code>claude</code> or <code>local</code>; the build part says <code>ready rev N</code>, <code>stale rev N</code>, <code>building</code> or <code>failed</code>. Below 1100 px the rail becomes a bottom drawer with Build | Output tabs; <kbd>Ctrl</kbd>+<kbd>B</kbd> and <kbd>Ctrl</kbd>+<kbd>J</kbd> toggle each pane.</p>
+<p><strong>An empty page.</strong> An empty editor says <em>"Type in any language. Even one that doesn't exist."</em> and shows a <em>start from</em> list: Claude's seeds first, then your recent code from this browser. Each one is a button with a label, a language badge and a two-line preview; picking one fills the editor. <kbd>Esc</kbd> or typing hides the list. When the window opens empty, Claude sends two to four seeds drawn from your saved sessions ("Continue user welcome script"), Doto's special skills and what the project is about, and Doto says <em>"Empty page. Start anywhere."</em></p>
+<p><strong>What stays in the browser.</strong> Your text, language and pane state are kept in <code>sessionStorage</code> for this tab, so a reload keeps the code. <code>localStorage</code> keeps preferences (rail open or closed, font size, wrap) and your last 10 recents, recorded on Run and on Send. Nothing else is stored. Without a host, the editor still works locally; Run, Ask and Send are off.</p>
+<p><strong>Doto on this page.</strong> He sits by the caret. Click him for <em>Finish this</em>, <em>Explain this line</em> (or <em>Explain the selection</em>), <em>Run it</em>, <em>Show the real code</em> and <em>Open chat</em>. He reacts once per thing you do, at most: a <a href="./companion.html#expressions">wink</a> when you accept a ghost, a nod when a build lands ready, a cheer when a run exits 0 and when you send to Claude, an oops when a run fails, and a sparkle when you accept three ghosts in a row.</p>
+
+<h2 id="keys">Mouse &amp; keyboard</h2>
+<p>With the editor focused, unless the row says otherwise:</p>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th scope="col">Key</th><th scope="col">Does</th></tr></thead>
+    <tbody>
+      <tr><td><kbd>Tab</kbd></td><td>Accept the ghost; otherwise insert two spaces (or indent the selected lines)</td></tr>
+      <tr><td><kbd>Shift</kbd>+<kbd>Tab</kbd></td><td>Outdent</td></tr>
+      <tr><td><kbd>Ctrl</kbd>+<kbd>→</kbd></td><td>Accept the ghost's first word</td></tr>
+      <tr><td><kbd>Alt</kbd>+<kbd>]</kbd> / <kbd>Alt</kbd>+<kbd>[</kbd></td><td>Next / previous alternative</td></tr>
+      <tr><td><kbd>Esc</kbd></td><td>Dismiss the ghost; then close the innermost open thing (ask form, note, help, empty state)</td></tr>
+      <tr><td><kbd>Alt</kbd>+<kbd>\</kbd></td><td>Ask for a ghost now (Suggest)</td></tr>
+      <tr><td><kbd>Enter</kbd></td><td>New line with the current indentation, one level deeper after a line ending in <code>:</code>, <code>{</code> or <code>(</code>; on a <code>??</code> line it also asks Claude</td></tr>
+      <tr><td><kbd>Ctrl</kbd>+<kbd>Enter</kbd></td><td>Run</td></tr>
+      <tr><td><kbd>Ctrl</kbd>+<kbd>K</kbd></td><td>Ask</td></tr>
+      <tr><td><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Enter</kbd></td><td>Send to Claude</td></tr>
+      <tr><td><kbd>Ctrl</kbd>+<kbd>Z</kbd> / <kbd>Ctrl</kbd>+<kbd>Y</kbd> / <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd></td><td>Undo / redo: cocode's own stack, 200 steps, typing within 600 ms counts as one step</td></tr>
+      <tr><td><kbd>Ctrl</kbd>+<kbd>D</kbd></td><td>Duplicate the line (or the selection)</td></tr>
+      <tr><td><kbd>Alt</kbd>+<kbd>↑</kbd> / <kbd>Alt</kbd>+<kbd>↓</kbd></td><td>Move the line (or the selection)</td></tr>
+      <tr><td><kbd>Ctrl</kbd>+<kbd>;</kbd></td><td>Comment the line with the language's marker: <code>#</code> for python, bash and pseudo, <code>//</code> otherwise</td></tr>
+      <tr><td><kbd>Ctrl</kbd>+<kbd>/</kbd></td><td>The shell's chat, as in every unique</td></tr>
+      <tr><td><kbd>Ctrl</kbd>+<kbd>B</kbd> / <kbd>Ctrl</kbd>+<kbd>J</kbd></td><td>Toggle the Build / Output pane</td></tr>
+      <tr><td><kbd>Ctrl</kbd>+<kbd>M</kbd></td><td>Toggle <em>Tab moves focus</em>: the editor stops trapping <kbd>Tab</kbd>, so the keyboard can leave it (the status line says so)</td></tr>
+      <tr><td><kbd>?</kbd> (outside the editor)</td><td>The shortcuts overlay</td></tr>
+      <tr><td><kbd>1</kbd> / <kbd>2</kbd> (outside the editor)</td><td>Focus the editor / the Output pane</td></tr>
+    </tbody>
+  </table>
+</div>
+<p>Every control is reachable with <kbd>Tab</kbd> in page order and has an accessible name. The code area is labelled "Code", and a screen reader hears each ghost once, politely ("Suggestion: …"). Under reduced motion, jumping to a line is instant.</p>
+
+<h2 id="ghost">The ghost</h2>
+<p>The prediction loop, step by step:</p>
+<ol>
+  <li>You type. After 500 ms of quiet, the window sends the settled text to Claude (<code>cocode.changed</code>), with the caret line so far (<code>prefix</code>).</li>
+  <li>Meanwhile, after 250 ms, the local predictor may already show a weak ghost, labelled <em>local</em> in the status line.</li>
+  <li>Claude answers with one ghost for that revision (<code>cocode.suggest</code>): the next one to four lines, in <strong>your</strong> dialect. It replaces the local one. If the caret is mid-line, the ghost starts with the rest of that line. Two or three alternatives come along when the fork is real (<code>else</code> or <code>return</code>).</li>
+  <li>Typing the characters the ghost starts with shrinks it instead of dismissing it. Any other key dismisses it, and so do moving the caret and <kbd>Esc</kbd>. <kbd>Tab</kbd> accepts all of it (the first line's indentation follows your current line); <kbd>Ctrl</kbd>+<kbd>→</kbd> accepts one word.</li>
+</ol>
+<p>There is never more than one ghost on screen, and the window shows at most 12 lines of it. A ghost Claude made for an older revision shows only while the text before the caret still matches what you had typed then; otherwise it is dropped without a word. An accepted ghost is your change: <code>rev</code> goes up and Claude sees it like anything you typed.</p>
+
+<h3 id="local">When Claude is away</h3>
+<p>The local predictor (<code>ui/predict.js</code>) keeps the page alive with weaker ghosts of at most two lines. It is synchronous and fast (under 2 ms for 64 KB), and the first rule that fits wins:</p>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th scope="col">Rule</th><th scope="col">When</th><th scope="col">Offers</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Closers</strong></td><td>A <code>(</code>, <code>[</code> or <code>{</code> on the caret line is not closed</td><td>The missing closers, plus <code>:</code> after a Python <code>def</code>, <code>if</code> or <code>for</code> line head</td></tr>
+      <tr><td><strong>Pairs</strong></td><td>The previous block opened with <code>if</code>, <code>try</code>, <code>for</code> or <code>while</code> (python, pseudo) and the caret is on a fresh line at the block's indentation</td><td><code>else:</code>, <code>except Exception as e:</code>, or nothing for loops. JS-like code gets <code>} else {</code> and <code>} catch (e) {</code>.</td></tr>
+      <tr><td><strong>Sequences</strong></td><td>Two or more previous lines differ only in a number or a letter (<code>step 1</code>, <code>step 2</code>)</td><td>The next one</td></tr>
+      <tr><td><strong>Echo</strong></td><td>The caret line (3 characters or more) is the start of an earlier, longer line</td><td>The rest of that line</td></tr>
+      <tr><td><strong>Repeat shape</strong></td><td>The two previous lines start with the same bullet marker (<code>-</code>, <code>*</code>, <code>•</code>, <code>&gt;</code>) or with consecutive numbers (<code>1.</code>, <code>2.</code>)</td><td>That marker, or the next number</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h3 id="feedback">Accept, dismiss, and what Claude learns</h3>
+<p>Every accept and dismiss goes to Claude as feedback: <code>cocode.ghost.accept</code> (with <code>partial: true</code> for one word) and <code>cocode.ghost.reject</code> with the reason (<code>esc</code>, <code>typed-away</code>, <code>moved</code>). Claude reads them plainly. Three rejects in a row mean shorter, more literal ghosts. A partial accept means the first word was right. A dismissed ghost is a "no", so Claude does not send it again for the same revision. Once per session at most, Claude writes a style note into Doto's memory, such as <em>"writes python-ish pseudo-code, 2-space indents, accepts short ghosts"</em>. The window counts accepts and rejects in <code>stats</code>.</p>
+
+<h2 id="build">Build ahead &amp; Run</h2>
+<p>While you type, Claude keeps a real, runnable version of your code in the Build pane (<code>cocode.build</code>). The language is your target if you picked one in the Build pane, or the chip's language if it names a real one; pseudo-code becomes Python unless your dialect is clearly JS-like. The build is self-contained: sample data where input is implied, prints for what the program computes, nothing interactive, no network, no writes outside the working folder.</p>
+<p>Claude waits until the purpose is clear and the text is more than a line or two, and while you type fast it builds every few revisions. The pane shows the language, the rev and the status: a spinner while building, the reason when it failed. When you type past it, the status reads <em>stale for rev N</em> in dim text, and the code stays until a new build arrives.</p>
+<p><strong>Run</strong> (<kbd>Ctrl</kbd>+<kbd>Enter</kbd>) opens a new entry at the top of the Output pane and sends <code>cocode.run</code> with the latest build attached, stale or not. Then Claude:</p>
+<ol>
+  <li>runs that build if it matches the current revision; otherwise it builds for this revision first (you see a dim "building first…" line), then runs;</li>
+  <li>writes the file into its scratch folder and runs it with its own tools: 30 s timeout, no network, no sudo, no deletes. If the program would touch files outside that folder or needs secrets, Claude stops and asks one short question in the chat;</li>
+  <li>streams stdout and stderr into the entry, and always closes it with the exit code and the time it took;</li>
+  <li>says one Doto line: <em>"Ran it. Exit 0, 3 lines."</em> or <em>"Failed on line 4. See Output."</em> If it failed because your intent was unclear, Claude says what it assumed and offers the fix as a ghost or a note on the line, not a rewrite.</li>
+</ol>
+<p>If the host is not connected, Run shows a toast and does nothing. If Claude is away, the entry still opens and a toast says <em>"Doto is away. The run starts with your next message in Claude Code."</em> (at most once every 30 seconds). A run with no output for 60 seconds shows <em>no answer yet</em> (status <code>lost</code>) until output arrives.</p>
+
+<h2 id="talk">Talking in code</h2>
+<p>In cocode, the code is the message. There are three ways to talk:</p>
+<ul>
+  <li><strong>Ask</strong> (<kbd>Ctrl</kbd>+<kbd>K</kbd>, or a question from Doto's menu): a one-line question about the current line or the selection. Claude answers in the chat in two to eight lines, highlights the lines it talks about and clears the glow when done. If the question asks for a change, Claude makes it with an insert or a replace, then says one line.</li>
+  <li><strong>A <code>??</code> line</strong>: type <code>?? why is this slow</code> in your code and press <kbd>Enter</kbd>. It goes to Claude as a question, like asking the person next to you. The line stays in the document as your note; Claude answers in the chat and pins a one-line reply to that line.</li>
+  <li><strong>Send to Claude</strong>: the whole document as a handoff (<a href="#handoff">next section</a>).</li>
+</ul>
+<h3 id="intents">The six intents</h3>
+<p>The intent select next to Send to Claude says how to read the code. Leave it on <em>you decide</em> and Claude reads the code as a message: <code>??</code> lines and comments are questions or asides; imperative lines ("deploy this", "make it faster") and <code>TODO</code>s are a task; a stack trace, a failing run or a <code>fix</code> line is a bug; a complete program is a review, or "does this do what I think?"; prose in code clothes is a note. Claude says in one line which reading it chose, then answers in that register:</p>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th scope="col">Intent</th><th scope="col">In the select</th><th scope="col">Claude answers with</th></tr></thead>
+    <tbody>
+      <tr><td><code>auto</code></td><td><em>you decide</em> (default)</td><td>One of the six below, named in one line</td></tr>
+      <tr><td><code>ask</code></td><td><em>a question</em></td><td>The answer</td></tr>
+      <tr><td><code>explain</code></td><td><em>explain this</em></td><td>A walkthrough</td></tr>
+      <tr><td><code>do</code></td><td><em>do this</em></td><td>The work done: the real program written and run, and what happened</td></tr>
+      <tr><td><code>fix</code></td><td><em>fix this</em></td><td>The cause and the fix</td></tr>
+      <tr><td><code>review</code></td><td><em>review this</em></td><td>Gaps, risks and three concrete changes</td></tr>
+      <tr><td><code>note</code></td><td><em>just a note</em></td><td>A short acknowledgement and what Claude kept</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 id="handoff">Send to Claude &amp; resume</h2>
+<p><strong>Send to Claude</strong> is a handoff. The window sends <code>cocode.export</code>: your code, its language, the caret and selection, the latest build, the last three runs (output tails of 2,000 characters), the notes and the ghost stats. The engine saves it as a session and closes the window, with a cheer from Doto. Claude answers in the Claude Code chat, not in the window.</p>
+<p>The window names the session after your first non-empty line and the language, such as <code>for each user in users · pseudo</code>; Claude then labels it in three to six words. Say <em>continue</em> (or <code>/lets cocode resume</code>) and the window comes back with <code>cocode.load</code>: your text, language, build, runs, notes and caret, with no ghost or accept events. Claude carries on with ghosts and builds. If the tab also kept a draft, a load in the first 8 seconds wins over it.</p>
+<p>The manifest's <code>session</code> block names the roles:</p>
+<pre><code>"session": { "export": "cocode.export", "snapshot": "cocode.snapshot", "restore": "cocode.load" }</code></pre>
+
+<h2 id="events">Events (up)</h2>
+<p>Each event says what you meant. Lines are 1-based, columns 0-based. In every event, <code>text</code> is at most 64,000 characters; longer text keeps the tail and carries <code>truncated: true</code>.</p>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th scope="col">Event</th><th scope="col">When</th></tr></thead>
+    <tbody>
+      <tr><td><code>cocode.changed {rev, text, lang, detected, cursor, selection, lines, prefix, by, delta?}</code></td><td>The text settled, 500 ms after the last keystroke: you typed, pasted, accepted a ghost or undid, or a command from Claude changed the text. <code>by</code> is <code>"human"</code>, <code>"claude"</code> or <code>"restore"</code>. <code>prefix</code> is the caret line up to the caret (at most 200 characters). <code>delta {from, to, text}</code> is the changed line range when known.</td></tr>
+      <tr><td><code>cocode.ghost.accept {rev, source, text, partial}</code></td><td>You pressed <kbd>Tab</kbd> (the whole ghost) or <kbd>Ctrl</kbd>+<kbd>→</kbd> (<code>partial: true</code>, one word). <code>source</code> is <code>"claude"</code> or <code>"local"</code>.</td></tr>
+      <tr><td><code>cocode.ghost.reject {rev, source, reason}</code></td><td>You pressed <kbd>Esc</kbd> (<code>"esc"</code>), typed something else (<code>"typed-away"</code>) or moved the caret off the anchor (<code>"moved"</code>).</td></tr>
+      <tr><td><code>cocode.ghost.request {rev, text, lang, cursor, prefix}</code></td><td>You pressed <strong>Suggest</strong> (<kbd>Alt</kbd>+<kbd>\</kbd>) or picked it from Doto's menu: you want a ghost now.</td></tr>
+      <tr><td><code>cocode.build.request {rev, text, lang, target}</code></td><td>You picked a target language in the Build pane or pressed <strong>Prepare</strong>. <code>target</code> is <code>"auto"</code> or a language name.</td></tr>
+      <tr><td><code>cocode.run {run, rev, text, lang, build?}</code></td><td>You pressed <strong>Run</strong> (<kbd>Ctrl</kbd>+<kbd>Enter</kbd>). <code>run</code> is the window's id for this run (<code>r_&lt;rev&gt;_&lt;n&gt;</code>). <code>build {rev, lang, code, status}</code> is the latest build if any, stale or not.</td></tr>
+      <tr><td><code>cocode.ask {question, rev, text, lang, line, selection?, source}</code></td><td>You pressed <strong>Ask</strong> (<kbd>Ctrl</kbd>+<kbd>K</kbd>, <code>"toolbar"</code>), ended a <code>??</code> line with <kbd>Enter</kbd> (<code>"inline"</code>: <code>question</code> is the line without the <code>??</code>), or picked a question from Doto's menu (<code>"menu"</code>).</td></tr>
+      <tr><td><code>cocode.export {label, intent, text, lang, rev, cursor, selection?, build?, runs?, annotations?, stats}</code></td><td>You pressed <strong>Send to Claude</strong>: the handoff. <code>intent</code> is <code>auto</code> or what you picked: <code>ask</code>, <code>explain</code>, <code>do</code>, <code>fix</code>, <code>review</code>, <code>note</code>. <code>runs</code> holds at most the last 3, with output tails of 2,000 characters. <code>label</code> is the first non-empty line (up to 60 characters) plus the language.</td></tr>
+      <tr><td><code>cocode.snapshot</code></td><td>Nothing you did: it is the reply to Claude's <code>cocode.snapshot</code> command (<code>re</code> is the command's id), the export payload without <code>intent</code>.</td></tr>
+    </tbody>
+  </table>
+</div>
+<p>Build status is <code>building</code>, <code>ready</code> or <code>failed</code>; <em>stale</em> is worked out by the pane (<code>build.rev &lt; rev</code>) and never sent. Run status is <code>running</code>, <code>done</code>, <code>failed</code> or <code>lost</code> (no output for 60 s). <code>rev</code> starts at 1 on an empty editor and never goes down; a load bumps it like any change.</p>
+
+<h2 id="commands">Commands (down)</h2>
+<p>Commands are idempotent and animate (300 ms at most, transform and opacity only); nothing teleports. Every command accepts <code>"ack": true</code> on the envelope and gets <code>lip.ack {ok, error?}</code> back. A bad command without <code>ack</code> gets <code>lip.error {code: "bad_request", message, re}</code>. Line numbers past the end are clamped to the document, except in <code>cocode.annotate</code>, where a line past the end is an error.</p>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th scope="col">Command</th><th scope="col">Does</th></tr></thead>
+    <tbody>
+      <tr><td><code>cocode.suggest {rev, text, at?, alternatives?, reason?, seq?, done?}</code></td><td>Show <code>text</code> as the ghost at the caret, or at <code>at {line, col}</code>. At most 12 lines; longer text is cut. Chunks with the same <code>re</code> or <code>rev</code> and a <code>seq</code> append; <code>done: true</code> ends the stream. A ghost for an older <code>rev</code> shows only while the text before the caret still matches the <code>prefix</code> that rev reported; otherwise it is dropped silently, with no reject event. <code>text: ""</code> clears the ghost. <kbd>Alt</kbd>+<kbd>]</kbd> / <kbd>Alt</kbd>+<kbd>[</kbd> cycle the <code>alternatives</code>.</td></tr>
+      <tr><td><code>cocode.seed {items: [{id, label, text, lang?, hint?}]}</code></td><td>Replace the <em>start from</em> list of an empty editor (up to 6 items). Picking one inserts <code>text</code>, sets <code>lang</code> if given, and counts as your change. Ignored while the editor has text, and kept for the next time it is empty.</td></tr>
+      <tr><td><code>cocode.build {rev, lang, code, status?, file?, notes?, seq?, done?}</code></td><td>Put the real program in the Build pane, replacing any earlier build. <code>status</code> defaults to <code>ready</code>; <code>building</code> shows a spinner and may carry no <code>code</code>; <code>failed</code> shows <code>notes</code> as the reason. A message with <code>seq</code> for the same <code>rev</code> appends its <code>code</code>; one without <code>seq</code>, or for another <code>rev</code>, replaces the build. A build restored on resume is re-based on the new window's <code>rev</code>.</td></tr>
+      <tr><td><code>cocode.output {run, stream, text, seq?, done?, exit?, ms?}</code></td><td>Append to the run named by <code>run</code>. <code>stream</code> is <code>"stdout"</code>, <code>"stderr"</code> or <code>"system"</code> (dim lines such as "building first…"). <code>done: true</code> closes the run: <code>exit</code> 0 shows <em>ok</em>, anything else <em>failed</em>, and <code>ms</code> is shown when given. Chunks are ordered by <code>seq</code> when present. A run id the window never issued creates an entry named by Claude.</td></tr>
+      <tr><td><code>cocode.insert {at, text}</code></td><td>Insert text at <code>{line, col}</code>, <code>"cursor"</code> or <code>"end"</code>. The new lines glow for 600 ms. Undoable; <code>rev</code> goes up and <code>cocode.changed {by: "claude"}</code> follows.</td></tr>
+      <tr><td><code>cocode.replace {from, to?, text}</code></td><td>Replace lines <code>from</code> to <code>to</code> (1-based, inclusive; <code>to</code> defaults to <code>from</code>) with <code>text</code>. Animated and undoable.</td></tr>
+      <tr><td><code>cocode.set {text, lang?}</code></td><td>Replace the whole document, with a fade. Undoable, but your text is gone from view, so Claude asks first.</td></tr>
+      <tr><td><code>cocode.lang {lang}</code></td><td>Set the language chip (<code>detected</code> becomes <code>false</code>).</td></tr>
+      <tr><td><code>cocode.annotate {line, text, kind?}</code></td><td>A marker in the gutter and a floating note that opens on hover, focus or click; it is also listed in the Output pane under <em>Notes</em>. <code>kind</code> is <code>note</code>, <code>ok</code>, <code>warn</code> or <code>error</code>. <code>text: ""</code> removes that line's note; <code>line: 0</code> clears them all.</td></tr>
+      <tr><td><code>cocode.highlight {from, to?, color?, ttl?}</code></td><td>Glow lines <code>from</code> to <code>to</code>. <code>ttl</code> defaults to 4000 ms, <code>0</code> keeps the glow, <code>from: 0</code> clears every glow.</td></tr>
+      <tr><td><code>cocode.focus {line, col?}</code></td><td>Scroll the line into view and put the caret there (smooth; instant under reduced motion).</td></tr>
+      <tr><td><code>cocode.load {text, lang?, build?, runs?, annotations?, cursor?}</code></td><td>The restore command: render a session's export without ghost or accept events, bump <code>rev</code>, and emit one <code>cocode.changed {by: "restore"}</code>. In the first 8 s after boot it wins over the tab's draft.</td></tr>
+      <tr><td><code>cocode.snapshot {}</code></td><td>Reply with a <code>cocode.snapshot</code> event.</td></tr>
+    </tbody>
+  </table>
+</div>
+<p>A round trip, as the guide describes it: you type → <code>cocode.changed {by: "human"}</code> → <code>cocode.suggest {rev, text}</code> → you press <kbd>Tab</kbd> → <code>cocode.ghost.accept</code> → <code>cocode.changed</code> for the new revision.</p>
+<pre><code><span class="c">// a ghost for rev 12, with one alternative</span>
+{<span class="s">"type"</span>:<span class="s">"cocode.suggest"</span>,<span class="s">"data"</span>:{<span class="s">"rev"</span>:12,<span class="s">"text"</span>:<span class="s">"    send welcome\n  else:\n    skip user"</span>,<span class="s">"alternatives"</span>:[<span class="s">"    send welcome"</span>]}}
+<span class="c">// the real program, ready before you press Run</span>
+{<span class="s">"type"</span>:<span class="s">"cocode.build"</span>,<span class="s">"data"</span>:{<span class="s">"rev"</span>:12,<span class="s">"lang"</span>:<span class="s">"python"</span>,<span class="s">"status"</span>:<span class="s">"ready"</span>,<span class="s">"file"</span>:<span class="s">"welcome.py"</span>,<span class="s">"code"</span>:<span class="s">"users = [...]\nfor user in users:\n    ..."</span>}}
+<span class="c">// stream a run, then close it</span>
+{<span class="s">"type"</span>:<span class="s">"cocode.output"</span>,<span class="s">"data"</span>:{<span class="s">"run"</span>:<span class="s">"r_12_1"</span>,<span class="s">"stream"</span>:<span class="s">"stdout"</span>,<span class="s">"text"</span>:<span class="s">"welcome, ada\n"</span>,<span class="s">"seq"</span>:1}}
+{<span class="s">"type"</span>:<span class="s">"cocode.output"</span>,<span class="s">"data"</span>:{<span class="s">"run"</span>:<span class="s">"r_12_1"</span>,<span class="s">"stream"</span>:<span class="s">"stdout"</span>,<span class="s">"text"</span>:<span class="s">""</span>,<span class="s">"done"</span>:true,<span class="s">"exit"</span>:0,<span class="s">"ms"</span>:410}}
+<span class="c">// pin a note to line 3</span>
+{<span class="s">"type"</span>:<span class="s">"cocode.annotate"</span>,<span class="s">"data"</span>:{<span class="s">"line"</span>:3,<span class="s">"kind"</span>:<span class="s">"warn"</span>,<span class="s">"text"</span>:<span class="s">"users is never filled; add sample data?"</span>}}</code></pre>
+
+<h2 id="etiquette">Claude's etiquette</h2>
+<p>cocode's <code>GUIDE.md</code> is what Claude reads when it opens the page. Its promises, in short:</p>
+<ul>
+  <li><strong>The ghost is an offer.</strong> Claude never inserts what you did not accept, and a dismissed ghost is not sent again for the same revision.</li>
+  <li><strong>Your language wins.</strong> Ghosts follow your indentation, your invented keywords, your casing, your spelling of <code>print</code>. Pseudo-code stays pseudo-code in the editor; the real program belongs in the Build pane.</li>
+  <li><strong>Ask before replacing everything.</strong> <code>cocode.set</code> needs a yes in the chat. Claude prefers insert and replace: your text is the conversation.</li>
+  <li><strong>An undo is a "no".</strong> <kbd>Ctrl</kbd>+<kbd>Z</kbd> reverts Claude's insert too, and Claude takes it that way.</li>
+  <li><strong>Quiet while you type.</strong> No chat line for a keystroke: the ghost is the answer. Claude stays silent on changes it made itself and on a restore.</li>
+  <li><strong>One line per thing that happened.</strong> Short, verb first, ending on a dot; here Doto counts and names: <em>"Built it. Python, 14 lines."</em> He speaks on Run, Ask, a ready build or a seed. <code>thinking</code> while Claude builds or runs, <code>proud</code> on a clean exit, <code>curious</code> when it asks.</li>
+</ul>
+
+<h2 id="layout">Repository layout</h2>
+<pre><code>lets-unique-cocode/
+  unique.json            <span class="c"># manifest: domain cocode, engine &gt;=0.4.0, no permissions</span>
+  GUIDE.md               <span class="c"># what Claude reads on open</span>
+  CONTRACT.md            <span class="c"># the unique's behaviour spec</span>
+  README.md  CHANGELOG.md  LICENSE  icon.svg
+  package.json           <span class="c"># npm run validate</span>
+  scripts/validate.mjs   <span class="c"># zero-dependency manifest check</span>
+  schemas/               <span class="c"># unique.schema.json and message schemas</span>
+  .github/workflows/validate.yml
+  ui/index.html          <span class="c"># the page</span>
+  ui/cocode.js           <span class="c"># the window</span>
+  ui/editor.js           <span class="c"># textarea, highlight layer, ghost, undo</span>
+  ui/syntax.js           <span class="c"># tokenizer and language detection</span>
+  ui/predict.js          <span class="c"># the local predictor</span>
+  ui/style.css</code></pre>
+<p>Plain HTML, ES modules and CSS: no build step, no CDN, no inline script, no <code>eval</code>. MIT licensed. More: <a href="https://github.com/TikoTikTok/lets-unique-cocode">lets-unique-cocode</a> has the full <code>GUIDE.md</code>, the behaviour contract (<code>CONTRACT.md</code>) and JSON Schemas for the messages.</p>
+
+<nav class="doc-pager" aria-label="Previous and next page"><a class="prev" href="./den.html"><small>← Previous</small>Doto's home (den)</a><a class="next" href="./protocol.html"><small>Next →</small>Protocol (LIP)</a></nav>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div>
+      <div class="footer-brand"><img src="../assets/logo.svg" alt="" width="28" height="28">lets</div>
+      <p>Talk to Claude through windows, not just text.</p>
+      <p>MIT © TikoTikTok · made with Claude Code</p>
+    </div>
+    <div>
+      <h2>Repositories</h2>
+      <ul>
+        <li><a href="https://github.com/TikoTikTok/lets">lets</a> <span class="dim">engine, plugin, SDK, protocol</span></li>
+        <li><a href="https://github.com/TikoTikTok/lets-unique-graph">lets-unique-graph</a> <span class="dim">the graph board</span></li>
+        <li><a href="https://github.com/TikoTikTok/lets-unique-den">lets-unique-den</a> <span class="dim">Doto's home</span></li>
+        <li><a href="https://github.com/TikoTikTok/lets-unique-cocode">lets-unique-cocode</a> <span class="dim">talk in code</span></li>
+        <li><a href="https://github.com/TikoTikTok/lets-store">lets-store</a> <span class="dim">community store</span></li>
+        <li><a href="https://github.com/TikoTikTok/lets-unique-template">lets-unique-template</a> <span class="dim">pulse template</span></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Site</h2>
+      <ul>
+        <li><a href="../docs/index.html">Docs</a></li>
+        <li><a href="../docs/protocol.html">Protocol (LIP)</a></li>
+        <li><a href="../uniques.html">Uniques</a></li>
+        <li><a href="../playground.html">Playground</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

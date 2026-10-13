@@ -40,6 +40,7 @@
         <li><a href="./uniques.html" aria-current="page">Uniques &amp; the store</a></li>
         <li><a href="./graph.html">The graph board</a></li>
         <li><a href="./den.html">Doto's home (den)</a></li>
+        <li><a href="./cocode.html">Talk in code (cocode)</a></li>
         <li><a href="./protocol.html">Protocol (LIP)</a></li>
         <li><a href="./architecture.html">Architecture</a></li>
       </ul>
@@ -69,13 +70,14 @@
 
 <h2 id="defaults">Defaults vs the store</h2>
 <p><strong><code>defaults.json</code></strong> in the engine repo is the list of uniques <strong>every installation gets</strong>. They are installed from git into <code>~/.lets/uniques</code> the first time the engine runs or the first time you open one; <code>node engine/bin/lets.mjs defaults</code> does it by hand, and <code>LETS_NO_DEFAULTS=1</code> opts out. Today the defaults are <strong>graph</strong> and <strong>den</strong>. Defaults are trusted by the list and still validated before they are served. More defaults will be added there as they mature.</p>
-<p>Everything else comes from a <strong>store</strong>: a git repository whose <code>index.json</code> lists uniques by git URL. Install with <code>/lets store &lt;name&gt;</code>: Claude syncs, searches, shows you the inspection (permissions, problems, verified flag), and installs only after you say yes.</p>
+<p>Everything else comes from a <strong>store</strong>: a git repository whose <code>index.json</code> lists uniques by git URL. Install with <code>/lets store &lt;name&gt;</code>: Claude syncs, searches, shows you the inspection (permissions, problems, verified flag), and installs only after you say yes. The first store-only unique by the maintainers is <a href="./cocode.html">cocode</a>, a code window you talk through: <code>/lets store cocode</code>.</p>
 <div class="table-wrap">
   <table>
     <thead><tr><th scope="col">Unique</th><th scope="col">Repo</th><th scope="col">Default</th><th scope="col">In lets-store</th></tr></thead>
     <tbody>
       <tr><td><strong>graph</strong>: talk in diagrams</td><td><a href="https://github.com/TikoTikTok/lets-unique-graph">lets-unique-graph</a></td><td>yes</td><td>yes, verified</td></tr>
       <tr><td><strong>den</strong>: Doto's home <span class="badge badge-new">new in 0.6.0</span></td><td><a href="https://github.com/TikoTikTok/lets-unique-den">lets-unique-den</a></td><td>yes</td><td>yes, verified</td></tr>
+      <tr><td><strong>cocode</strong>: talk in code <span class="badge badge-new">new</span></td><td><a href="https://github.com/TikoTikTok/lets-unique-cocode">lets-unique-cocode</a></td><td>no</td><td>yes, verified</td></tr>
       <tr><td><strong>pulse</strong>: a dial you talk through (template)</td><td><a href="https://github.com/TikoTikTok/lets-unique-template">lets-unique-template</a></td><td>no</td><td>yes, verified</td></tr>
     </tbody>
   </table>
@@ -218,6 +220,7 @@ node engine/bin/lets.mjs validate ./my-unique</code></pre>
         <li><a href="https://github.com/TikoTikTok/lets">lets</a> <span class="dim">engine, plugin, SDK, protocol</span></li>
         <li><a href="https://github.com/TikoTikTok/lets-unique-graph">lets-unique-graph</a> <span class="dim">the graph board</span></li>
         <li><a href="https://github.com/TikoTikTok/lets-unique-den">lets-unique-den</a> <span class="dim">Doto's home</span></li>
+        <li><a href="https://github.com/TikoTikTok/lets-unique-cocode">lets-unique-cocode</a> <span class="dim">talk in code</span></li>
         <li><a href="https://github.com/TikoTikTok/lets-store">lets-store</a> <span class="dim">community store</span></li>
         <li><a href="https://github.com/TikoTikTok/lets-unique-template">lets-unique-template</a> <span class="dim">pulse template</span></li>
       </ul>

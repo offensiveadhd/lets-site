@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Uniques · lets</title>
-  <meta name="description" content="The lets uniques: graph and den (Doto's home), installed by default, and pulse, the template. Defaults vs the community store, and how to propose a unique.">
+  <meta name="description" content="The lets uniques: graph and den (Doto's home), installed by default, cocode (talk in code) from the store, and pulse, the template. Defaults vs the community store, and how to propose a unique.">
   <meta name="theme-color" content="#120b1f">
   <link rel="icon" href="./assets/logo.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./css/site.css">
@@ -77,6 +77,24 @@
       </article>
 
       <article class="card unique-card">
+        <img src="./assets/cocode-icon.svg" alt="" width="64" height="64">
+        <div class="body">
+          <h2>cocode <span class="badge">in the store</span></h2>
+          <p><strong>Talk in code.</strong> An editor for any language, even one that doesn't exist. Claude predicts your next lines, prepares the real program while you type, and reads what you send as a question, a task or a note.</p>
+          <div class="meta"><span class="badge">not a default</span><span class="badge">verified in lets-store</span><span class="badge badge-new">new</span></div>
+          <ul>
+            <li>Claude's next lines appear as a dim ghost at the caret: <kbd>Tab</kbd> accepts, <kbd>Esc</kbd> dismisses. When Claude is away, a local predictor offers weaker ones.</li>
+            <li>While you type, Claude builds the real program (Python, JavaScript, …) in the Build pane, so Run (<kbd>Ctrl</kbd>+<kbd>Enter</kbd>) is instant and the output streams in.</li>
+            <li>Ask (<kbd>Ctrl</kbd>+<kbd>K</kbd>, or a line starting with <code>??</code>) and Send to Claude carry the code as the message; Claude reads it as a question, a walkthrough, a task, a fix, a review or a note.</li>
+          </ul>
+          <div class="btn-row">
+            <a class="btn btn-sm" href="./docs/cocode.html">Docs</a>
+            <a class="btn btn-sm" href="https://github.com/TikoTikTok/lets-unique-cocode">Repository</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card unique-card">
         <img src="./assets/pulse-icon.svg" alt="" width="64" height="64">
         <div class="body">
           <h2>pulse <span class="badge">template</span></h2>
@@ -110,7 +128,7 @@
       </article>
       <article class="card">
         <h3><span class="card-icon" aria-hidden="true">⌂</span>The store</h3>
-        <p>Where <strong>community uniques live</strong>. <a href="https://github.com/TikoTikTok/lets-store">lets-store</a> is a git repository whose <code>index.json</code> points at uniques by git URL. Install with <code>/lets store &lt;name&gt;</code>: you see the permissions and the verified flag, and nothing installs until you say yes.</p>
+        <p>Where <strong>community uniques live</strong>. <a href="https://github.com/TikoTikTok/lets-store">lets-store</a> is a git repository whose <code>index.json</code> points at uniques by git URL. Install with <code>/lets store &lt;name&gt;</code>: you see the permissions and the verified flag, and nothing installs until you say yes. <a href="./docs/cocode.html"><strong>cocode</strong></a> is the first store-only unique by the maintainers.</p>
         <p><a class="more" href="./docs/uniques.html#verified">What "verified" means →</a></p>
       </article>
     </div>
@@ -148,6 +166,7 @@
         <li><a href="https://github.com/TikoTikTok/lets">lets</a> <span class="dim">engine, plugin, SDK, protocol</span></li>
         <li><a href="https://github.com/TikoTikTok/lets-unique-graph">lets-unique-graph</a> <span class="dim">the graph board</span></li>
         <li><a href="https://github.com/TikoTikTok/lets-unique-den">lets-unique-den</a> <span class="dim">Doto's home</span></li>
+        <li><a href="https://github.com/TikoTikTok/lets-unique-cocode">lets-unique-cocode</a> <span class="dim">talk in code</span></li>
         <li><a href="https://github.com/TikoTikTok/lets-store">lets-store</a> <span class="dim">community store</span></li>
         <li><a href="https://github.com/TikoTikTok/lets-unique-template">lets-unique-template</a> <span class="dim">pulse template</span></li>
       </ul>

@@ -13,15 +13,15 @@ CDN, no web fonts from the network, no analytics.
 
 ```
 index.html            landing page (hero with Doto, install prompt, screenshots)
-uniques.html          graph + den + pulse, defaults vs the store, proposed next
+uniques.html          graph + den + cocode + pulse, defaults vs the store, proposed next
 playground.html       the real lets shell on an offline loopback: moods, reactions, chat
 404.html              self-contained (inline CSS), works at any depth
-docs/                 index, getting-started, companion, uniques, graph, den, protocol, architecture
+docs/                 index, getting-started, companion, uniques, graph, den, cocode, protocol, architecture
 css/site.css          the only stylesheet (deep-violet theme variables from lets/sdk/lets-shell.css)
 js/site.js            nav toggles, copy buttons, the hero orb, anchors
 js/playground.js      mounts the shell with a stub transport
 sdk/                  vendored copies of lets/sdk/lets-client.js, lets-shell.js, lets-shell.css
-assets/               logo, graph + den + pulse icons, screenshots
+assets/               logo, graph + den + cocode + pulse icons, screenshots
 .nojekyll             tells Pages to serve files as-is (no Jekyll)
 ```
 
