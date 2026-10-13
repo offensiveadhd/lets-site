@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Talk in Morse (mors) · lets</title>
+  <meta name="description" content="The mors unique: one key, one tape. Key your message in dots and dashes and send it to Claude, who reads it as a prompt and does what it says. The window assumes you know Morse: only Doto helps you craft the message, and Claude can answer in Morse on the tape.">
+  <meta name="theme-color" content="#120b1f">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../css/site.css">
+  <script type="module" src="../js/site.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../assets/logo.svg" alt="" width="34" height="34">lets</a>
+    <button class="btn btn-sm nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav class="site-nav" id="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="../docs/index.html" aria-current="page">Docs</a></li>
+        <li><a href="../uniques.html">Uniques</a></li>
+        <li><a href="../playground.html">Playground</a></li>
+        <li><a href="../index.html#install">Install</a></li>
+        <li><a href="https://github.com/TikoTikTok/lets">GitHub</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap docs-layout">
+  <aside class="docs-side" aria-label="Documentation">
+    <button class="btn btn-sm docs-nav-toggle" type="button" aria-expanded="false" aria-controls="docs-nav">Docs pages <span aria-hidden="true">▾</span></button>
+    <h2>Documentation</h2>
+    <nav class="docs-nav" id="docs-nav" aria-label="Docs pages">
+      <ul>
+        <li><a href="./index.html">Overview</a></li>
+        <li><a href="./getting-started.html">Getting started</a></li>
+        <li><a href="./companion.html">The companion (Doto)</a></li>
+        <li><a href="./uniques.html">Uniques &amp; the store</a></li>
+        <li><a href="./graph.html">The graph board</a></li>
+        <li><a href="./den.html">Doto's home (den)</a></li>
+        <li><a href="./cocode.html">Talk in code (cocode)</a></li>
+        <li><a href="./mors.html" aria-current="page">Talk in Morse (mors)</a></li>
+        <li><a href="./protocol.html">Protocol (LIP)</a></li>
+        <li><a href="./architecture.html">Architecture</a></li>
+      </ul>
+    </nav>
+  </aside>
+  <main id="main" class="doc">
+<h1>Talk in Morse (mors) <span class="badge badge-new">new</span></h1>
+<div class="unique-card" style="margin-bottom:1.6em">
+  <img src="../assets/mors-icon.svg" width="64" height="64" alt="The mors icon: a round Morse key under a strip of tape with dots and dashes.">
+  <div class="body">
+    <p class="lead" style="margin:0"><strong>One key, one tape.</strong> Key your message in dots and dashes and send it to Claude, who reads it as a prompt and does what it says. The window assumes you know Morse: only Doto helps you craft the message. mors lives in the store: it is not a default.</p>
+  </div>
+</div>
+
+<nav class="toc" aria-label="On this page">
+  <strong>On this page</strong>
+  <ol>
+    <li><a href="#what">What it is</a></li>
+    <li><a href="#install">Install</a></li>
+    <li><a href="#do">What you can do</a></li>
+    <li><a href="#keys">Mouse &amp; keyboard</a></li>
+    <li><a href="#doto">Doto's help</a></li>
+    <li><a href="#reply">Claude talks back</a></li>
+    <li><a href="#handoff">Send to Claude</a></li>
+    <li><a href="#events">Events (up)</a></li>
+    <li><a href="#commands">Commands (down)</a></li>
+    <li><a href="#hood">Under the hood</a></li>
+    <li><a href="#develop">Develop</a></li>
+  </ol>
+</nav>
+
+<h2 id="what">What it is</h2>
+<p>You hold a key. A short press is a dot, a long one a dash, and the tape shows them as you key. When the message is done, <strong>Send to Claude</strong> hands it over. Claude reads it as a prompt: it says in one line what it read, then does what the message asks, in the Claude Code transcript.</p>
+<p>The window assumes you know Morse. By default it shows three things: the key, the tape and Send to Claude. No alphabet, no translation. Help comes from one place, Doto's menu: <em>Read it back</em>, <em>Spell a word for me</em>, <em>Check what I keyed</em>, <em>Show the chart</em> and <em>Full controller</em> (<a href="#doto">below</a>).</p>
+<p>Claude can talk Morse back. Its replies blink the lamp in magenta and sound a lower tone, on a second track of the tape under yours.</p>
+<p>mors stores nothing on the host. The message lives in the window, and in a saved session after Send to Claude.</p>
+
+<h2 id="install">Install</h2>
+<p>mors is not in the engine's <code>defaults.json</code>. It lives in <a href="https://github.com/TikoTikTok/lets-store">lets-store</a>, so you install it once:</p>
+<pre><code>/lets store mors      <span class="c"># inspect → confirm</span>
+/lets mors            <span class="c"># open it</span></code></pre>
+<p>Claude shows you the inspection (permissions, problems, the verified flag) and copies it into <code>~/.lets/uniques/mors</code> only after you say yes. Manual: clone <a href="https://github.com/TikoTikTok/lets-unique-mors">the repo</a> into <code>~/.lets/uniques/mors</code>.</p>
+<p>mors needs engine 0.4.0 or later (<code>"engine": "&gt;=0.4.0"</code>) for handoff sessions; it needs no new engine endpoint. It asks for no permissions: <code>"fs.write": []</code>, <code>"net": []</code>. Its capabilities are <code>entity</code>, <code>chat</code> and <code>components</code>.</p>
+<p class="note note-new">This page describes <strong>mors 0.1.0</strong> (2026-10-13). Like the other lets repositories, its repository is private for now.</p>
+
+<h2 id="do">What you can do</h2>
+<p>The tape and the key are the page: large, centred, calm, on the deep-violet dotted grid. A toolbar sits on top and a status line at the bottom.</p>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th scope="col">Part</th><th scope="col">You see</th><th scope="col">You can do</th></tr></thead>
+    <tbody>
+      <tr><td><strong>toolbar</strong></td><td>The status dot, "mors", the wpm chip (<code>12 wpm · auto</code>) and <strong>Send to Claude</strong>; at the right end sound, chat, Doto and <code>?</code></td><td>Read your speed on the chip: <em>auto</em> lights while the speed follows your hand. Press Send to Claude (<kbd>Ctrl</kbd>+<kbd>Enter</kbd>) when the message is done. There is no toolbar button for Doto's extras.</td></tr>
+      <tr><td><strong>tape</strong></td><td>Your track in cyan: dots are glowing discs, dashes glowing bars three times as long, words split by a faint <code>/</code>. The letter you are keying pulses at the end. Claude's track, in magenta, appears under yours after its first play. An empty tape says <em>Key something. Hold Space, or the key.</em></td><td>Read it. Each track scrolls to the end by itself. With read-back on, every letter shows its character above it, and a readout under the tape shows the decoded text.</td></tr>
+      <tr><td><strong>key and lamp</strong></td><td>A round knob on a base plate (120 px, 88 px on narrow screens) with a lamp ring. The lamp lights while you press, and in magenta while Claude plays.</td><td>Hold it with the pointer, or hold <kbd>Space</kbd>. The tone sounds and the key squashes while you hold. A press shorter than 2 units is a dot, anything longer a dash.</td></tr>
+      <tr><td><strong>hint line</strong></td><td>Under the key: <em>Hold Space or the key · pause for a letter, longer for a word · Backspace erases a letter · ········ erases the word</em></td><td>Read it once. The full controller replaces it with its panel.</td></tr>
+      <tr><td><strong>status line</strong></td><td>At the bottom: <code>3 words · 11 letters · 12 wpm · ghost: claude · spell · read-back off</code>, and <em>Doto is keying…</em> while Claude plays</td><td>Read it: the counts, the speed, whose ghost is on the tape and why, and whether read-back is on.</td></tr>
+    </tbody>
+  </table>
+</div>
+<p><strong>Keying.</strong> Pause after the last dot or dash and the letter closes; pause longer and the word closes. That is when Claude sees the message: settled words, never half a letter. With <em>auto</em> on, each press tunes the speed, so the window follows your hand (the rules are <a href="#hood">under the hood</a>). If you prefer typing, <kbd>.</kbd> keys a dot, <kbd>-</kbd> or <kbd>_</kbd> a dash, and <kbd>/</kbd> a word gap.</p>
+<p><strong>Erasing.</strong> <kbd>Backspace</kbd> removes the last dot or dash of the letter you are keying, or the last letter when none is open. <kbd>Ctrl</kbd>+<kbd>Backspace</kbd> removes the last word. Eight dots or more in one letter (<code>........</code>) is the operator's own eraser: it drops itself and the word you were keying, and the tape says <em>erased</em> for a second. <kbd>Ctrl</kbd>+<kbd>Z</kbd> undoes the last erase, insert or clear (50 steps).</p>
+<p><strong>A long message.</strong> A message holds up to 4,000 elements or 1,000 characters; keying beyond that is refused with a toast. The tape draws the last 300 letters, with a <em>… n more</em> marker at the left.</p>
+
+<h2 id="keys">Mouse &amp; keyboard</h2>
+<p>Outside text fields, unless the row says otherwise:</p>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th scope="col">Key</th><th scope="col">Does</th></tr></thead>
+    <tbody>
+      <tr><td><kbd>Space</kbd> (hold)</td><td>The key</td></tr>
+      <tr><td><kbd>.</kbd> <kbd>-</kbd> <kbd>_</kbd></td><td>A typed dot or dash</td></tr>
+      <tr><td><kbd>/</kbd></td><td>A word gap (typed input)</td></tr>
+      <tr><td><kbd>Backspace</kbd> / <kbd>Ctrl</kbd>+<kbd>Backspace</kbd></td><td>Erase the last element or letter / the last word</td></tr>
+      <tr><td><kbd>Tab</kbd> / <kbd>Shift</kbd>+<kbd>Tab</kbd> (with a ghost)</td><td>Key the ghost's next letter / the rest of it; without a ghost, <kbd>Tab</kbd> moves focus as usual</td></tr>
+      <tr><td><kbd>Esc</kbd></td><td>Dismiss the ghost; then close the innermost open thing (chart, help, Say it, Ask)</td></tr>
+      <tr><td><kbd>Enter</kbd> (Send armed by AR, SK or K)</td><td>Send to Claude</td></tr>
+      <tr><td><kbd>Ctrl</kbd>+<kbd>Enter</kbd></td><td>Send to Claude</td></tr>
+      <tr><td><kbd>Ctrl</kbd>+<kbd>Z</kbd></td><td>Undo the last erase, insert or clear</td></tr>
+      <tr><td><kbd>M</kbd></td><td>Sound on / off</td></tr>
+      <tr><td><kbd>?</kbd></td><td>The shortcuts overlay</td></tr>
+      <tr><td><kbd>Ctrl</kbd>+<kbd>/</kbd> · <kbd>Ctrl</kbd>+<kbd>Space</kbd> · right-click</td><td>The shell, as in every unique: the chat · <a href="./companion.html#talking">Doto</a></td></tr>
+    </tbody>
+  </table>
+</div>
+<p>Everything is reachable with <kbd>Tab</kbd> in page order and every control has an accessible name. The key is a real button: <kbd>Enter</kbd> on it keys a dot, and <kbd>Space</kbd> on it is the key, as everywhere else. With read-back on, a screen reader hears the decoded text through the readout's live region; it hears a ghost once, when it appears (<em>"Spell: HELLO"</em>). Under reduced motion the lamp still lights (it is the signal), but the key does not squash and nothing pulses.</p>
+
+<h2 id="doto">Doto's help</h2>
+<p>The extras are hidden by default because the window assumes you know Morse: you key and read dots and dashes, nothing else. Help is there when you ask for it, and only then. Doto's menu is the way in. Click him and pick:</p>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th scope="col">In his menu</th><th scope="col">What happens</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Read it back</strong> / <em>Hide the reading</em></td><td>In the window, no Claude needed. Each letter group shows its character above it, on both tracks, and a readout line under the tape shows the decoded text in a larger monospace. A group not in the table shows as <code>#</code>, with its raw pattern on hover.</td></tr>
+      <tr><td><strong>Spell a word for me</strong></td><td>A one-line form opens under the toolbar: <em>What do you want to say?</em> Claude shows the letters as a <strong>ghost</strong> after the end of your message: dim cyan patterns, each with its character above, always readable even with read-back off. Key them. Each matched letter lights and the ghost shrinks; a word gap matches a space. <kbd>Tab</kbd> keys the next letter for you (lamp, tone, tape), <kbd>Shift</kbd>+<kbd>Tab</kbd> keys the rest. <kbd>Esc</kbd> or a letter that does not match drops it. Key it to the end and Doto winks.</td></tr>
+      <tr><td><strong>Check what I keyed</strong></td><td>Claude reads your Morse and says in one Doto line what it read: <em>"I read SHOW ME THE TESTS."</em> If a group is off, it says which one and what it should be. It does not fix it unless you say so.</td></tr>
+      <tr><td><strong>Show the chart</strong> / <em>Hide the chart</em></td><td>In the window. The alphabet in a glass overlay: letters, digits, punctuation and prosigns. Each one is a button that keys it when the full controller is on; otherwise the chart is read-only. <kbd>Esc</kbd> closes it.</td></tr>
+      <tr><td><strong>Full controller</strong> / <em>Just the key</em></td><td>In the window. A panel replaces the hint line (a bottom drawer on short screens): the readout, a <strong>Say it</strong> box (type words, <kbd>Enter</kbd> keys them at the current speed), the letter grid (each button shows the character and its pattern), <strong>Undo letter</strong>, <strong>Clear</strong>, the speed slider (3 to 30 wpm) with <strong>auto</strong>, <strong>sound</strong>, <strong>Chart</strong>, and an <strong>Ask</strong> box for a free question. Claude answers that in the chat, and in Morse on the tape when it fits.</td></tr>
+    </tbody>
+  </table>
+</div>
+<p>The menu ends with <em>Open chat</em>. Each of the three toggles (read-back, chart, full controller) is remembered for the next window. Claude can open them too, with <code>mors.reveal</code>, when you ask in the chat (<em>"show me the text"</em>). It does not push them on you: it offers one when you seem stuck, such as three unreadable groups in a row, an erase storm or a question in the chat.</p>
+<p><strong>Your hand, your message.</strong> Claude never erases or inserts unless you ask, and it prefers a ghost over an insert: the point is that you key it. A ghost is an offer; a ghost you key away from is a "no", and Claude does not send the same one again. While you key, Claude stays quiet: the tape is your draft, not a conversation. Doto speaks on a sign-off, on an SOS (once), on a spell, a check or a finished play, never on a letter.</p>
+<p><strong>His reactions.</strong> At most one per thing you do: a <a href="./companion.html#expressions">wink</a> when you key a ghost to the end, an oops on the eight-dot eraser, a cheer on Send to Claude, a nod when Claude's play finishes, and a start when a word closes as <code>SOS</code>.</p>
+
+<h2 id="reply">Claude talks back</h2>
+<p><code>mors.play</code> is Claude talking Morse. The lamp blinks magenta, a lower tone sounds, and the symbols appear on Claude's track under yours as they play (with their characters when read-back is on). The status line says <em>Doto is keying…</em> until the play ends with <code>mors.played</code>, and Doto nods. Plays queue in order. The key stays live: press during a play and you key as usual; the two tones differ in pitch.</p>
+<p>Claude keeps plays short, 20 characters at most: <code>R</code> (received), <code>K</code> (over, your turn), <code>73</code> (best regards), <code>SK</code> (end of contact), or a word you asked it to spell when you also want to hear it. Whole answers go to the chat or the transcript, never to the tape.</p>
+<p>The reply track is part of the window's state: <code>reply</code> holds what Claude has played so far, it travels with Send to Claude and it comes back on resume.</p>
+
+<h2 id="handoff">Send to Claude</h2>
+<p><strong>Send to Claude</strong> (the button, or <kbd>Ctrl</kbd>+<kbd>Enter</kbd>) is a handoff. The window sends <code>mors.export</code>: the Morse, the window's decode, the counts, the speed, which extras were open, Claude's reply track, the end sign and the stats. The engine saves it as a session and closes the window, with a cheer from Doto. An empty message cannot be sent.</p>
+<p>Then Claude:</p>
+<ol>
+  <li><strong>decodes the Morse itself.</strong> The window's <code>text</code> is a straight table lookup; your hand is not. Claude fixes what timing broke: a missing word gap that glued two words (<code>HELLOWORLD</code>), an extra one that split a word, a long dot read as a dash (<code>E</code> as <code>T</code>, <code>S</code> as <code>U</code>), a <code>#</code> that is two letters run together;</li>
+  <li><strong>says in one line what it read</strong>: <em>"Read: SHOW ME THE FAILING TESTS."</em> When its reading differs from the window's, it says so and goes with its own. An unreadable word gets a best guess and a question in the same line;</li>
+  <li><strong>treats the text as the prompt</strong>, exactly as if you had typed it in Claude Code: a question gets the answer, a task gets done, a request for a file gets the file. A greeting or a ham call (<code>CQ</code>, <code>HELLO</code>, <code>TEST</code>, <code>SOS</code>) gets a short greeting back; <code>73</code> or <code>SK</code> means you are leaving: one line, no questions;</li>
+  <li>labels the session in three to six words of the message.</li>
+</ol>
+<p><strong>End signs.</strong> When a letter closes as <code>&lt;AR&gt;</code> (<code>.-.-.</code>) or <code>&lt;SK&gt;</code> (<code>...-.-</code>), or a word closes as <code>K</code>, the Send button glows and takes the next <kbd>Enter</kbd>. Nothing is sent by itself. The sign travels in the export as <code>ends</code>, and Claude reads it: <code>AR</code> is end of message (the normal case), <code>K</code> is over (you expect a reply and may come back, so Claude ends its answer with what you can key next), <code>SK</code> is end of contact (Claude closes the loop).</p>
+<p><strong>Resume.</strong> The window names the session after the decoded text (up to 60 characters) plus <code>· mors</code>, such as <code>SHOW ME THE TESTS · mors</code>. Say <em>continue</em> and the window comes back with <code>mors.load</code>: your message and Claude's reply track intact, with no ghost or accept events. If you signed off with <code>K</code>, Claude plays a short reply then (<code>R K</code>). If the tab also kept a draft, a load in the first 8 seconds wins over it.</p>
+<p>With <code>"handoff": "stay"</code> in <code>~/.lets/config.json</code> the window stays open after Send: Claude answers in the chat and plays <code>R</code> on the tape so you know it landed. If Claude is not listening, Send still exports, and the window says Doto is away (at most once every 30 seconds).</p>
+<p>The manifest's <code>session</code> block names the roles:</p>
+<pre><code>"session": { "export": "mors.export", "snapshot": "mors.snapshot", "restore": "mors.load" }</code></pre>
+
+<h2 id="events">Events (up)</h2>
+<p>Each event says what you meant. <code>morse</code> uses <code>.</code> and <code>-</code> only, letters split by a space and words by <code> / </code>: <code>... --- ... / -.-. --.-</code> is <code>SOS CQ</code>. <code>text</code> is the window's decode, uppercase, one character per letter group; a group not in the table reads <code>#</code> and its raw pattern stays in <code>morse</code>. Prosigns read <code>&lt;AR&gt;</code>, <code>&lt;SK&gt;</code> and <code>&lt;SOS&gt;</code>.</p>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th scope="col">Event</th><th scope="col">When</th></tr></thead>
+    <tbody>
+      <tr><td><code>mors.changed {rev, morse, text, letters, words, wpm, unit, view, by, delta?}</code></td><td>A word closed (a word gap of silence after the last element), you erased or cleared, or a command from Claude or a restore changed the message. Settled only: never while a letter is open. <code>by</code> is <code>"human"</code>, <code>"claude"</code> or <code>"restore"</code>. <code>delta {morse, text}</code> is what was added since the previous <code>mors.changed</code>, when it was an append.</td></tr>
+      <tr><td><code>mors.ghost.accept {rev, text, assisted}</code></td><td>You keyed the whole ghost, by hand or with <kbd>Tab</kbd>: <code>assisted</code> counts the letters the window keyed for you.</td></tr>
+      <tr><td><code>mors.ghost.reject {rev, reason, keyed}</code></td><td>You pressed <kbd>Esc</kbd> (<code>"esc"</code>), keyed a letter that is not the ghost's next one (<code>"keyed-away"</code>) or cleared the message (<code>"cleared"</code>). <code>keyed</code> is how many letters of the ghost had matched.</td></tr>
+      <tr><td><code>mors.ask {kind, question, morse, text, rev, view, source}</code></td><td>You asked Doto for help: <em>Spell a word for me</em> (<code>kind: "spell"</code>, <code>question</code> is the words you typed), <em>Check what I keyed</em> (<code>"check"</code>), or a free question in the full controller's Ask box (<code>"free"</code>). <code>source</code> is <code>"menu"</code> for spell and check, <code>"form"</code> for the Ask box.</td></tr>
+      <tr><td><code>mors.mode {view, by}</code></td><td>You opened or closed one of Doto's extras (the full controller, the read-back or the chart), or Claude did with <code>mors.reveal</code> (<code>by: "claude"</code>). <code>view</code> is <code>{controller: "key" | "full", readback, chart}</code>.</td></tr>
+      <tr><td><code>mors.played {id, morse, ms}</code></td><td>Nothing you did: a <code>mors.play</code> finished (<code>id</code> is the play's id).</td></tr>
+      <tr><td><code>mors.export {label, morse, text, letters, words, wpm, view, reply, ends?, stats}</code></td><td>You pressed <strong>Send to Claude</strong>: the handoff. <code>ends</code> is <code>"AR"</code>, <code>"SK"</code> or <code>"K"</code> when the message ends with that sign. <code>label</code> is the decoded text (up to 60 characters) plus <code>· mors</code>. The engine prepends <code>session {id, handoff, saved, summary}</code>.</td></tr>
+      <tr><td><code>mors.snapshot</code></td><td>Nothing you did: it is the reply to Claude's <code>mors.snapshot</code> command (<code>re</code> is the command's id), the export payload.</td></tr>
+    </tbody>
+  </table>
+</div>
+<p><code>rev</code> starts at 1 on an empty tape and never goes down; every change bumps it, a load included. <code>stats</code> counts dots, dashes, letters, words, errors, typed and assisted letters, and accepted and rejected ghosts.</p>
+
+<h2 id="commands">Commands (down)</h2>
+<p>Commands are idempotent and animate (300 ms at most, transform and opacity only), except a play, which lasts as long as its message. Every command accepts <code>"ack": true</code> on the envelope and gets <code>lip.ack {ok, error?}</code> back. A bad command without <code>ack</code> gets <code>lip.error {code: "bad_request", message, re}</code>.</p>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th scope="col">Command</th><th scope="col">Does</th></tr></thead>
+    <tbody>
+      <tr><td><code>mors.suggest {rev, text, reason?}</code></td><td>Show <code>text</code> as the ghost after the end of the message: dim cyan patterns with the character above each. Up to 60 characters (letters, digits, punctuation, spaces), uppercased; characters not in the table are dropped. It shows when <code>rev</code> is the current one, or when the decoded text is still what it was at that <code>rev</code>; otherwise it is dropped silently. <code>text: ""</code> clears. <code>reason</code> shows in the status line (<code>ghost: claude · spell</code>). A new ghost replaces the old one without a reject event.</td></tr>
+      <tr><td><code>mors.play {id?, text?, morse?, wpm?, silent?}</code></td><td>Play <code>text</code> (encoded) or <code>morse</code> on the reply track: the lamp blinks magenta and the lower tone sounds unless <code>silent</code> or sound is off. <code>wpm</code> defaults to the window's. Plays queue in order; <code>{text: ""}</code> stops and empties the queue. Ends with <code>mors.played</code>.</td></tr>
+      <tr><td><code>mors.insert {text?, morse?, play?}</code></td><td>Append to your message as <code>by: "claude"</code>. With <code>play</code> (the default) the window keys it at the current speed with lamp and tone, so you watch it go in; <code>play: false</code> appends at once. Bumps <code>rev</code> and emits <code>mors.changed</code>. Undoable. Claude asks before inserting more than a word: the message is your voice.</td></tr>
+      <tr><td><code>mors.erase {letters?, words?, all?}</code></td><td>Remove from the end: <code>letters: n</code>, <code>words: n</code>, or everything. Undoable.</td></tr>
+      <tr><td><code>mors.reveal {controller?, readback?, chart?}</code></td><td>Doto's extras from Claude's side: <code>controller</code> is <code>"key"</code> or <code>"full"</code>, plus the read-back and the chart. Only the keys given change. Emits <code>mors.mode {by: "claude"}</code>.</td></tr>
+      <tr><td><code>mors.set {wpm?, unit?, auto?, sound?}</code></td><td>Speed (<code>wpm</code> 3 to 30, or <code>unit</code> 40 to 400 ms), whether the unit keeps following your hand (<code>auto</code>), and the tone on or off.</td></tr>
+      <tr><td><code>mors.load {morse, text?, wpm?, view?, reply?, ghost?}</code></td><td>The restore command: render the saved message and Claude's reply track without ghost or accept events, bump <code>rev</code>, and emit one <code>mors.changed {by: "restore"}</code>. In the first 8 s after boot it wins over the tab's draft. <code>text</code> is ignored: the window decodes <code>morse</code> itself. <code>morse</code> and <code>reply</code> keep the message limits; <code>ghost</code> is <code>{text, keyed?}</code> with the limits of <code>mors.suggest</code>.</td></tr>
+      <tr><td><code>mors.snapshot {}</code></td><td>Reply with a <code>mors.snapshot</code> event.</td></tr>
+    </tbody>
+  </table>
+</div>
+<p>A round trip: you pick <em>Spell a word for me</em> → <code>mors.ask {kind: "spell", question}</code> → <code>mors.suggest {rev, text, reason: "spell"}</code> → you key the ghost (or <kbd>Tab</kbd>) → <code>mors.ghost.accept</code>.</p>
+<pre><code><span class="c">// spell two words as a ghost</span>
+{<span class="s">"type"</span>:<span class="s">"mors.suggest"</span>,<span class="s">"data"</span>:{<span class="s">"rev"</span>:7,<span class="s">"text"</span>:<span class="s">"HELLO WORLD"</span>,<span class="s">"reason"</span>:<span class="s">"spell"</span>}}
+<span class="c">// talk back: received, over</span>
+{<span class="s">"type"</span>:<span class="s">"mors.play"</span>,<span class="s">"data"</span>:{<span class="s">"id"</span>:<span class="s">"p1"</span>,<span class="s">"text"</span>:<span class="s">"R K"</span>}}
+<span class="c">// the same, as elements</span>
+{<span class="s">"type"</span>:<span class="s">"mors.play"</span>,<span class="s">"data"</span>:{<span class="s">"morse"</span>:<span class="s">".-. / -.-"</span>}}
+<span class="c">// show the read-back, because you asked in the chat</span>
+{<span class="s">"type"</span>:<span class="s">"mors.reveal"</span>,<span class="s">"data"</span>:{<span class="s">"readback"</span>:true}}
+<span class="c">// slower, and stop following the hand</span>
+{<span class="s">"type"</span>:<span class="s">"mors.set"</span>,<span class="s">"data"</span>:{<span class="s">"wpm"</span>:10,<span class="s">"auto"</span>:false}}</code></pre>
+
+<h2 id="hood">Under the hood</h2>
+<h3 id="timing">Timing</h3>
+<ul>
+  <li><strong>Units.</strong> A dot is 1 unit, a dash 3, the gap inside a letter 1, between letters 3, between words 7. <code>unit</code> is the dot length in ms, <code>1200 / wpm</code>, clamped to 40 to 400 ms (30 to 3 wpm). The default is 100 ms (12 wpm).</li>
+  <li><strong>Dot or dash.</strong> A press shorter than 2 units is a dot; anything longer is a dash. Press times come from <code>performance.now()</code> in the pointer and key handlers, never from rendering.</li>
+  <li><strong>Silence closes things.</strong> After 2.2 units the letter closes: it is decoded, appended to the message, and <code>rev</code> goes up. After 5.5 units the word closes and <code>mors.changed</code> goes out.</li>
+  <li><strong>Auto.</strong> With <code>auto</code> on, each press tunes the unit: <code>unit = 0.75·unit + 0.25·(dot ? press : press / 3)</code>, clamped to 40 to 400 ms. The wpm chip shows the result.</li>
+  <li><strong>Typed input.</strong> Typed <code>.</code>, <code>-</code> and <code>_</code> are timed with a fixed 160 ms unit: the letter closes after 350 ms, the word after 880 ms. <code>/</code> forces a word gap.</li>
+  <li><strong>The error prosign.</strong> Eight dots or more in one group (<code>........</code>, <code>&lt;HH&gt;</code>) is never kept. When it closes, the window drops it and the word being keyed, back to the last word gap, shows <em>erased</em> on the tape for a second, and Doto plays his oops. Like every erase, it bumps <code>rev</code> and emits <code>mors.changed</code>.</li>
+</ul>
+<h3 id="table">The table</h3>
+<p>International Morse: <code>A–Z</code>, <code>0–9</code>, the punctuation <code>. , ? ' ! / ( ) &amp; : ; = + - _ " $ @</code> and the prosigns <code>&lt;AR&gt;</code> (<code>.-.-.</code>), <code>&lt;SK&gt;</code> (<code>...-.-</code>) and <code>&lt;SOS&gt;</code> (<code>...---...</code>). <code>-...-</code> decodes as <code>=</code>, <code>-.--.</code> as <code>(</code> and <code>.-...</code> as <code>&amp;</code>. A letter is a group of 1 to 8 elements; only the eraser, a run of dots, grows longer.</p>
+<h3 id="sound">Sound and lamp</h3>
+<p>Web Audio, started on your first press (browsers want a gesture first). One sine oscillator per track: 700 Hz for you, 520 Hz for Claude, with 5 ms ramps so there is no click. Sound is on by default; <kbd>M</kbd>, the toolbar button, the full controller or <code>mors.set {sound}</code> turns it off, and the choice is remembered. The lamp always works, sound or not.</p>
+<h3 id="storage">Storage and offline</h3>
+<p>Nothing is stored on the host. <code>sessionStorage["lets.mors.draft"]</code> keeps the message and the reply track for this tab, so a reload keeps them. <code>localStorage["lets.mors"]</code> holds preferences: <code>sound</code>, <code>wpm</code>, <code>auto</code> and <code>view</code>. Nothing else is stored.</p>
+<p>Without a host, mors still works: keying, read-back, the chart and the full controller are all local. Send, Ask and the ghost need the host and say so with a toast.</p>
+<h3 id="files">The files</h3>
+<pre><code>lets-unique-mors/
+  unique.json            <span class="c"># manifest: domain mors, engine &gt;=0.4.0, no permissions</span>
+  GUIDE.md               <span class="c"># what Claude reads on open</span>
+  CONTRACT.md            <span class="c"># the unique's behaviour spec</span>
+  README.md  CHANGELOG.md  LICENSE  icon.svg
+  package.json          <span class="c"># npm run validate</span>
+  scripts/validate.mjs   <span class="c"># zero-dependency manifest check</span>
+  schemas/               <span class="c"># unique.schema.json and message schemas</span>
+  ui/index.html          <span class="c"># the page</span>
+  ui/mors.js             <span class="c"># the window</span>
+  ui/morse.js            <span class="c"># table, encode, decode, the keyer state machine, timing</span>
+  ui/style.css</code></pre>
+<p>Plain HTML, ES modules and CSS: no build step, no CDN, no inline script, no <code>eval</code>, no user content through <code>innerHTML</code>. MIT licensed. More: <a href="https://github.com/TikoTikTok/lets-unique-mors">lets-unique-mors</a> has the full <code>GUIDE.md</code>, the behaviour contract (<code>CONTRACT.md</code>) and JSON Schemas for the messages.</p>
+
+<h2 id="develop">Develop</h2>
+<p>Run the host standalone from a lets checkout. The registry looks for <code>&lt;dir&gt;/mors/unique.json</code>, so point it at the parent of a folder named <code>mors</code> (a symlink or junction to this repo works):</p>
+<pre><code>LETS_UNIQUES_DIRS=/path/to/parent node engine/bin/lets.mjs serve --open mors --verbose
+
+node engine/bin/lets.mjs send mors.play <span class="s">'{"text":"R K"}'</span>   <span class="c"># drive it from the CLI</span>
+node engine/bin/lets.mjs events                            <span class="c"># drain what mors emitted</span></code></pre>
+<p><code>--verbose</code> prints every event the window emits. Validate with <code>npm run validate</code> in the repo, or <code>node engine/bin/lets.mjs validate &lt;this folder&gt;</code> from the engine. The general recipe is in <a href="./uniques.html#develop">Develop &amp; validate</a>.</p>
+
+<nav class="doc-pager" aria-label="Previous and next page"><a class="prev" href="./cocode.html"><small>← Previous</small>Talk in code (cocode)</a><a class="next" href="./protocol.html"><small>Next →</small>Protocol (LIP)</a></nav>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div>
+      <div class="footer-brand"><img src="../assets/logo.svg" alt="" width="28" height="28">lets</div>
+      <p>Talk to Claude through windows, not just text.</p>
+      <p>MIT © TikoTikTok · made with Claude Code</p>
+    </div>
+    <div>
+      <h2>Repositories</h2>
+      <ul>
+        <li><a href="https://github.com/TikoTikTok/lets">lets</a> <span class="dim">engine, plugin, SDK, protocol</span></li>
+        <li><a href="https://github.com/TikoTikTok/lets-unique-graph">lets-unique-graph</a> <span class="dim">the graph board</span></li>
+        <li><a href="https://github.com/TikoTikTok/lets-unique-den">lets-unique-den</a> <span class="dim">Doto's home</span></li>
+        <li><a href="https://github.com/TikoTikTok/lets-unique-cocode">lets-unique-cocode</a> <span class="dim">talk in code</span></li>
+        <li><a href="https://github.com/TikoTikTok/lets-unique-mors">lets-unique-mors</a> <span class="dim">talk in Morse</span></li>
+        <li><a href="https://github.com/TikoTikTok/lets-store">lets-store</a> <span class="dim">community store</span></li>
+        <li><a href="https://github.com/TikoTikTok/lets-unique-template">lets-unique-template</a> <span class="dim">pulse template</span></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Site</h2>
+      <ul>
+        <li><a href="../docs/index.html">Docs</a></li>
+        <li><a href="../docs/protocol.html">Protocol (LIP)</a></li>
+        <li><a href="../uniques.html">Uniques</a></li>
+        <li><a href="../playground.html">Playground</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
