@@ -87,6 +87,7 @@
             <li>While you type, Claude builds the real program (Python, JavaScript, …) in the Build pane, so Run (<kbd>Ctrl</kbd>+<kbd>Enter</kbd>) is instant and the output streams in.</li>
             <li>Ask (<kbd>Ctrl</kbd>+<kbd>K</kbd>, or a line starting with <code>??</code>) and Send to Claude carry the code as the message; Claude reads it as a question, a walkthrough, a task, a fix, a review or a note.</li>
             <li><strong>Answer in code</strong>: Claude's whole answer comes back as code in your language, nothing else; also <code>/lets cocode output</code> without a window. <span class="badge badge-new">new in 0.2.0</span></li>
+            <li><strong>Reach</strong>: a line that asks for what no sandbox can do (<code>ping('google.com')</code>, <code>claude.browser(url)</code>, <code>research(topic)</code>, <code>$ cmd</code>) is done for real by Claude: the real ping, the browser pane, a web search, a sub-agent, the shell. Never a function that prints what a ping would say. <span class="badge badge-new">new in 0.3.0</span></li>
           </ul>
           <div class="btn-row">
             <a class="btn btn-sm" href="./docs/cocode.html">Docs</a>
