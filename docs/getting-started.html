@@ -70,14 +70,14 @@
 <h2 id="requirements">Requirements</h2>
 <ul>
   <li><strong>Node 18+</strong> and the <strong><code>claude</code> CLI</strong> on your PATH.</li>
-  <li><strong>git</strong> with credentials that can read the repository. While the repos are private, log in with <code>gh auth login</code> and run <code>gh auth setup-git</code>.</li>
+  <li><strong>git</strong>. The repositories are public, so no GitHub login is needed.</li>
   <li>The Claude desktop app is the nicest home: windows open in its built-in browser pane, right next to the chat. Without a browser pane, Claude opens the window in your system browser.</li>
 </ul>
 
 <h2 id="agent">Install with your agent</h2>
 <p>The easiest way: paste this line into Claude Code. It clones the repo, runs the installer and follows <code>INSTALL.md</code>, which is written for an agent to carry out step by step.</p>
 <div class="copy-box">
-  <pre class="wrap-text" id="install-prompt">Install the `lets` plugin for Claude Code on this machine: clone https://github.com/offensiveadhd/lets (use `gh repo clone offensiveadhd/lets` — it is private, so make sure `gh auth status` is logged in and run `gh auth setup-git`), then run `node install.mjs` inside the clone and follow INSTALL.md in that repo. When done, tell me to restart Claude Code and show me `/lets graph`.</pre>
+  <pre class="wrap-text" id="install-prompt">Install the `lets` plugin for Claude Code on this machine: clone https://github.com/offensiveadhd/lets (`git clone https://github.com/offensiveadhd/lets.git`), then run `node install.mjs` inside the clone and follow INSTALL.md in that repo. When done, tell me to restart Claude Code and show me `/lets graph`.</pre>
   <div>
     <button class="btn btn-primary" type="button" data-copy="install-prompt">Copy prompt</button>
     <span class="copy-status" role="status" aria-live="polite"></span>
@@ -86,7 +86,7 @@
 
 <h2 id="manual">Install by hand</h2>
 <p>One command from a checkout:</p>
-<pre><code>gh repo clone offensiveadhd/lets
+<pre><code>git clone https://github.com/offensiveadhd/lets.git
 cd lets
 node install.mjs</code></pre>
 <p>The installer adds the <code>lets</code> marketplace from GitHub, installs the <code>lets</code> plugin at user scope, installs the default uniques (graph, den) into <code>~/.lets/uniques</code>, and installs a personal <code>/lets</code> alias. Restart the app or run <code>/reload-plugins</code> once, and both of these work in any session:</p>

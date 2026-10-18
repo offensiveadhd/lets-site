@@ -256,19 +256,19 @@
       <div class="install">
         <div class="copy-box">
           <h3>The install prompt</h3>
-          <pre class="wrap-text" id="install-prompt">Install the `lets` plugin for Claude Code on this machine: clone https://github.com/offensiveadhd/lets (use `gh repo clone offensiveadhd/lets` — it is private, so make sure `gh auth status` is logged in and run `gh auth setup-git`), then run `node install.mjs` inside the clone and follow INSTALL.md in that repo. When done, tell me to restart Claude Code and show me `/lets graph`.</pre>
+          <pre class="wrap-text" id="install-prompt">Install the `lets` plugin for Claude Code on this machine: clone https://github.com/offensiveadhd/lets (`git clone https://github.com/offensiveadhd/lets.git`), then run `node install.mjs` inside the clone and follow INSTALL.md in that repo. When done, tell me to restart Claude Code and show me `/lets graph`.</pre>
           <div>
             <button class="btn btn-primary" type="button" data-copy="install-prompt">Copy prompt</button>
             <span class="copy-status" role="status" aria-live="polite"></span>
           </div>
-          <p class="note note-warn" style="margin:14px 0 0">The repositories are private for now: your GitHub account needs read access, and <code>gh</code> must be logged in.</p>
+          <p class="note note-new" style="margin:14px 0 0">The repositories are public: no GitHub login is needed to clone or install. Contributions are welcome.</p>
         </div>
 
         <div>
           <h3>Or by hand</h3>
-          <p class="dim">Needs Node 18+, the <code>claude</code> CLI on your PATH, and git credentials that can read the repo (<code>gh auth setup-git</code>).</p>
+          <p class="dim">Needs Node 18+, the <code>claude</code> CLI on your PATH, and git.</p>
           <div class="pre-wrap">
-            <pre id="manual-cmds"><code>gh repo clone offensiveadhd/lets
+            <pre id="manual-cmds"><code>git clone https://github.com/offensiveadhd/lets.git
 cd lets
 node install.mjs</code></pre>
             <button class="btn btn-sm btn-copy" type="button" data-copy="manual-cmds">Copy</button>

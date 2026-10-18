@@ -89,7 +89,7 @@
 /lets cocode            <span class="c"># open it</span></code></pre>
 <p>Claude shows you the inspection (permissions, problems, the verified flag) and copies it into <code>~/.lets/uniques/cocode</code> only after you say yes. Manual: clone <a href="https://github.com/offensiveadhd/lets-unique-cocode">the repo</a> into <code>~/.lets/uniques/cocode</code>.</p>
 <p>cocode needs engine 0.4.0 or later (<code>"engine": "&gt;=0.4.0"</code>) for handoff sessions; it needs no new engine endpoint. It asks for no write or network permission: <code>"fs.write": []</code>, <code>"net": []</code>. The window writes nothing itself. Claude runs your program with its own tools (<a href="#build">below</a>), except where the engine's local runner can run it for you: <span class="badge badge-new">new in 0.2.0</span> cocode also declares <code>permissions.exec</code>, the languages it may ask the engine to run, and the runner is new in lets 0.7.0 (<a href="#local-run">Run on your machine</a>).</p>
-<p class="note note-new">This page describes <strong>cocode 0.1.0</strong> (2026-10-13), plus the local runner marked <em>new in 0.2.0</em> and <a href="#reach">reach</a> marked <em>new in 0.3.0</em> (2026-10-15). Like the other lets repositories, its repository is private for now.</p>
+<p class="note note-new">This page describes <strong>cocode 0.1.0</strong> (2026-10-13), plus the local runner marked <em>new in 0.2.0</em> and <a href="#reach">reach</a> marked <em>new in 0.3.0</em> (2026-10-15).</p>
 
 <h2 id="do">What you can do</h2>
 <p>A toolbar sits on top. Below it, the editor on the left and a rail on the right with two panes, <strong>Build</strong> and <strong>Output</strong>.</p>
