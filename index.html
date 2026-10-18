@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>lets</title>
-  <meta name="description" content="lets is a Claude Code plugin: talk to Claude through interactive windows (a graph board first), with Doto, a small companion dot that rolls along beside your cursor.">
+  <meta name="description" content="lets is an engine for Claude Code: a zero-dependency Node MCP server that hosts interactive windows (uniques) beside your chat, with Doto, a small companion dot. Two uniques show what it can do: graph (talk in diagrams) and cocode (talk in code).">
   <meta name="theme-color" content="#120b1f">
   <link rel="icon" href="./assets/logo.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./css/site.css">
@@ -38,12 +38,13 @@
           <h1 id="hero-title">lets</h1>
         </div>
         <p class="tagline">Talk to Claude through windows, not just text.</p>
-        <p class="hero-lead"><code>/lets graph</code> opens a dark-violet board where you draw the thing you mean while you chat. Doto, a small bright dot, rolls along beside your cursor, points, pitches in, learns how you work, and teaches himself new tricks.</p>
+        <p class="hero-lead"><strong>lets is an engine for Claude Code.</strong> A zero-dependency Node MCP server that hosts interactive windows, called <em>uniques</em>, beside your chat: it serves them, carries one small protocol between you and Claude, keeps the companion's memory, saves what you send, installs more uniques from git, and runs your programs on your machine. Doto, a small bright dot, rolls along in every window.</p>
+        <p class="hero-lead">Two uniques show what it can do: <a href="#showcase"><strong>graph</strong></a>, a board you talk through in diagrams, and <a href="#showcase"><strong>cocode</strong></a>, an editor where Claude predicts your next lines, builds the real program and runs it.</p>
         <div class="btn-row">
-          <a class="btn btn-primary" href="#install">Install with your agent</a>
-          <a class="btn" href="./docs/graph.html">See the graph board</a>
+          <a class="btn btn-primary" href="#install">Install the engine</a>
+          <a class="btn" href="#showcase">Meet graph and cocode</a>
         </div>
-        <p class="dim" style="margin-top:18px;font-size:.92rem">A Claude Code plugin · MIT licensed · no build step, no dependencies</p>
+        <p class="dim" style="margin-top:18px;font-size:.92rem">lets 0.7.0 · a Claude Code plugin · MIT licensed · no build step, no dependencies</p>
       </div>
 
       <div class="hero-stage">
@@ -55,7 +56,7 @@
             <div class="doto-bubble" role="status" data-open="false"></div>
             <button class="doto" id="doto-hero" type="button" data-mood="idle" data-doze="1"
               data-greet="Hi, I'm Doto. A dot that does."
-              data-lines="Three nodes on this card. I counted.|Right-click in a window. I roll right over.|Draw it. Claude reads the same board.|Press Send to Claude. See you in Claude Code.|I learn how you work. Then I write it down."
+              data-lines="Three nodes on this card. I counted.|Right-click in a window. I roll right over.|Draw it. Claude reads the same board.|Type it. Claude guesses the next line.|Press Send to Claude. See you in Claude Code.|I learn how you work. Then I write it down."
               aria-label="Doto, the companion dot. Press to boop.">
               <span class="doto-bob"><span class="doto-squash">
                 <svg viewBox="-32 -32 64 64" aria-hidden="true" focusable="false">
@@ -89,36 +90,139 @@
     </div>
   </section>
 
-  <!-- ============================================================ (a) what it is -->
-  <section class="section" aria-labelledby="what-title">
+  <!-- ============================================================ (a) the engine -->
+  <section class="section" id="engine" aria-labelledby="engine-title">
     <div class="wrap">
       <div class="section-head">
-        <span class="eyebrow">What it is</span>
-        <h2 id="what-title">One plugin, three layers</h2>
-        <p>Everything between you, the window and Claude crosses one small protocol, <a href="./docs/protocol.html">LIP</a>: typed JSON envelopes, up (you → Claude) and down (Claude → window).</p>
+        <span class="eyebrow">The engine</span>
+        <h2 id="engine-title">One engine, any window</h2>
+        <p>The engine knows nothing about graphs or code. It hosts a unique (a static web app with a manifest and a guide for Claude), gives it the companion, chat and components for free, and carries everything that happens across one protocol, <a href="./docs/protocol.html">LIP</a>: typed JSON envelopes, up (you → Claude) and down (Claude → window). A unique for voice, AR or a haptic strip would speak the same envelope.</p>
       </div>
       <div class="cards">
         <article class="card">
-          <h3><span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="4" width="18" height="6" rx="2"/><rect x="3" y="14" width="18" height="6" rx="2"/><path d="M7 7h.01M7 17h.01"/></svg></span>Engine</h3>
-          <p>A zero-dependency Node MCP server. It hosts windows on loopback, carries the protocol, keeps the companion's memory, routes multi-task work to the cheapest trustworthy model, and installs community mediums from git.</p>
-          <p><a class="more" href="./docs/architecture.html">How it fits together →</a></p>
+          <h3><span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="4" width="18" height="6" rx="2"/><rect x="3" y="14" width="18" height="6" rx="2"/><path d="M7 7h.01M7 17h.01"/></svg></span>Hosts windows</h3>
+          <p>A zero-dependency Node MCP server. It serves uniques on loopback, behind a per-host token and a strict CSP, in the app's browser pane or your system browser. No <code>npm install</code>, no build step, no admin rights; everything it keeps lives under <code>~/.lets</code>.</p>
         </article>
         <article class="card">
-          <h3><span class="card-icon" aria-hidden="true"><img src="./assets/graph-icon.svg" alt="" width="22" height="22"></span>Uniques</h3>
-          <p>The interactive mediums: static web apps that speak LIP, each in its own repository. Every install gets the defaults: <strong>graph</strong>, a board you talk through in diagrams, and <strong>den</strong>, Doto's home, where you see and edit what he learned. The store holds the rest, starting with <strong>cocode</strong>, a code window where Claude predicts your next lines and runs the real program, and <strong>mors</strong>, a Morse key you talk through: Claude reads what you key as a prompt.</p>
-          <p><a class="more" href="./uniques.html">Browse uniques →</a></p>
+          <h3><span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h11l-3-3M20 17H9l3 3"/></svg></span>One protocol</h3>
+          <p>LIP: what you do in the window reaches Claude as meaning (a node you added, a line you asked about), never as pointer moves. Claude answers with commands the window animates. Each unique declares its own events, commands and permissions in a manifest.</p>
+          <p><a class="more" href="./docs/protocol.html">Read the protocol →</a></p>
         </article>
         <article class="card">
-          <h3><span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="7"/><path d="M9.5 11v1M14.5 11v1M10 15c1.2.8 2.8.8 4 0"/></svg></span>Companion</h3>
-          <p>Doto, Claude's presence in the window: a small dot that rolls after your cursor, points, pitches in, learns how you work, and keeps the special skills he writes for himself. He costs zero tokens until you click him.</p>
+          <h3><span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="7"/><path d="M9.5 11v1M14.5 11v1M10 15c1.2.8 2.8.8 4 0"/></svg></span>A companion</h3>
+          <p>Doto, Claude's presence in every window: a dot that rolls after your cursor, points, pitches in, and learns how you work. What he learns is written to disk where you can read it, and <code>/lets den</code> lets you edit or forget any of it.</p>
           <p><a class="more" href="./docs/companion.html">Meet Doto →</a></p>
+        </article>
+        <article class="card">
+          <h3><span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h9l5 5v11H5z"/><path d="M14 4v5h5M9 14l2 2 4-4"/></svg></span>Saved sessions</h3>
+          <p><strong>Send to Claude</strong> is a handoff: the engine saves the window's content, the window says goodbye and closes, and Claude answers in your chat. Say <em>continue</em> or <code>/lets graph resume</code> and the window comes back as you left it.</p>
+          <p><a class="more" href="./docs/getting-started.html#handoff">How handoff works →</a></p>
+        </article>
+        <article class="card">
+          <h3><span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9l8-5 8 5v6l-8 5-8-5z"/><path d="M4 9l8 5 8-5M12 14v6"/></svg></span>A store</h3>
+          <p>More uniques come from git. <code>/lets store cocode</code> syncs the community store, shows you the manifest, its permissions and the verified flag, and installs into <code>~/.lets/uniques</code> only after you say yes. Two defaults come with the engine itself.</p>
+          <p><a class="more" href="./docs/getting-started.html#uniques">Installing uniques →</a></p>
+        </article>
+        <article class="card">
+          <h3><span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 5l7 7-7 7M13 19h6"/></svg></span>A runner and native panes <span class="badge badge-new">0.7.0</span></h3>
+          <p>A unique that holds a program can run it on your machine after one consent: Python under an audit hook, JavaScript and TypeScript under Node's permission model, output back in milliseconds. And a unique with a native view opens as a pane inside Claude Code, with no browser at all.</p>
+          <p><a class="more" href="./docs/architecture.html">How it fits together →</a></p>
         </article>
       </div>
     </div>
   </section>
 
-  <!-- ============================================================ (b) how it feels -->
-  <section class="section section-alt" aria-labelledby="feel-title">
+  <!-- ============================================================ (b) showcase: graph + cocode -->
+  <section class="section section-alt" id="showcase" aria-labelledby="showcase-title">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Two uniques to show it</span>
+        <h2 id="showcase-title">graph and cocode</h2>
+        <p>Same engine, same companion, same protocol; two very different windows. graph comes with the engine, cocode is one store command away.</p>
+      </div>
+      <div class="showcase">
+        <article class="showcase-item" aria-labelledby="sc-graph">
+          <div class="showcase-visual">
+            <svg class="mini-board" viewBox="0 0 420 260" role="img" aria-label="A small graph board: an API gateway node connects to an Auth service node, which leads to a Users DB node and a Token valid? decision with a yes and a no branch; a sticky note asks about rate limits.">
+              <defs>
+                <marker id="mb-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5 0 10z" fill="#8c7fb8"/></marker>
+              </defs>
+              <rect width="420" height="260" rx="18" fill="#1a1030"/>
+              <g fill="#2f2057"><circle cx="20" cy="20" r="1"/><circle cx="60" cy="20" r="1"/><circle cx="100" cy="20" r="1"/><circle cx="140" cy="20" r="1"/><circle cx="180" cy="20" r="1"/><circle cx="220" cy="20" r="1"/><circle cx="260" cy="20" r="1"/><circle cx="300" cy="20" r="1"/><circle cx="340" cy="20" r="1"/><circle cx="380" cy="20" r="1"/><circle cx="20" cy="240" r="1"/><circle cx="60" cy="240" r="1"/><circle cx="100" cy="240" r="1"/><circle cx="140" cy="240" r="1"/><circle cx="180" cy="240" r="1"/><circle cx="220" cy="240" r="1"/><circle cx="260" cy="240" r="1"/><circle cx="300" cy="240" r="1"/><circle cx="340" cy="240" r="1"/><circle cx="380" cy="240" r="1"/></g>
+              <g stroke="#8c7fb8" stroke-width="1.6" fill="none" marker-end="url(#mb-arrow)">
+                <path d="M128 60H178"/>
+                <path d="M258 60c30 0 30 40 60 40"/>
+                <path d="M218 76v32"/>
+                <path d="M218 148v26"/>
+                <path d="M262 128H336V174"/>
+              </g>
+              <g font-family="ui-sans-serif, Segoe UI, system-ui, sans-serif" font-size="12" font-weight="600">
+                <rect x="36" y="44" width="92" height="32" rx="9" fill="#241746" stroke="#5a44a0"/><text x="82" y="64" text-anchor="middle" fill="#ece6ff">API gateway</text>
+                <rect x="178" y="44" width="80" height="32" rx="9" fill="#241746" stroke="#6bf0ff" stroke-opacity=".7"/><text x="218" y="64" text-anchor="middle" fill="#ece6ff">Auth service</text>
+                <rect x="318" y="84" width="72" height="32" rx="9" fill="#241746" stroke="#5ef2a6" stroke-opacity=".6"/><text x="354" y="104" text-anchor="middle" fill="#ece6ff">Users DB</text>
+                <path d="M218 108l44 20-44 20-44-20z" fill="#2a1744" stroke="#ff6bd6" stroke-opacity=".8"/><text x="218" y="132" text-anchor="middle" fill="#ece6ff">Token valid?</text>
+                <rect x="178" y="178" width="80" height="32" rx="9" fill="#241746" stroke="#6bf0ff" stroke-opacity=".7"/><text x="218" y="198" text-anchor="middle" fill="#ece6ff">Route</text>
+                <rect x="306" y="178" width="60" height="32" rx="9" fill="#241746" stroke="#ff6b8b" stroke-opacity=".7"/><text x="336" y="198" text-anchor="middle" fill="#ece6ff">401</text>
+                <text x="226" y="166" fill="#a99cd0" font-size="10" font-weight="500">yes</text>
+                <text x="292" y="123" fill="#a99cd0" font-size="10" font-weight="500">no</text>
+                <rect x="40" y="150" width="112" height="46" rx="6" fill="#3a2a63" stroke="#5a44a0"/><text x="52" y="169" fill="#ece6ff" font-size="10.5" font-weight="500">rate-limit here?</text><text x="52" y="184" fill="#a99cd0" font-size="10" font-weight="500">— Claude</text>
+              </g>
+              <g transform="translate(372 216)"><circle r="12" fill="#a66bff" fill-opacity=".28"/><circle r="8" fill="#b892ff"/><circle cx="-3" cy="-1.5" r="1.6" fill="#1b0f3a"/><circle cx="3" cy="-1.5" r="1.6" fill="#1b0f3a"/><path d="M-2.5 3q2.5 2 5 0" fill="none" stroke="#1b0f3a" stroke-width="1" stroke-linecap="round"/></g>
+            </svg>
+          </div>
+          <div class="showcase-text">
+            <h3 id="sc-graph"><img src="./assets/graph-icon.svg" alt="" width="32" height="32">graph <span class="badge badge-ok">comes with the engine</span></h3>
+            <p class="showcase-lead"><strong>Talk to Claude in diagrams.</strong> A dark-violet node and edge board where you draw the thing you mean while you chat. Claude reads the same board, points at what it talks about, and answers by adding to it, animated and undoable.</p>
+            <ul>
+              <li>Seven node kinds, edges, tree / grid / radial layouts, undo for everything. Paste a screenshot and it becomes a node Claude can read.</li>
+              <li>Right-click for Doto: <em>What's missing around this?</em>, <em>Break it into steps</em>, <em>Review the flow</em>.</li>
+              <li>Opens as a browser window, or as a pane inside Claude Code with <code>/lets graph native</code>. <span class="badge badge-new">0.4.0</span></li>
+            </ul>
+            <pre><code>/lets graph plan the auth flow   <span class="c"># comes with lets</span></code></pre>
+            <div class="btn-row">
+              <a class="btn btn-sm" href="./docs/graph.html">Docs &amp; install</a>
+              <a class="btn btn-sm" href="https://github.com/offensiveadhd/lets-unique-graph">Repository</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="showcase-item" aria-labelledby="sc-cocode">
+          <div class="showcase-visual">
+            <div class="mini-editor" role="img" aria-label="A small cocode window: a pseudo-code program with three lines typed by the human, a cyan ghost line predicted by Claude, a Build and run button with a spinning wheel, and a status line reading ghost: claude, build: ready.">
+              <div class="bar"><span class="dot" aria-hidden="true"></span><span>cocode</span><span class="chip-lang">pseudo</span><span class="spacer"></span><span class="run"><span class="wheel" aria-hidden="true"></span>Build &amp; run</span></div>
+              <div class="lines">
+                <span class="ln">1</span><span>for each user in <span class="k">users</span>:</span>
+                <span class="ln">2</span><span>    if user.last_seen &gt; 30 days:</span>
+                <span class="ln">3</span><span>        send a reminder to user</span>
+                <span class="ln">4</span><span class="ghost">        log <span class="s">"reminded"</span>, user.id ▍</span>
+                <span class="ln">5</span><span><span class="c">?? what if the mail bounces</span></span>
+              </div>
+              <div class="status">Ln 4, Col 9 · 5 lines · rev 12 · ghost: claude · build: ready rev 12 · python</div>
+            </div>
+          </div>
+          <div class="showcase-text">
+            <h3 id="sc-cocode"><img src="./assets/cocode-icon.svg" alt="" width="32" height="32">cocode <span class="badge">from the store</span></h3>
+            <p class="showcase-lead"><strong>Talk in code.</strong> An editor for any language, even one that doesn't exist. Claude predicts your next lines as a ghost you accept with <kbd>Tab</kbd>, prepares the real program while you type, and runs it on your machine the moment you press <kbd>F5</kbd>.</p>
+            <ul>
+              <li>Your pseudo-code stays yours. The real Python or JavaScript lives in the Build pane, and Run executes it in milliseconds after one consent.</li>
+              <li>A line starting with <code>??</code> is a question. A line like <code>ping google.com</code> or <code>research …</code> is a <em>reach</em>: Claude does it for real with his own tools.</li>
+              <li><strong>Send to Claude</strong> hands the code over as a question, a task, a fix or a note; <strong>Answer in code</strong> brings the reply back as code.</li>
+            </ul>
+            <pre><code>/lets store cocode   <span class="c"># inspect, then say yes</span>
+/lets cocode         <span class="c"># open it</span></code></pre>
+            <div class="btn-row">
+              <a class="btn btn-sm" href="./docs/cocode.html">Docs &amp; install</a>
+              <a class="btn btn-sm" href="https://github.com/offensiveadhd/lets-unique-cocode">Repository</a>
+            </div>
+          </div>
+        </article>
+      </div>
+      <p class="dim" style="margin-top:22px">Also with the engine: <a href="./docs/den.html"><strong>den</strong></a>, Doto's home. In the store: <a href="./docs/mors.html"><strong>mors</strong></a>, a Morse key you talk through. To build your own: <strong>pulse</strong>, the template. <a href="./uniques.html">All uniques →</a></p>
+    </div>
+  </section>
+
+  <!-- ============================================================ (c) how it feels -->
+  <section class="section" aria-labelledby="feel-title">
     <div class="wrap">
       <div class="section-head">
         <span class="eyebrow">How it feels</span>
@@ -127,26 +231,26 @@
       <ol class="steps">
         <li>
           <h3>Open a window</h3>
-          <p><code>/lets graph plan the auth flow</code>. Claude opens the board in the app's browser pane, seeds a few nodes, and Doto says hi.</p>
+          <p><code>/lets graph plan the auth flow</code> or <code>/lets cocode</code>. Claude opens the unique in the app's browser pane, seeds a start, and Doto says hi.</p>
         </li>
         <li>
-          <h3>Draw &amp; chat</h3>
-          <p>Double-click to add a node, drag to connect, right-click for Doto, chat on the side. Paste a screenshot and Claude reads the file.</p>
+          <h3>Draw, type &amp; chat</h3>
+          <p>Add nodes, accept a ghost line, right-click for Doto, chat on the side. Everything you do reaches Claude as meaning, with your next message or at once.</p>
         </li>
         <li>
           <h3>Send to Claude</h3>
-          <p>The window says goodbye and closes itself; Claude reviews the board right in your Claude Code chat. <span class="badge badge-new">new in 0.4.0</span></p>
+          <p>The window says goodbye and closes itself; Claude reviews the board or the code right in your Claude Code chat.</p>
         </li>
         <li>
           <h3>Say "continue"</h3>
-          <p>"Continue the auth board" or <code>/lets graph resume</code> brings the board back as you sent it, and Claude draws in its proposals. <span class="badge badge-new">new in 0.4.0</span></p>
+          <p>"Continue the auth board" or <code>/lets graph resume</code> brings the window back as you sent it, and Claude draws in its proposals.</p>
         </li>
       </ol>
     </div>
   </section>
 
-  <!-- ============================================================ (c) screenshots -->
-  <section class="section" aria-labelledby="shots-title">
+  <!-- ============================================================ (d) screenshots -->
+  <section class="section section-alt" aria-labelledby="shots-title">
     <div class="wrap">
       <div class="section-head">
         <span class="eyebrow">Screenshots</span>
@@ -161,7 +265,7 @@
         <figure class="shot">
           <img src="./assets/screenshot-companion.jpg" width="800" height="600" loading="lazy"
             alt="The shell demo: a control panel on the left, Doto in the middle with his suggestion menu open (Say hi, Open chat, Paste a screenshot, Think about it), and on the right a help card and a live log of events on their way to Claude.">
-          <figcaption>The shell every unique gets for free: Doto's click menu, cards Claude can summon at runtime, and the stream of events on their way to Claude.</figcaption>
+          <figcaption>The shell every unique gets from the engine: Doto's click menu, cards Claude can summon at runtime, and the stream of events on their way to Claude.</figcaption>
         </figure>
         <figure class="shot">
           <img src="./assets/screenshot-farewell.jpg" width="800" height="600" loading="lazy"
@@ -172,8 +276,8 @@
     </div>
   </section>
 
-  <!-- ============================================================ (d) Doto -->
-  <section class="section section-alt" aria-labelledby="doto-title">
+  <!-- ============================================================ (e) Doto -->
+  <section class="section" aria-labelledby="doto-title">
     <div class="wrap doto-teaser">
       <div class="doto-panel">
         <div class="doto-holder">
@@ -224,7 +328,7 @@
         <p>Doto is a dot that does: Claude's presence inside the window. He rolls after your cursor on a gentle spring, flips sides so he never covers what you point at, and gets sleepy when you pause. Claude sets his mood: <em>thinking</em> while it works, <em>proud</em> when it's done, <em>curious</em> when it asks.</p>
         <p>He talks short: verb first, one line, ending on a dot. <em>"On it." "Done. Look."</em> He keeps count, too: boops in a row, secrets found. And he learns how you work (your pace, your clicks, what you liked) and writes it down where you can read it, in <code>~/.lets/entity/</code>. Nothing is learned silently. You can rename him, too.</p>
 
-        <h3 style="margin-top:1.4em">Expressions <span class="badge badge-new">new in 0.4.0</span></h3>
+        <h3 style="margin-top:1.4em">Expressions</h3>
         <p>Doto reacts to how you move: shake the mouse and he gets dizzy, a click storm startles him, an undo gets an "oops", lingering on him makes him blush. It all runs in the window: zero tokens, short, never in your way, and calm when you prefer reduced motion.</p>
 
         <h3 style="margin-top:1.4em">Secret moves</h3>
@@ -245,13 +349,13 @@
     </div>
   </section>
 
-  <!-- ============================================================ (e) install -->
-  <section class="section" id="install" aria-labelledby="install-title">
+  <!-- ============================================================ (f) install -->
+  <section class="section section-alt" id="install" aria-labelledby="install-title">
     <div class="wrap">
       <div class="section-head">
         <span class="eyebrow">Install</span>
-        <h2 id="install-title">Install with your agent</h2>
-        <p>Paste one line into Claude Code and let it do the setup. It clones the repo, runs the installer and follows the repo's <code>INSTALL.md</code>.</p>
+        <h2 id="install-title">Install the engine</h2>
+        <p>Paste one line into Claude Code and let it do the setup. It clones the repo, runs the installer and follows the repo's <code>INSTALL.md</code>. The engine brings graph and den with it; cocode and mors are one store command away.</p>
       </div>
       <div class="install">
         <div class="copy-box">
@@ -278,16 +382,32 @@ node install.mjs</code></pre>
           <p class="dim">Prefer the plugin manager? Inside Claude Code: <code>/plugin marketplace add offensiveadhd/lets</code> then <code>/plugin install lets@lets</code>. All the options are in <a href="./docs/getting-started.html">Getting started</a>.</p>
         </div>
       </div>
+
+      <div class="install-uniques">
+        <h3>Then the uniques</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th scope="col">Unique</th><th scope="col">Comes from</th><th scope="col">Type</th></tr></thead>
+            <tbody>
+              <tr><td><strong>graph</strong> · talk in diagrams</td><td>installed with the engine (a default)</td><td><code>/lets graph</code> · as a pane: <code>/lets graph native</code></td></tr>
+              <tr><td><strong>cocode</strong> · talk in code</td><td>the store, after you inspect and say yes</td><td><code>/lets store cocode</code> then <code>/lets cocode</code></td></tr>
+              <tr><td><strong>den</strong> · Doto's home</td><td>installed with the engine (a default)</td><td><code>/lets den</code></td></tr>
+              <tr><td><strong>mors</strong> · talk in Morse</td><td>the store</td><td><code>/lets store mors</code> then <code>/lets mors</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="dim"><code>/lets list</code> shows what is installed. Every way to install, verify, update and remove a unique, including by hand with git, is in <a href="./docs/getting-started.html#uniques">Installing uniques</a>.</p>
+      </div>
     </div>
   </section>
 
-  <!-- ============================================================ (f) build your own -->
+  <!-- ============================================================ (g) build your own -->
   <section class="section" aria-labelledby="build-title">
     <div class="wrap">
       <div class="cta-band">
         <div>
           <h2 id="build-title">Build your own unique</h2>
-          <p>A unique is a folder: a manifest, a guide for Claude, and a static page. Start from the <strong>pulse</strong> template, validate it, then propose it to the store.</p>
+          <p>A unique is a folder: a manifest, a guide for Claude, and a static page. The engine does the rest. Start from the <strong>pulse</strong> template, validate it, then propose it to the store.</p>
         </div>
         <div class="btn-row">
           <a class="btn btn-primary" href="./docs/uniques.html">Authoring guide</a>
@@ -308,10 +428,10 @@ node install.mjs</code></pre>
     <div>
       <h2>Repositories</h2>
       <ul>
-        <li><a href="https://github.com/offensiveadhd/lets">lets</a> <span class="dim">engine, plugin, SDK, protocol</span></li>
+        <li><a href="https://github.com/offensiveadhd/lets">lets</a> <span class="dim">the engine, plugin, SDK, protocol</span></li>
         <li><a href="https://github.com/offensiveadhd/lets-unique-graph">lets-unique-graph</a> <span class="dim">the graph board</span></li>
-        <li><a href="https://github.com/offensiveadhd/lets-unique-den">lets-unique-den</a> <span class="dim">Doto's home</span></li>
         <li><a href="https://github.com/offensiveadhd/lets-unique-cocode">lets-unique-cocode</a> <span class="dim">talk in code</span></li>
+        <li><a href="https://github.com/offensiveadhd/lets-unique-den">lets-unique-den</a> <span class="dim">Doto's home</span></li>
         <li><a href="https://github.com/offensiveadhd/lets-unique-mors">lets-unique-mors</a> <span class="dim">talk in Morse</span></li>
         <li><a href="https://github.com/offensiveadhd/lets-store">lets-store</a> <span class="dim">community store</span></li>
         <li><a href="https://github.com/offensiveadhd/lets-unique-template">lets-unique-template</a> <span class="dim">pulse template</span></li>
@@ -321,6 +441,7 @@ node install.mjs</code></pre>
       <h2>Site</h2>
       <ul>
         <li><a href="./docs/index.html">Docs</a></li>
+        <li><a href="./docs/getting-started.html#uniques">Installing uniques</a></li>
         <li><a href="./docs/protocol.html">Protocol (LIP)</a></li>
         <li><a href="./uniques.html">Uniques</a></li>
         <li><a href="./playground.html">Playground</a></li>

@@ -60,7 +60,7 @@
   <strong>On this page</strong>
   <ol>
     <li><a href="#what">What it is</a></li>
-    <li><a href="#install">Install</a></li>
+    <li><a href="#install">Install</a> · <a href="#install-needs">needs</a> · <a href="#install-check">check</a></li>
     <li><a href="#do">What you can do</a></li>
     <li><a href="#keys">Mouse &amp; keyboard</a></li>
     <li><a href="#ghost">The ghost</a></li>
@@ -84,12 +84,26 @@
 <p>An empty editor shows <em>seeds</em>: starting points Claude draws from memory and your saved sessions. cocode stores nothing on the host. The document lives in the window, and in a saved session after Send to Claude.</p>
 
 <h2 id="install">Install</h2>
-<p>cocode is not in the engine's <code>defaults.json</code>. It lives in <a href="https://github.com/offensiveadhd/lets-store">lets-store</a>, so you install it once:</p>
-<pre><code>/lets store cocode      <span class="c"># inspect → confirm</span>
-/lets cocode            <span class="c"># open it</span></code></pre>
-<p>Claude shows you the inspection (permissions, problems, the verified flag) and copies it into <code>~/.lets/uniques/cocode</code> only after you say yes. Manual: clone <a href="https://github.com/offensiveadhd/lets-unique-cocode">the repo</a> into <code>~/.lets/uniques/cocode</code>.</p>
-<p>cocode needs engine 0.4.0 or later (<code>"engine": "&gt;=0.4.0"</code>) for handoff sessions; it needs no new engine endpoint. It asks for no write or network permission: <code>"fs.write": []</code>, <code>"net": []</code>. The window writes nothing itself. Claude runs your program with its own tools (<a href="#build">below</a>), except where the engine's local runner can run it for you: <span class="badge badge-new">new in 0.2.0</span> cocode also declares <code>permissions.exec</code>, the languages it may ask the engine to run, and the runner is new in lets 0.7.0 (<a href="#local-run">Run on your machine</a>).</p>
-<p class="note note-new">This page describes <strong>cocode 0.1.0</strong> (2026-10-13), plus the local runner marked <em>new in 0.2.0</em> and <a href="#reach">reach</a> marked <em>new in 0.3.0</em> (2026-10-15).</p>
+<p>cocode is not in the engine's <code>defaults.json</code>. It lives in <a href="https://github.com/offensiveadhd/lets-store">lets-store</a>, so you install it once, from inside Claude Code, after the engine is <a href="./getting-started.html#agent">installed</a>:</p>
+<pre><code>/lets store cocode      <span class="c"># 1. Claude syncs the store, finds cocode, inspects it and shows you what it found</span>
+                        <span class="c"># 2. you say yes: the staged copy moves to ~/.lets/uniques/cocode</span>
+/lets cocode            <span class="c"># 3. open it (or /lets:lets cocode without the alias)</span></code></pre>
+<p>What the inspection shows, so you know what to expect: the title <em>Cocode — talk in code</em>, version 0.4.0, <code>verified: true</code>, no problems, no native view, and the permissions <code>"fs.write": []</code> and <code>"net": []</code> (the window writes nothing and reaches nothing itself) plus <code>"exec": ["python", "javascript", "typescript"]</code>, the languages it may ask the engine to run for you once you allow it (<a href="#local-run">Run on your machine</a>). Nothing is installed until you confirm, and the install records the repo, commit and version in <code>~/.lets/uniques/.installed.json</code>.</p>
+
+<h3 id="install-needs">What it needs</h3>
+<ul>
+  <li><strong>lets 0.7.0 or later</strong>: the manifest says <code>"engine": "&gt;=0.7.0"</code>. Engines before 0.7.0 do not know <code>permissions.exec</code> and reject the manifest, so an older engine lists cocode with a problem in <code>/lets list</code>. <code>claude plugin update lets@lets</code> updates the engine; restart Claude Code afterwards.</li>
+  <li>To run programs on your machine: <code>python</code> for Python and <code>node</code> 20+ for JavaScript on your PATH (TypeScript runs through Node's type stripping, Node 22.6+). The Output pane's badge lists what this machine can run. Without them, Run goes through Claude, as it does for every other language.</li>
+  <li>Nothing else: no build step, no dependencies, no network.</li>
+</ul>
+
+<h3 id="install-check">Check, update, remove</h3>
+<pre><code>/lets list                                                 <span class="c"># cocode listed, mode web, no problems</span>
+node engine/bin/lets.mjs validate ~/.lets/uniques/cocode   <span class="c"># the manifest and safety rules, from the lets checkout</span>
+node engine/bin/lets.mjs doctor                            <span class="c"># … "uniques": [… "cocode:ok"]</span></code></pre>
+<p>To <strong>update</strong>, ask Claude to update cocode from the store: the <code>store</code> tool's <code>update</code> action clones it again at the store's ref and reinstalls it. Your consent for the runner and your saved sessions survive that, because they live in <code>~/.lets/config.json</code> and <code>~/.lets/sessions/cocode/</code>, not in the unique's folder. To <strong>remove</strong> it, ask Claude (<code>store remove</code>) or delete <code>~/.lets/uniques/cocode</code> yourself. To take back the runner's permission alone, delete <code>cocode</code> from <code>runner.allow</code> in <code>~/.lets/config.json</code>; to switch the runner off for every unique, set <code>"runner": {"enabled": false}</code> there.</p>
+<p><strong>By hand:</strong> <code>git clone https://github.com/offensiveadhd/lets-unique-cocode.git ~/.lets/uniques/cocode</code> is the same install without the inspection; <code>git pull</code> in that folder updates it. While developing, point <code>LETS_UNIQUES_DIRS</code> at the parent of your checkout instead. Every path and option is in <a href="./getting-started.html#uniques">Installing uniques</a>.</p>
+<p class="note note-new">This page describes <strong>cocode 0.4.0</strong> (2026-10-18). Badges mark what landed with each release: the local runner and <em>Answer in code</em> with 0.2.0, <a href="#reach">reach</a> with 0.3.0, <em>Build &amp; run</em> and the wheel with 0.4.0.</p>
 
 <h2 id="do">What you can do</h2>
 <p>A toolbar sits on top. Below it, the editor on the left and a rail on the right with two panes, <strong>Build</strong> and <strong>Output</strong>.</p>
@@ -301,19 +315,21 @@
 
 <h2 id="layout">Repository layout</h2>
 <pre><code>lets-unique-cocode/
-  unique.json            <span class="c"># manifest: domain cocode, engine &gt;=0.4.0, no fs or net permissions (exec for the local runner)</span>
+  unique.json            <span class="c"># manifest: domain cocode, engine &gt;=0.7.0, no fs or net permissions (exec for the local runner)</span>
   GUIDE.md               <span class="c"># what Claude reads on open</span>
   CONTRACT.md            <span class="c"># the unique's behaviour spec</span>
   README.md  CHANGELOG.md  LICENSE  icon.svg
-  package.json           <span class="c"># npm run validate</span>
+  package.json           <span class="c"># npm run validate, npm test</span>
   scripts/validate.mjs   <span class="c"># zero-dependency manifest check</span>
   schemas/               <span class="c"># unique.schema.json and message schemas</span>
+  test/reach.test.mjs    <span class="c"># node --test: the reach scanner</span>
   .github/workflows/validate.yml
   ui/index.html          <span class="c"># the page</span>
   ui/cocode.js           <span class="c"># the window</span>
   ui/editor.js           <span class="c"># textarea, highlight layer, ghost, undo</span>
   ui/syntax.js           <span class="c"># tokenizer and language detection</span>
   ui/predict.js          <span class="c"># the local predictor</span>
+  ui/reach.js            <span class="c"># the lines that reach outside the sandbox</span>
   ui/style.css</code></pre>
 <p>Plain HTML, ES modules and CSS: no build step, no CDN, no inline script, no <code>eval</code>. MIT licensed. More: <a href="https://github.com/offensiveadhd/lets-unique-cocode">lets-unique-cocode</a> has the full <code>GUIDE.md</code>, the behaviour contract (<code>CONTRACT.md</code>) and JSON Schemas for the messages.</p>
 

@@ -74,17 +74,17 @@
 <p>Everything else comes from a <strong>store</strong>: a git repository whose <code>index.json</code> lists uniques by git URL. Install with <code>/lets store &lt;name&gt;</code>: Claude syncs, searches, shows you the inspection (permissions, problems, verified flag), and installs only after you say yes. The first store-only uniques by the maintainers are <a href="./cocode.html">cocode</a>, a code window you talk through (<code>/lets store cocode</code>), and <a href="./mors.html">mors</a>, a Morse key you talk through (<code>/lets store mors</code>).</p>
 <div class="table-wrap">
   <table>
-    <thead><tr><th scope="col">Unique</th><th scope="col">Repo</th><th scope="col">Default</th><th scope="col">In lets-store</th></tr></thead>
+    <thead><tr><th scope="col">Unique</th><th scope="col">Repo</th><th scope="col">Default</th><th scope="col">In lets-store</th><th scope="col">Install</th><th scope="col">Needs</th></tr></thead>
     <tbody>
-      <tr><td><strong>graph</strong>: talk in diagrams</td><td><a href="https://github.com/offensiveadhd/lets-unique-graph">lets-unique-graph</a></td><td>yes</td><td>yes, verified</td></tr>
-      <tr><td><strong>den</strong>: Doto's home <span class="badge badge-new">new in 0.6.0</span></td><td><a href="https://github.com/offensiveadhd/lets-unique-den">lets-unique-den</a></td><td>yes</td><td>yes, verified</td></tr>
-      <tr><td><strong>cocode</strong>: talk in code <span class="badge badge-new">new</span></td><td><a href="https://github.com/offensiveadhd/lets-unique-cocode">lets-unique-cocode</a></td><td>no</td><td>yes, verified</td></tr>
-      <tr><td><strong>mors</strong>: talk in Morse <span class="badge badge-new">new</span></td><td><a href="https://github.com/offensiveadhd/lets-unique-mors">lets-unique-mors</a></td><td>no</td><td>yes, verified</td></tr>
-      <tr><td><strong>pulse</strong>: a dial you talk through (template)</td><td><a href="https://github.com/offensiveadhd/lets-unique-template">lets-unique-template</a></td><td>no</td><td>yes, verified</td></tr>
+      <tr><td><a href="./graph.html"><strong>graph</strong></a>: talk in diagrams</td><td><a href="https://github.com/offensiveadhd/lets-unique-graph">lets-unique-graph</a></td><td>yes</td><td>yes, verified</td><td>comes with lets; <code>/lets graph</code></td><td>lets 0.7.0 (graph 0.4.0)</td></tr>
+      <tr><td><a href="./den.html"><strong>den</strong></a>: Doto's home <span class="badge badge-new">new in 0.6.0</span></td><td><a href="https://github.com/offensiveadhd/lets-unique-den">lets-unique-den</a></td><td>yes</td><td>yes, verified</td><td>comes with lets; <code>/lets den</code></td><td>lets 0.6.0</td></tr>
+      <tr><td><a href="./cocode.html"><strong>cocode</strong></a>: talk in code <span class="badge badge-new">new</span></td><td><a href="https://github.com/offensiveadhd/lets-unique-cocode">lets-unique-cocode</a></td><td>no</td><td>yes, verified</td><td><code>/lets store cocode</code>, then <code>/lets cocode</code></td><td>lets 0.7.0 (cocode 0.4.0)</td></tr>
+      <tr><td><a href="./mors.html"><strong>mors</strong></a>: talk in Morse <span class="badge badge-new">new</span></td><td><a href="https://github.com/offensiveadhd/lets-unique-mors">lets-unique-mors</a></td><td>no</td><td>yes, verified</td><td><code>/lets store mors</code>, then <code>/lets mors</code></td><td>lets 0.4.0</td></tr>
+      <tr><td><strong>pulse</strong>: a dial you talk through (template)</td><td><a href="https://github.com/offensiveadhd/lets-unique-template">lets-unique-template</a></td><td>no</td><td>yes, verified</td><td><code>/lets store pulse</code>, then <code>/lets pulse</code></td><td>lets 0.4.0</td></tr>
     </tbody>
   </table>
 </div>
-<p>New candidates grow in the store first. Once a unique is solid, propose it for <code>defaults.json</code>. See the <a href="../uniques.html">uniques page</a> for cards.</p>
+<p>The store flow (sync, search, inspect, your yes, install), the by-hand install with git, where the engine looks for uniques, how to check, update and remove one: all of it is on one page, <a href="./getting-started.html#uniques">Installing uniques</a>. New candidates grow in the store first. Once a unique is solid, propose it for <code>defaults.json</code>. See the <a href="../uniques.html">uniques page</a> for cards.</p>
 
 <h2 id="authoring">Authoring a unique</h2>
 <h3 id="folder">The folder</h3>

@@ -12,8 +12,9 @@ CDN, no web fonts from the network, no analytics.
 ## What is here
 
 ```
-index.html            landing page (hero with Doto, install prompt, screenshots)
-uniques.html          graph + den + cocode + mors + pulse, defaults vs the store, proposed next
+index.html            landing page: the engine first (hero with Doto, what the engine does),
+                      graph + cocode as the two showcase uniques, install prompt, screenshots
+uniques.html          graph + cocode + den + mors + pulse with their install lines, defaults vs the store, proposed next
 playground.html       the real lets shell on an offline loopback: moods, reactions, chat
 404.html              self-contained (inline CSS), works at any depth
 docs/                 index, getting-started, companion, uniques, graph, den, cocode, mors, protocol, architecture

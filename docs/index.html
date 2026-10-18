@@ -49,12 +49,12 @@
   </aside>
   <main id="main" class="doc">
 <h1>Documentation</h1>
-<p class="lead">Install lets, open your first window, meet the companion, build a unique of your own, and read the protocol that ties it all together.</p>
+<p class="lead">Install the engine, add the uniques you want (graph comes along, cocode is one store command away), open your first window, meet the companion, build a unique of your own, and read the protocol that ties it all together.</p>
 
 <div class="cards hub-cards">
   <article class="card">
     <h2><a class="stretch" href="./getting-started.html">Getting started</a></h2>
-    <p>Install with your agent or by hand, your first <code>/lets graph</code>, listening vs away, and Send to Claude with resume.</p>
+    <p>Install the engine with your agent or by hand, install uniques (defaults, the store, by hand with git), your first <code>/lets graph</code>, listening vs away, and Send to Claude with resume.</p>
   </article>
   <article class="card">
     <h2><a class="stretch" href="./companion.html">The companion (Doto)</a></h2>
@@ -66,7 +66,7 @@
   </article>
   <article class="card">
     <h2><a class="stretch" href="./graph.html">The graph board</a></h2>
-    <p>The first unique: what you can do on the board, and the events and commands Claude uses to edit it with you.</p>
+    <p>The first unique and the engine's showcase: it comes with lets, as a browser window or a pane inside Claude Code. What you can do on the board, and the events and commands Claude uses to edit it with you.</p>
   </article>
   <article class="card">
     <h2><a class="stretch" href="./den.html">Doto's home (den)</a></h2>
@@ -74,7 +74,7 @@
   </article>
   <article class="card">
     <h2><a class="stretch" href="./cocode.html">Talk in code (cocode)</a></h2>
-    <p>The first store-only unique: an editor for any language, where Claude predicts your next lines and runs the real program. <span class="badge badge-new">new</span></p>
+    <p>The second showcase, from the store (<code>/lets store cocode</code>): an editor for any language, where Claude predicts your next lines, builds the real program and runs it on your machine. <span class="badge badge-new">new</span></p>
   </article>
   <article class="card">
     <h2><a class="stretch" href="./mors.html">Talk in Morse (mors)</a></h2>
@@ -97,7 +97,7 @@
     <thead><tr><th scope="col">Layer</th><th scope="col">What it does</th></tr></thead>
     <tbody>
       <tr><td><strong>Engine</strong></td><td>A zero-dependency Node MCP server. Hosts windows on loopback, carries the protocol, keeps the companion's memory, routes multi-task work to the cheapest trustworthy model, installs community mediums from git.</td></tr>
-      <tr><td><strong>Uniques</strong></td><td>The interactive mediums: static web apps that speak LIP, each in its own repository. The engine installs the <strong>default</strong> ones from <code>defaults.json</code> on first use. Today they are <a href="./graph.html">graph</a> and <a href="./den.html">den</a>, Doto's home. The store holds the rest, starting with <a href="./cocode.html">cocode</a>, a code window you talk through, and <a href="./mors.html">mors</a>, a Morse key you talk through.</td></tr>
+      <tr><td><strong>Uniques</strong></td><td>The interactive mediums: static web apps that speak LIP (optionally with a native view for Claude Code's sidebar), each in its own repository. The engine installs the <strong>default</strong> ones from <code>defaults.json</code> on first use: <a href="./graph.html">graph</a> and <a href="./den.html">den</a>, Doto's home. The store holds the rest, installed with <code>/lets store &lt;name&gt;</code> after you see the inspection: <a href="./cocode.html">cocode</a>, a code window you talk through, and <a href="./mors.html">mors</a>, a Morse key you talk through. How each one is installed: <a href="./getting-started.html#uniques">Installing uniques</a>.</td></tr>
       <tr><td><strong>Shell + SDK</strong></td><td>What every unique gets for free: the companion entity, chat panel, runtime components (sliders, options, forms, image paste…), toasts and the theme.</td></tr>
     </tbody>
   </table>
@@ -115,7 +115,7 @@
   <dt>session <span class="badge badge-new">new in 0.4.0</span></dt><dd>A saved copy of a window's content, written when you press <em>Send to Claude</em>, so the window can be resumed later.</dd>
 </dl>
 
-<p class="note note-new">These docs describe <strong>lets 0.6.0</strong>. A badge like <span class="badge badge-new">new in 0.6.0</span> marks what landed with that release.</p>
+<p class="note note-new">These docs describe <strong>lets 0.7.0</strong> (native panes and the local runner), with graph 0.4.0, den 0.1.0, cocode 0.4.0 and mors 0.1.0. A badge like <span class="badge badge-new">new in 0.7.0</span> marks what landed with that release.</p>
 
 <nav class="doc-pager" aria-label="Previous and next page"><a class="next" href="./getting-started.html"><small>Next →</small>Getting started</a></nav>
   </main>

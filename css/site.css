@@ -282,8 +282,9 @@ td code { white-space: normal; }
 .redacted-bar { display: inline-block; width: 9em; max-width: 60%; height: .9em; border-radius: 4px; background: repeating-linear-gradient(90deg, var(--lets-line-2) 0 10px, var(--lets-line) 10px 14px); vertical-align: middle; }
 
 /* install box */
-.install { display: grid; gap: 22px; }
-@media (min-width: 960px) { .install { grid-template-columns: 1.25fr 1fr; } }
+.install { display: grid; gap: 22px; grid-template-columns: minmax(0, 1fr); }
+.install > * { min-width: 0; }   /* a long command line scrolls inside its <pre> instead of widening the page */
+@media (min-width: 960px) { .install { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); } }
 .copy-box { position: relative; padding: 18px; border-radius: 16px; border: 1px solid var(--lets-accent); background: var(--lets-bg-2); box-shadow: 0 0 34px rgba(166, 107, 255, .2); }
 .copy-box h3 { margin: 0 0 10px; }
 .copy-box pre { margin-bottom: 12px; }
@@ -302,6 +303,41 @@ td code { white-space: normal; }
 @media (min-width: 820px) { .cta-band { grid-template-columns: 1fr auto; } }
 .cta-band h2 { margin-bottom: 6px; }
 .cta-band p { margin: 0; color: var(--lets-fg-dim); }
+
+/* --------------------------------------------- showcase (graph + cocode) */
+.showcase { display: grid; gap: 22px; }
+.showcase-item { display: grid; gap: 20px; align-items: center; padding: 22px; border-radius: 20px; border: 1px solid var(--lets-line); background: rgba(26, 16, 48, .78); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .04); }
+@media (min-width: 880px) {
+  .showcase-item { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 34px; padding: 28px; }
+  .showcase-item:nth-child(even) .showcase-visual { order: 2; }
+}
+.showcase-visual { min-width: 0; }
+.showcase-text { min-width: 0; }
+.showcase-text h3 { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 0 0 10px; font-size: 1.45rem; }
+.showcase-text h3 img { width: 32px; height: 32px; border-radius: 9px; }
+.showcase-lead { color: var(--lets-fg); margin-bottom: .8em; }
+.showcase-text ul { margin: 0 0 14px; padding-left: 1.2em; color: var(--lets-fg-dim); }
+.showcase-text li { margin-bottom: .4em; }
+.showcase-text pre { margin-bottom: 14px; }
+.mini-board { display: block; width: 100%; height: auto; border-radius: 18px; border: 1px solid var(--lets-line-2); box-shadow: var(--lets-shadow); }
+.mini-editor { border-radius: 14px; border: 1px solid var(--lets-line-2); background: var(--site-code-bg); box-shadow: var(--lets-shadow); overflow: hidden; font: 12.5px/1.65 var(--lets-mono); color: var(--lets-fg); }
+.mini-editor .bar { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-bottom: 1px solid var(--lets-line); background: var(--lets-bg-2); font: 600 .8rem/1.2 var(--lets-font); }
+.mini-editor .bar .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--lets-ok); box-shadow: 0 0 8px var(--lets-ok); }
+.mini-editor .chip-lang { padding: 1px 8px; border-radius: 999px; border: 1px solid var(--lets-line-2); color: var(--lets-fg-dim); font-weight: 500; }
+.mini-editor .spacer { flex: 1; }
+.mini-editor .run { display: inline-flex; align-items: center; gap: 7px; padding: 3px 10px; border-radius: 8px; background: linear-gradient(135deg, #7f48f5, #6a3be0); color: #fff; }
+.mini-editor .wheel { width: 11px; height: 11px; border-radius: 50%; border: 2px solid rgba(255, 255, 255, .85); border-top-color: transparent; animation: doto-spin 1.1s linear infinite; }
+.mini-editor .lines { display: grid; grid-template-columns: 2.4em minmax(0, 1fr); padding: 10px 12px 8px 0; white-space: pre; overflow-x: auto; }
+.mini-editor .ln { color: var(--lets-fg-dim); opacity: .55; text-align: right; padding-right: 12px; user-select: none; -webkit-user-select: none; }
+.mini-editor .k { color: var(--lets-accent-3); }
+.mini-editor .s { color: #ffb4ec; }
+.mini-editor .c { color: #8c7fb8; }
+.mini-editor .ghost { color: var(--lets-accent-3); font-style: italic; opacity: .85; }
+.mini-editor .status { padding: 6px 12px; border-top: 1px solid var(--lets-line); color: var(--lets-fg-dim); font: .76rem/1.4 var(--lets-font); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.install-uniques { margin-top: 28px; }
+.install-uniques h3 { margin-bottom: 10px; }
+.install-uniques .table-wrap { margin-bottom: 10px; }
+.install-uniques p { margin: 0; }
 
 /* ---------------------------------------------------------------- footer */
 .site-footer { margin-top: 40px; padding: 36px 0 44px; border-top: 1px solid var(--lets-line); background: rgba(12, 7, 23, .7); color: var(--lets-fg-dim); font-size: .94rem; }

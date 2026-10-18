@@ -49,7 +49,7 @@
   </aside>
   <main id="main" class="doc">
 <h1>Getting started</h1>
-<p class="lead">Install the plugin, type <code>/lets graph</code>, and draw. This page covers the install, your first window, what "listening" means, and how a board travels back to Claude and comes back again.</p>
+<p class="lead">Install the engine, type <code>/lets graph</code>, and draw. This page covers the engine's install, how uniques get installed (the defaults that come along, the store, by hand with git), your first window, what "listening" means, and how a board travels back to Claude and comes back again.</p>
 
 <nav class="toc" aria-label="On this page">
   <strong>On this page</strong>
@@ -57,6 +57,7 @@
     <li><a href="#requirements">Requirements</a></li>
     <li><a href="#agent">Install with your agent</a></li>
     <li><a href="#manual">Install by hand</a></li>
+    <li><a href="#uniques">Installing uniques</a></li>
     <li><a href="#first-window">Your first window</a></li>
     <li><a href="#listening">Listening vs away</a></li>
     <li><a href="#handoff">Send to Claude &amp; resume</a></li>
@@ -113,6 +114,65 @@ node install.mjs</code></pre>
 /plugin install lets@lets</code></pre>
 <p>Then run <code>node engine/bin/lets.mjs install-skill</code> from a checkout for the bare <code>/lets</code> alias.</p>
 
+<h2 id="uniques">Installing uniques</h2>
+<p>The engine ships no window of its own. Every window you open is a <em>unique</em>, a folder under <code>~/.lets/uniques/&lt;name&gt;</code> with a manifest, a guide for Claude and a static page, and there are three ways one gets there: it is a <strong>default</strong> the engine installs for you, you install it from the <strong>store</strong>, or you put it there <strong>by hand</strong> with git. All three end the same way: <code>/lets &lt;name&gt;</code> opens it.</p>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th scope="col">Unique</th><th scope="col">Comes from</th><th scope="col">Install</th><th scope="col">Open</th><th scope="col">Needs</th></tr></thead>
+    <tbody>
+      <tr><td><a href="./graph.html"><strong>graph</strong></a> · talk in diagrams</td><td>default</td><td>nothing to do: the installer, or the engine on first use, clones it</td><td><code>/lets graph</code><br><code>/lets graph native</code> for a pane</td><td>lets 0.7.0 (graph 0.4.0)</td></tr>
+      <tr><td><a href="./den.html"><strong>den</strong></a> · Doto's home</td><td>default</td><td>nothing to do</td><td><code>/lets den</code></td><td>lets 0.6.0</td></tr>
+      <tr><td><a href="./cocode.html"><strong>cocode</strong></a> · talk in code</td><td>store</td><td><code>/lets store cocode</code>, then your yes</td><td><code>/lets cocode</code></td><td>lets 0.7.0 (cocode 0.4.0); <code>python</code> or <code>node</code> on PATH to run on your machine</td></tr>
+      <tr><td><a href="./mors.html"><strong>mors</strong></a> · talk in Morse</td><td>store</td><td><code>/lets store mors</code>, then your yes</td><td><code>/lets mors</code></td><td>lets 0.4.0</td></tr>
+      <tr><td><strong>pulse</strong> · the template dial</td><td>store</td><td><code>/lets store pulse</code>, then your yes</td><td><code>/lets pulse</code></td><td>lets 0.4.0</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h3 id="uniques-defaults">Defaults: graph and den</h3>
+<p>The engine repo's <code>defaults.json</code> lists the uniques every installation gets. <code>node install.mjs</code> clones them into <code>~/.lets/uniques</code> when you install lets, and the engine clones any that are missing in the background when it starts, or on demand the first time you open one. So after the restart <code>/lets graph</code> just works. From the lets checkout:</p>
+<pre><code>node engine/bin/lets.mjs defaults                       <span class="c"># install what is missing</span>
+node engine/bin/lets.mjs defaults --force               <span class="c"># reinstall both from a fresh clone of main (also how you update them)</span>
+node engine/bin/lets.mjs defaults --force --only graph  <span class="c"># reinstall just one</span></code></pre>
+<p>Inside Claude Code, <code>/lets list</code> installs missing defaults too (the <code>uniques</code> tool's <code>defaults</code> action). <code>LETS_NO_DEFAULTS=1</code> in the environment skips them on purpose. Installing a default needs git and access to GitHub; if the installer prints <em>could not install a default unique now</em>, the engine retries on first use, and the commands above do it by hand.</p>
+
+<h3 id="uniques-store">From the store: cocode, mors and the rest</h3>
+<p>Everything that is not a default comes from a <strong>store</strong>: a git repository whose <code>index.json</code> lists uniques by git URL. <a href="https://github.com/offensiveadhd/lets-store">lets-store</a> is registered out of the box (<code>~/.lets/stores/</code>). One command does the whole flow:</p>
+<pre><code>/lets store cocode</code></pre>
+<ol>
+  <li>Claude <strong>syncs</strong> the store indexes (a <code>git pull</code> of each store) and <strong>searches</strong> them for your words: a name, a tag or a word from the description all match. Searching installs nothing.</li>
+  <li>Claude <strong>inspects</strong> the match: the engine clones it into a staging folder, validates the manifest, checks the commit and manifest hash against the index, and scans for executable-looking files. You are shown the title and version, the permissions it asks for (<code>fs.write</code>, <code>net</code>, <code>exec</code>), its capabilities, whether it has a native view (code the host would run for a pane: install those only from authors you trust), the problems found, the repo and commit, and the <code>verified</code> flag.</li>
+  <li>Only after you say <strong>yes</strong> does Claude <strong>install</strong> it: the staged copy moves to <code>~/.lets/uniques/cocode</code>, and <code>~/.lets/uniques/.installed.json</code> records the repo, commit, version and manifest hash. A unique with problems installs only if you accept them explicitly.</li>
+  <li><code>/lets cocode</code> opens it.</li>
+</ol>
+<p>The same actions by name, for the curious: the <code>store</code> tool's <code>sync</code>, <code>search</code>, <code>inspect</code>, <code>install</code> (which refuses without <code>confirm: true</code>), <code>installed</code>, <code>update</code>, <code>remove</code>, <code>stores</code> and <code>add_store</code>. A git URL works in place of a name, so a unique that is in no store yet installs with <code>/lets store https://github.com/you/lets-unique-thing.git</code>, with the same inspection and the same yes. Another store is added with <code>add_store</code> (a name and a git URL).</p>
+
+<h3 id="uniques-manual">By hand, with git</h3>
+<p>A unique is a folder with <code>unique.json</code> at its top, so a clone in the right place is an install. The folder name must equal the manifest's <code>name</code>:</p>
+<pre><code>git clone https://github.com/offensiveadhd/lets-unique-cocode.git ~/.lets/uniques/cocode
+git clone https://github.com/offensiveadhd/lets-unique-graph.git  ~/.lets/uniques/graph</code></pre>
+<p>The engine looks in three places: <code>~/.lets/uniques/</code> (defaults and store installs), every folder named in <code>LETS_UNIQUES_DIRS</code> (the <em>parent</em> of your unique folders; several, separated by the OS path separator), and <code>.lets/uniques/</code> inside the current project. A clone by hand is not recorded in <code>.installed.json</code>, so the store does not know it; update it with <code>git pull</code> in that folder. Every unique is validated against the manifest schema and the safety rules before it is served, whichever way it got there.</p>
+
+<h3 id="uniques-verify">Check it is there</h3>
+<pre><code>/lets list                                               <span class="c"># inside Claude Code: name, title, modes (web, native), source, problems</span>
+node engine/bin/lets.mjs uniques                         <span class="c"># the same from a terminal, in the lets checkout</span>
+node engine/bin/lets.mjs validate ~/.lets/uniques/cocode <span class="c"># the manifest and safety rules of one folder</span>
+node engine/bin/lets.mjs doctor                          <span class="c"># node version, lets home, running hosts, "graph:ok", "cocode:ok" …</span></code></pre>
+<p>A unique that needs a newer engine than the one installed is listed with a problem (its manifest says <code>"engine": "&gt;=0.7.0"</code>, for example). Update the engine with <code>claude plugin update lets@lets</code> and restart Claude Code.</p>
+
+<h3 id="uniques-update">Update and remove</h3>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th scope="col">Installed as</th><th scope="col">Update</th><th scope="col">Remove</th></tr></thead>
+    <tbody>
+      <tr><td>a default (graph, den)</td><td><code>node engine/bin/lets.mjs defaults --force --only graph</code></td><td>delete <code>~/.lets/uniques/graph</code>; the engine puts it back at its next start unless <code>LETS_NO_DEFAULTS=1</code></td></tr>
+      <tr><td>from the store (cocode, mors)</td><td>ask Claude to update it: the <code>store</code> tool's <code>update</code> action clones it again at the store's ref and reinstalls</td><td>ask Claude to remove it (<code>store remove</code>), or delete the folder</td></tr>
+      <tr><td>by hand</td><td><code>git pull</code> in the folder</td><td>delete the folder</td></tr>
+    </tbody>
+  </table>
+</div>
+<p>Nothing you made is in those folders: saved sessions live in <code>~/.lets/sessions/&lt;unique&gt;/</code>, uploads in <code>~/.lets/uploads/</code>, your consent for the runner in <code>~/.lets/config.json</code>, and Doto's memory in <code>~/.lets/entity/</code>. All of it survives a reinstall.</p>
+
 <h2 id="first-window">Your first window</h2>
 <ol>
   <li><code>/lets graph plan the auth flow</code>. Claude opens the board in the app's browser pane, seeds a few nodes, and Doto says hi.</li>
@@ -161,8 +221,9 @@ node install.mjs</code></pre>
     <tbody>
       <tr><td><code>/lets graph [intent]</code></td><td>Open a unique. Words after the name are the opening intent: <code>/lets graph plan the auth flow</code>.</td></tr>
       <tr><td><code>/lets graph resume</code></td><td>Reopen the last board you sent. <span class="badge badge-new">new in 0.4.0</span></td></tr>
-      <tr><td><code>/lets list</code></td><td>List installed uniques and any problems.</td></tr>
-      <tr><td><code>/lets store &lt;query&gt;</code></td><td>Search the store; install only after inspecting and saying yes.</td></tr>
+      <tr><td><code>/lets graph native</code>, <code>/lets graph web</code></td><td>Pick the mode: a pane inside Claude Code (needs the <code>lets-native</code> mod, see <a href="./graph.html#native">the graph page</a>) or the browser window. <span class="badge badge-new">new in 0.7.0</span></td></tr>
+      <tr><td><code>/lets list</code></td><td>List installed uniques (modes, source, problems) and install any missing default.</td></tr>
+      <tr><td><code>/lets store &lt;query&gt;</code></td><td>Search the store; install only after inspecting and saying yes (<a href="#uniques-store">the store flow</a>).</td></tr>
       <tr><td><code>/lets entity</code></td><td>Who Doto is, what he learned, which special skills he has.</td></tr>
       <tr><td><code>/lets den</code></td><td>Open <a href="./den.html">Doto's home</a>: see and edit what he learned, by pointing. <span class="badge badge-new">new in 0.6.0</span></td></tr>
       <tr><td><code>/lets store cocode</code>, then <code>/lets cocode</code></td><td>Install and open <a href="./cocode.html">cocode</a>: type in any language, Claude predicts the next lines, builds and runs the real program. In the store, not a default. <span class="badge badge-new">new</span></td></tr>

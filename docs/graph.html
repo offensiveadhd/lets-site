@@ -49,7 +49,7 @@
   </aside>
   <main id="main" class="doc">
 <h1>The graph board</h1>
-<p class="lead"><strong>Talk to Claude in diagrams.</strong> graph is the first unique: a dark-violet node/edge board where you draw the thing you mean while you chat, and the companion (Doto) reads, points, suggests and edits the same board.</p>
+<p class="lead"><strong>Talk to Claude in diagrams.</strong> graph is the first unique and the one that shows what the engine does: a dark-violet node/edge board where you draw the thing you mean while you chat, and the companion (Doto) reads, points, suggests and edits the same board. It comes with lets, as a browser window or, since 0.4.0, as a pane inside Claude Code.</p>
 
 <figure class="shot">
   <img src="../assets/screenshot-graph.jpg" width="800" height="600" loading="lazy"
@@ -60,12 +60,14 @@
 <nav class="toc" aria-label="On this page">
   <strong>On this page</strong>
   <ol>
-    <li><a href="#install">Install</a></li>
+    <li><a href="#install">Install</a> · <a href="#install-needs">needs</a> · <a href="#install-check">check</a></li>
+    <li><a href="#native">A pane inside Claude Code</a></li>
     <li><a href="#do">What you can do</a></li>
     <li><a href="#kinds">Node kinds</a></li>
     <li><a href="#keys">Mouse &amp; keyboard</a></li>
     <li><a href="#doto">Doto on the board</a></li>
     <li><a href="#handoff">Send to Claude &amp; resume</a></li>
+    <li><a href="#model">The board's data</a></li>
     <li><a href="#events">Events (up)</a></li>
     <li><a href="#commands">Commands (down)</a></li>
     <li><a href="#etiquette">Claude's etiquette</a></li>
@@ -73,9 +75,32 @@
 </nav>
 
 <h2 id="install">Install</h2>
-<p>It comes with lets: graph is listed in the engine's <code>defaults.json</code>, so the engine installs it into <code>~/.lets/uniques/graph</code> the first time it runs. Then:</p>
-<pre><code>/lets graph             <span class="c"># or /lets:lets graph without the alias</span></code></pre>
-<p>Manual: <code>/lets store graph</code> (inspect → confirm), or clone <a href="https://github.com/offensiveadhd/lets-unique-graph">the repo</a> into <code>~/.lets/uniques/graph</code>.</p>
+<p>graph comes with the engine. It is the first entry in the engine's <code>defaults.json</code>, so <code>node install.mjs</code> clones it into <code>~/.lets/uniques/graph</code> when you <a href="./getting-started.html#agent">install lets</a>, and the engine clones it again whenever it is missing: in the background when it starts, or on demand the first time you open it. After the restart there is nothing to install, only something to type:</p>
+<pre><code>/lets graph                      <span class="c"># or /lets:lets graph without the alias</span>
+/lets graph plan the auth flow   <span class="c"># with an opening intent</span>
+/lets graph native               <span class="c"># as a pane inside Claude Code (see below)</span></code></pre>
+
+<h3 id="install-needs">What it needs</h3>
+<ul>
+  <li><strong>lets 0.7.0 or later</strong> for graph 0.4.0: the manifest says <code>"engine": "&gt;=0.7.0"</code>, because of the native view. An older engine lists graph with a problem in <code>/lets list</code>; <code>claude plugin update lets@lets</code> updates the engine, then restart Claude Code.</li>
+  <li>Permissions: <code>"fs.write": ["uploads"]</code> (a pasted screenshot lands under <code>~/.lets/uploads/graph/</code>) and <code>"net": []</code>. Capabilities: <code>entity</code>, <code>chat</code>, <code>components</code>, <code>media.image</code>, <code>clipboard</code>.</li>
+  <li>For the pane only: the optional <code>lets-native</code> mod and Claude Code 2.1.287+ (<a href="#native">below</a>). The browser window needs neither.</li>
+</ul>
+
+<h3 id="install-check">Check, reinstall, update, remove</h3>
+<pre><code>/lets list                                              <span class="c"># graph, modes web and native, no problems</span>
+node engine/bin/lets.mjs doctor                         <span class="c"># from the lets checkout: … "uniques": ["graph:ok", "den:ok"]</span>
+node engine/bin/lets.mjs defaults --force --only graph  <span class="c"># reinstall from main: also how you update it</span></code></pre>
+<p>Other ways in, all ending in the same folder: <code>/lets store graph</code> installs it through the store like any other unique (Claude shows the inspection, you say yes), and a plain <code>git clone https://github.com/offensiveadhd/lets-unique-graph.git ~/.lets/uniques/graph</code> works too (update that copy with <code>git pull</code>). While developing, point <code>LETS_UNIQUES_DIRS</code> at the parent of your checkout instead of copying. To remove graph, delete <code>~/.lets/uniques/graph</code>; being a default, it comes back the next time the engine starts unless <code>LETS_NO_DEFAULTS=1</code> is set. Your saved boards are not in that folder (they live in <code>~/.lets/sessions/graph/</code>) and survive a reinstall. Every path and option is in <a href="./getting-started.html#uniques">Installing uniques</a>.</p>
+
+<h2 id="native">A pane inside Claude Code <span class="badge badge-new">new in 0.4.0</span></h2>
+<p>graph 0.4.0 is the first unique with a <em>native view</em>. With lets 0.7.0 the same board can open as a pane in Claude Code's own sidebar instead of a browser window: the board as a picture, your nodes as a list of buttons, an editor for what you select (rename, kind, details, connect, note, remove), an <em>add</em> box and an <em>ask</em> box. Doto is a line at the top (his words, his mood, his suggestions as buttons) and the chat a block under the view. Claude and Doto work the same way in both modes, with the same events and commands, and <strong>Send to Claude</strong> and resume carry the board across.</p>
+<pre><code>node install.mjs --native             <span class="c"># once, from the lets checkout: installs the lets-native mod …</span>
+/plugin install lets-native@lets      <span class="c"># … or the same from inside Claude Code (2.1.287+). Restart afterwards.</span>
+/lets graph native plan the auth flow
+/lets graph web                       <span class="c"># the browser window, explicitly</span>
+/lets graph native resume             <span class="c"># bring back a board you sent</span></code></pre>
+<p>The word after the name picks the mode; a bare <code>/lets graph</code> opens the browser window. Put <code>"mode": "native"</code> in <code>~/.lets/config.json</code> to make the pane the default for uniques that have one. If Claude says no lets-native mod was seen, the mod is not installed or Claude Code has not been restarted since; the web window works meanwhile. A native window does not outlive the Claude Code session (saved sessions do), and the pane polls the host, so Claude's commands land within about a second. The contract is the engine's <a href="https://github.com/offensiveadhd/lets/blob/main/docs/NATIVE.md"><code>docs/NATIVE.md</code></a>.</p>
 
 <h2 id="do">What you can do</h2>
 <ul>

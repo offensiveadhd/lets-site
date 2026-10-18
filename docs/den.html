@@ -82,6 +82,7 @@
 <p>It comes with lets 0.6.0: den is listed next to graph in the engine's <code>defaults.json</code>, so the engine installs it into <code>~/.lets/uniques/den</code> the first time it runs. Then:</p>
 <pre><code>/lets den               <span class="c"># or /lets:lets den without the alias</span></code></pre>
 <p>Manual: <code>/lets store den</code> (inspect → confirm), or clone <a href="https://github.com/offensiveadhd/lets-unique-den">the repo</a> into <code>~/.lets/uniques/den</code>. den needs engine 0.6.0 or later (<code>"engine": "&gt;=0.6.0"</code>) because it reads the companion's state from the new <code>GET /lip/entity</code>. It asks for no permissions: <code>"fs.write": []</code>, <code>"net": []</code>.</p>
+<p>Check with <code>/lets list</code> (den listed, no problems); reinstall or update with <code>node engine/bin/lets.mjs defaults --force --only den</code> from the lets checkout. Every way to install, check, update and remove a unique is in <a href="./getting-started.html#uniques">Installing uniques</a>.</p>
 
 <h2 id="do">What you can do</h2>
 <p>A toolbar sits on top: the listening dot, <strong>Refresh</strong>, <strong>Ask</strong>, <strong>Send to Claude</strong>, chat, Doto and <code>?</code> for shortcuts. Below it, nine cards, top to bottom:</p>

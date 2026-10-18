@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Uniques · lets</title>
-  <meta name="description" content="The lets uniques: graph and den (Doto's home), installed by default, cocode (talk in code) and mors (talk in Morse) from the store, and pulse, the template. Defaults vs the community store, and how to propose a unique.">
+  <meta name="description" content="The lets uniques: graph (talk in diagrams) and cocode (talk in code), the two showcase uniques; den (Doto's home), installed by default; mors (talk in Morse) from the store; and pulse, the template. How each one is installed, defaults vs the community store, and how to propose a unique.">
   <meta name="theme-color" content="#120b1f">
   <link rel="icon" href="./assets/logo.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./css/site.css">
@@ -33,7 +33,7 @@
   <div class="wrap">
     <span class="eyebrow">Uniques</span>
     <h1 id="u-title">Windows you talk through</h1>
-    <p>A unique is one interactive medium: a static web app that speaks LIP, lives in its own repository, and gets the companion, chat and components from the shell for free.</p>
+    <p>A unique is one interactive medium: a static web app that speaks LIP, lives in its own repository, and gets the companion, chat and components from the <a href="./index.html#engine">engine</a> for free. graph and cocode are the two that show what the engine can do; graph comes with it, cocode is one store command away. Each card says how to install it.</p>
   </div>
 </section>
 
@@ -43,17 +43,42 @@
       <article class="card unique-card">
         <img src="./assets/graph-icon.svg" alt="" width="64" height="64">
         <div class="body">
-          <h2>graph <span class="badge badge-ok">default</span></h2>
+          <h2>graph <span class="badge badge-ok">default</span> <span class="badge badge-new">showcase</span></h2>
           <p><strong>Talk to Claude in diagrams.</strong> A dark-violet node/edge board where you draw the thing you mean while you chat, and the companion reads, points, suggests and edits the same board.</p>
-          <div class="meta"><span class="badge">installed with lets</span><span class="badge">verified in lets-store</span><span class="badge">reference implementation</span></div>
+          <div class="meta"><span class="badge">installed with lets</span><span class="badge">verified in lets-store</span><span class="badge">reference implementation</span><span class="badge">needs lets 0.7.0</span></div>
           <ul>
             <li>Nodes in seven kinds, edges, auto-layouts, undo for everything.</li>
             <li>Paste a screenshot: it becomes a node and Claude reads the file.</li>
-            <li>Send to Claude hands the board over; "continue" brings it back. <span class="badge badge-new">new in 0.4.0</span></li>
+            <li>Send to Claude hands the board over; "continue" brings it back.</li>
+            <li>Opens as a browser window, or as a pane inside Claude Code with the <code>lets-native</code> mod. <span class="badge badge-new">new in 0.4.0</span></li>
           </ul>
+          <pre><code>/lets graph          <span class="c"># comes with the engine: nothing to install</span>
+/lets graph native   <span class="c"># as a pane (node install.mjs --native, once)</span></code></pre>
           <div class="btn-row">
-            <a class="btn btn-sm" href="./docs/graph.html">Docs</a>
+            <a class="btn btn-sm" href="./docs/graph.html">Docs &amp; install</a>
             <a class="btn btn-sm" href="https://github.com/offensiveadhd/lets-unique-graph">Repository</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card unique-card">
+        <img src="./assets/cocode-icon.svg" alt="" width="64" height="64">
+        <div class="body">
+          <h2>cocode <span class="badge">in the store</span> <span class="badge badge-new">showcase</span></h2>
+          <p><strong>Talk in code.</strong> An editor for any language, even one that doesn't exist. Claude predicts your next lines, prepares the real program while you type, runs it on your machine, and reads what you send as a question, a task or a note.</p>
+          <div class="meta"><span class="badge">not a default</span><span class="badge">verified in lets-store</span><span class="badge">needs lets 0.7.0</span><span class="badge badge-new">0.4.0</span></div>
+          <ul>
+            <li>Claude's next lines appear as a dim ghost at the caret: <kbd>Tab</kbd> accepts, <kbd>Esc</kbd> dismisses. When Claude is away, a local predictor offers weaker ones.</li>
+            <li>While you type, Claude builds the real program (Python, JavaScript, …) in the Build pane. <strong>Build &amp; run</strong> (<kbd>F5</kbd>) executes it on your machine in milliseconds after one consent, and the wheel on the button shows where the job stands. <span class="badge badge-new">new in 0.4.0</span></li>
+            <li>Ask (<kbd>Ctrl</kbd>+<kbd>K</kbd>, or a line starting with <code>??</code>) and Send to Claude carry the code as the message; Claude reads it as a question, a walkthrough, a task, a fix, a review or a note.</li>
+            <li><strong>Answer in code</strong>: Claude's whole answer comes back as code in your language, nothing else; also <code>/lets cocode output</code> without a window.</li>
+            <li><strong>Reach</strong>: a line that asks for what no sandbox can do (<code>ping google.com</code>, <code>claude.browser(url)</code>, <code>research …</code>, <code>$ cmd</code>, in any spelling) is done for real by Claude: the real ping, the browser pane, a web search, a sub-agent, the shell. Never a function that prints what a ping would say.</li>
+          </ul>
+          <pre><code>/lets store cocode   <span class="c"># inspect, then say yes</span>
+/lets cocode         <span class="c"># open it</span></code></pre>
+          <div class="btn-row">
+            <a class="btn btn-sm" href="./docs/cocode.html">Docs &amp; install</a>
+            <a class="btn btn-sm" href="https://github.com/offensiveadhd/lets-unique-cocode">Repository</a>
           </div>
         </div>
       </article>
@@ -63,35 +88,16 @@
         <div class="body">
           <h2>den <span class="badge badge-ok">default</span></h2>
           <p><strong>Doto's home.</strong> One calm page that shows what the companion has learned about you, where you edit or forget any of it by pointing.</p>
-          <div class="meta"><span class="badge">installed with lets</span><span class="badge">verified in lets-store</span><span class="badge badge-new">new in 0.6.0</span></div>
+          <div class="meta"><span class="badge">installed with lets</span><span class="badge">verified in lets-store</span><span class="badge">needs lets 0.6.0</span><span class="badge badge-new">new in 0.6.0</span></div>
           <ul>
             <li>Persona, six trait sliders, likes, dislikes, nicknames, memory lines and special skills: change or forget each one where it sits.</li>
             <li>The seven secret moves (found ones lit, the rest a "?") and how you work: pace, clicks per minute, dwell, favourite regions.</li>
             <li>Send to Claude hands it over for a memory review in the chat; "continue" brings it back live.</li>
           </ul>
+          <pre><code>/lets den            <span class="c"># comes with the engine: nothing to install</span></code></pre>
           <div class="btn-row">
-            <a class="btn btn-sm" href="./docs/den.html">Docs</a>
+            <a class="btn btn-sm" href="./docs/den.html">Docs &amp; install</a>
             <a class="btn btn-sm" href="https://github.com/offensiveadhd/lets-unique-den">Repository</a>
-          </div>
-        </div>
-      </article>
-
-      <article class="card unique-card">
-        <img src="./assets/cocode-icon.svg" alt="" width="64" height="64">
-        <div class="body">
-          <h2>cocode <span class="badge">in the store</span></h2>
-          <p><strong>Talk in code.</strong> An editor for any language, even one that doesn't exist. Claude predicts your next lines, prepares the real program while you type, and reads what you send as a question, a task or a note.</p>
-          <div class="meta"><span class="badge">not a default</span><span class="badge">verified in lets-store</span><span class="badge badge-new">new</span></div>
-          <ul>
-            <li>Claude's next lines appear as a dim ghost at the caret: <kbd>Tab</kbd> accepts, <kbd>Esc</kbd> dismisses. When Claude is away, a local predictor offers weaker ones.</li>
-            <li>While you type, Claude builds the real program (Python, JavaScript, …) in the Build pane, so Run (<kbd>Ctrl</kbd>+<kbd>Enter</kbd>) is instant and the output streams in.</li>
-            <li>Ask (<kbd>Ctrl</kbd>+<kbd>K</kbd>, or a line starting with <code>??</code>) and Send to Claude carry the code as the message; Claude reads it as a question, a walkthrough, a task, a fix, a review or a note.</li>
-            <li><strong>Answer in code</strong>: Claude's whole answer comes back as code in your language, nothing else; also <code>/lets cocode output</code> without a window. <span class="badge badge-new">new in 0.2.0</span></li>
-            <li><strong>Reach</strong>: a line that asks for what no sandbox can do (<code>ping('google.com')</code>, <code>claude.browser(url)</code>, <code>research(topic)</code>, <code>$ cmd</code>) is done for real by Claude: the real ping, the browser pane, a web search, a sub-agent, the shell. Never a function that prints what a ping would say. <span class="badge badge-new">new in 0.3.0</span></li>
-          </ul>
-          <div class="btn-row">
-            <a class="btn btn-sm" href="./docs/cocode.html">Docs</a>
-            <a class="btn btn-sm" href="https://github.com/offensiveadhd/lets-unique-cocode">Repository</a>
           </div>
         </div>
       </article>
@@ -101,14 +107,16 @@
         <div class="body">
           <h2>mors <span class="badge">in the store</span></h2>
           <p><strong>Talk in Morse.</strong> One key, one tape. You key your message in dots and dashes and send it to Claude, who reads it as a prompt: one line saying what it read, then it does what the message asks.</p>
-          <div class="meta"><span class="badge">not a default</span><span class="badge">verified in lets-store</span><span class="badge badge-new">new</span></div>
+          <div class="meta"><span class="badge">not a default</span><span class="badge">verified in lets-store</span><span class="badge">needs lets 0.4.0</span><span class="badge badge-new">new</span></div>
           <ul>
             <li>Hold <kbd>Space</kbd> or the key: a short press is a dot, a long one a dash. A pause closes the letter, a longer one the word. With <em>auto</em> on, the speed follows your hand.</li>
             <li>It assumes you know Morse: just the key, the tape and Send to Claude. Only Doto helps, from his menu: read it back, spell a word (<kbd>Tab</kbd> keys a letter for you), check what you keyed, the chart, a full controller.</li>
             <li>Claude can answer in Morse on a second track of the tape, with its own lamp and a lower tone.</li>
           </ul>
+          <pre><code>/lets store mors     <span class="c"># inspect, then say yes</span>
+/lets mors           <span class="c"># open it</span></code></pre>
           <div class="btn-row">
-            <a class="btn btn-sm" href="./docs/mors.html">Docs</a>
+            <a class="btn btn-sm" href="./docs/mors.html">Docs &amp; install</a>
             <a class="btn btn-sm" href="https://github.com/offensiveadhd/lets-unique-mors">Repository</a>
           </div>
         </div>
@@ -125,6 +133,7 @@
             <li>A keyboard-accessible dial, Send to Claude / resume demonstrated with a <code>session</code> block, and validate scaffolding. <span class="badge badge-new">new in 0.2.0</span></li>
             <li>Use it as a GitHub template, rename <code>pulse</code>, build yours.</li>
           </ul>
+          <pre><code>/lets store pulse    <span class="c"># to try it; to build on it, use the template on GitHub</span></code></pre>
           <div class="btn-row">
             <a class="btn btn-sm" href="./docs/uniques.html#template">Authoring guide</a>
             <a class="btn btn-sm" href="https://github.com/offensiveadhd/lets-unique-template">Template repository</a>
@@ -149,7 +158,7 @@
       <article class="card">
         <h3><span class="card-icon" aria-hidden="true">⌂</span>The store</h3>
         <p>Where <strong>community uniques live</strong>. <a href="https://github.com/offensiveadhd/lets-store">lets-store</a> is a git repository whose <code>index.json</code> points at uniques by git URL. Install with <code>/lets store &lt;name&gt;</code>: you see the permissions and the verified flag, and nothing installs until you say yes. <a href="./docs/cocode.html"><strong>cocode</strong></a> and <a href="./docs/mors.html"><strong>mors</strong></a> are the first store-only uniques by the maintainers.</p>
-        <p><a class="more" href="./docs/uniques.html#verified">What "verified" means →</a></p>
+        <p><a class="more" href="./docs/getting-started.html#uniques">Every way to install a unique →</a> · <a class="more" href="./docs/uniques.html#verified">What "verified" means →</a></p>
       </article>
     </div>
     <p class="dim" style="margin-top:18px">New candidates grow in the store first; once a unique is solid it can be proposed for <code>defaults.json</code>.</p>
