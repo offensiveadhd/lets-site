@@ -22,7 +22,7 @@
         <li><a href="../uniques.html">Uniques</a></li>
         <li><a href="../playground.html">Playground</a></li>
         <li><a href="../index.html#install">Install</a></li>
-        <li><a href="https://github.com/TikoTikTok/lets">GitHub</a></li>
+        <li><a href="https://github.com/offensiveadhd/lets">GitHub</a></li>
       </ul>
     </nav>
   </div>
@@ -77,7 +77,7 @@
 <h2 id="agent">Install with your agent</h2>
 <p>The easiest way: paste this line into Claude Code. It clones the repo, runs the installer and follows <code>INSTALL.md</code>, which is written for an agent to carry out step by step.</p>
 <div class="copy-box">
-  <pre class="wrap-text" id="install-prompt">Install the `lets` plugin for Claude Code on this machine: clone https://github.com/TikoTikTok/lets (use `gh repo clone TikoTikTok/lets` — it is private, so make sure `gh auth status` is logged in and run `gh auth setup-git`), then run `node install.mjs` inside the clone and follow INSTALL.md in that repo. When done, tell me to restart Claude Code and show me `/lets graph`.</pre>
+  <pre class="wrap-text" id="install-prompt">Install the `lets` plugin for Claude Code on this machine: clone https://github.com/offensiveadhd/lets (use `gh repo clone offensiveadhd/lets` — it is private, so make sure `gh auth status` is logged in and run `gh auth setup-git`), then run `node install.mjs` inside the clone and follow INSTALL.md in that repo. When done, tell me to restart Claude Code and show me `/lets graph`.</pre>
   <div>
     <button class="btn btn-primary" type="button" data-copy="install-prompt">Copy prompt</button>
     <span class="copy-status" role="status" aria-live="polite"></span>
@@ -86,7 +86,7 @@
 
 <h2 id="manual">Install by hand</h2>
 <p>One command from a checkout:</p>
-<pre><code>gh repo clone TikoTikTok/lets
+<pre><code>gh repo clone offensiveadhd/lets
 cd lets
 node install.mjs</code></pre>
 <p>The installer adds the <code>lets</code> marketplace from GitHub, installs the <code>lets</code> plugin at user scope, installs the default uniques (graph, den) into <code>~/.lets/uniques</code>, and installs a personal <code>/lets</code> alias. Restart the app or run <code>/reload-plugins</code> once, and both of these work in any session:</p>
@@ -109,7 +109,7 @@ node install.mjs</code></pre>
 
 <h3 id="plugin-manager">With the plugin manager</h3>
 <p>Inside Claude Code:</p>
-<pre><code>/plugin marketplace add TikoTikTok/lets
+<pre><code>/plugin marketplace add offensiveadhd/lets
 /plugin install lets@lets</code></pre>
 <p>Then run <code>node engine/bin/lets.mjs install-skill</code> from a checkout for the bare <code>/lets</code> alias.</p>
 
@@ -207,18 +207,18 @@ node install.mjs --uninstall       # from your checkout: remove</code></pre>
     <div>
       <div class="footer-brand"><img src="../assets/logo.svg" alt="" width="28" height="28">lets</div>
       <p>Talk to Claude through windows, not just text.</p>
-      <p>MIT © TikoTikTok · made with Claude Code</p>
+      <p>MIT © offensiveadhd · made with Claude Code</p>
     </div>
     <div>
       <h2>Repositories</h2>
       <ul>
-        <li><a href="https://github.com/TikoTikTok/lets">lets</a> <span class="dim">engine, plugin, SDK, protocol</span></li>
-        <li><a href="https://github.com/TikoTikTok/lets-unique-graph">lets-unique-graph</a> <span class="dim">the graph board</span></li>
-        <li><a href="https://github.com/TikoTikTok/lets-unique-den">lets-unique-den</a> <span class="dim">Doto's home</span></li>
-        <li><a href="https://github.com/TikoTikTok/lets-unique-cocode">lets-unique-cocode</a> <span class="dim">talk in code</span></li>
-        <li><a href="https://github.com/TikoTikTok/lets-unique-mors">lets-unique-mors</a> <span class="dim">talk in Morse</span></li>
-        <li><a href="https://github.com/TikoTikTok/lets-store">lets-store</a> <span class="dim">community store</span></li>
-        <li><a href="https://github.com/TikoTikTok/lets-unique-template">lets-unique-template</a> <span class="dim">pulse template</span></li>
+        <li><a href="https://github.com/offensiveadhd/lets">lets</a> <span class="dim">engine, plugin, SDK, protocol</span></li>
+        <li><a href="https://github.com/offensiveadhd/lets-unique-graph">lets-unique-graph</a> <span class="dim">the graph board</span></li>
+        <li><a href="https://github.com/offensiveadhd/lets-unique-den">lets-unique-den</a> <span class="dim">Doto's home</span></li>
+        <li><a href="https://github.com/offensiveadhd/lets-unique-cocode">lets-unique-cocode</a> <span class="dim">talk in code</span></li>
+        <li><a href="https://github.com/offensiveadhd/lets-unique-mors">lets-unique-mors</a> <span class="dim">talk in Morse</span></li>
+        <li><a href="https://github.com/offensiveadhd/lets-store">lets-store</a> <span class="dim">community store</span></li>
+        <li><a href="https://github.com/offensiveadhd/lets-unique-template">lets-unique-template</a> <span class="dim">pulse template</span></li>
       </ul>
     </div>
     <div>

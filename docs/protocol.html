@@ -22,7 +22,7 @@
         <li><a href="../uniques.html">Uniques</a></li>
         <li><a href="../playground.html">Playground</a></li>
         <li><a href="../index.html#install">Install</a></li>
-        <li><a href="https://github.com/TikoTikTok/lets">GitHub</a></li>
+        <li><a href="https://github.com/offensiveadhd/lets">GitHub</a></li>
       </ul>
     </nav>
   </div>
@@ -217,7 +217,7 @@
       <tr><td>Window → Host (blobs)</td><td><code>POST /lip/upload?w=&amp;source=&amp;component=</code> raw body, <code>content-type</code> = mime. Returns <code>{path,w?,h?,bytes,mime}</code>.</td></tr>
       <tr><td>Window → Host (runner info) <span class="badge badge-new">0.7.0</span></td><td><code>GET /lip/run/info?w=&lt;windowId&gt;</code>. Header <code>x-lets-token</code>. Returns whether the runner is enabled, whether this window's unique is allowed on this machine, the languages the manifest declares in <code>permissions.exec</code>, which of them this machine can run and with which sandbox, and the limits.</td></tr>
       <tr><td>Window → Host (runner consent) <span class="badge badge-new">0.7.0</span></td><td><code>POST /lip/run/consent?w=&lt;windowId&gt;</code> body <code>{"allow": true}</code>. Records (or, with <code>false</code>, revokes) the human's consent for the window's unique on this machine. Returns <code>{"allowed": true}</code>.</td></tr>
-      <tr><td>Window → Host (run) <span class="badge badge-new">0.7.0</span></td><td><code>POST /lip/run?w=&lt;windowId&gt;</code> body <code>{lang, code, stdin?, timeoutMs?, run?}</code>. Streams the run as NDJSON (<code>application/x-ndjson</code>): one object per line with <code>stream</code> = <code>system</code>, <code>stdout</code> or <code>stderr</code>, then a last line with <code>done:true, exit, ms, timedOut, killed, sandbox</code>. Failures before the process starts are plain JSON with a 4xx status (<code>consent</code>, <code>disabled</code>, <code>not-declared</code>, <code>unavailable</code>, <code>busy</code>, <code>bad-request</code>). See <a href="https://github.com/TikoTikTok/lets/blob/main/docs/RUNNER.md"><code>docs/RUNNER.md</code></a>.</td></tr>
+      <tr><td>Window → Host (run) <span class="badge badge-new">0.7.0</span></td><td><code>POST /lip/run?w=&lt;windowId&gt;</code> body <code>{lang, code, stdin?, timeoutMs?, run?}</code>. Streams the run as NDJSON (<code>application/x-ndjson</code>): one object per line with <code>stream</code> = <code>system</code>, <code>stdout</code> or <code>stderr</code>, then a last line with <code>done:true, exit, ms, timedOut, killed, sandbox</code>. Failures before the process starts are plain JSON with a 4xx status (<code>consent</code>, <code>disabled</code>, <code>not-declared</code>, <code>unavailable</code>, <code>busy</code>, <code>bad-request</code>). See <a href="https://github.com/offensiveadhd/lets/blob/main/docs/RUNNER.md"><code>docs/RUNNER.md</code></a>.</td></tr>
       <tr><td>Claude ↔ Host</td><td>MCP (stdio). <code>listen</code> long-polls the up-queue; <code>send</code> enqueues down-commands.</td></tr>
       <tr><td>Hooks → Host</td><td><code>GET /lip/drain?cursor=&lt;name&gt;</code> returns and advances a named cursor; used by the <code>UserPromptSubmit</code> hook so events reach Claude without a tool call.</td></tr>
     </tbody>
@@ -272,7 +272,7 @@
 
 <h2 id="future">9. Future mediums</h2>
 <p>A unique for a medium without a pointer (voice, gesture, AR, neural) still emits <code>entity.summon</code>, <code>component.action</code>, <code>media.*</code>: the <em>meaning</em> of an act, not its mechanics. New domains are free to add; shells for new mediums implement §3 semantics in whatever way the medium affords. The envelope never changes shape.</p>
-<p class="dim">Source of truth: <a href="https://github.com/TikoTikTok/lets/blob/main/protocol/LIP.md"><code>protocol/LIP.md</code></a> and the JSON schemas next to it in the lets repo.</p>
+<p class="dim">Source of truth: <a href="https://github.com/offensiveadhd/lets/blob/main/protocol/LIP.md"><code>protocol/LIP.md</code></a> and the JSON schemas next to it in the lets repo.</p>
 
 <nav class="doc-pager" aria-label="Previous and next page"><a class="prev" href="./mors.html"><small>← Previous</small>Talk in Morse (mors)</a><a class="next" href="./architecture.html"><small>Next →</small>Architecture</a></nav>
   </main>
@@ -283,18 +283,18 @@
     <div>
       <div class="footer-brand"><img src="../assets/logo.svg" alt="" width="28" height="28">lets</div>
       <p>Talk to Claude through windows, not just text.</p>
-      <p>MIT © TikoTikTok · made with Claude Code</p>
+      <p>MIT © offensiveadhd · made with Claude Code</p>
     </div>
     <div>
       <h2>Repositories</h2>
       <ul>
-        <li><a href="https://github.com/TikoTikTok/lets">lets</a> <span class="dim">engine, plugin, SDK, protocol</span></li>
-        <li><a href="https://github.com/TikoTikTok/lets-unique-graph">lets-unique-graph</a> <span class="dim">the graph board</span></li>
-        <li><a href="https://github.com/TikoTikTok/lets-unique-den">lets-unique-den</a> <span class="dim">Doto's home</span></li>
-        <li><a href="https://github.com/TikoTikTok/lets-unique-cocode">lets-unique-cocode</a> <span class="dim">talk in code</span></li>
-        <li><a href="https://github.com/TikoTikTok/lets-unique-mors">lets-unique-mors</a> <span class="dim">talk in Morse</span></li>
-        <li><a href="https://github.com/TikoTikTok/lets-store">lets-store</a> <span class="dim">community store</span></li>
-        <li><a href="https://github.com/TikoTikTok/lets-unique-template">lets-unique-template</a> <span class="dim">pulse template</span></li>
+        <li><a href="https://github.com/offensiveadhd/lets">lets</a> <span class="dim">engine, plugin, SDK, protocol</span></li>
+        <li><a href="https://github.com/offensiveadhd/lets-unique-graph">lets-unique-graph</a> <span class="dim">the graph board</span></li>
+        <li><a href="https://github.com/offensiveadhd/lets-unique-den">lets-unique-den</a> <span class="dim">Doto's home</span></li>
+        <li><a href="https://github.com/offensiveadhd/lets-unique-cocode">lets-unique-cocode</a> <span class="dim">talk in code</span></li>
+        <li><a href="https://github.com/offensiveadhd/lets-unique-mors">lets-unique-mors</a> <span class="dim">talk in Morse</span></li>
+        <li><a href="https://github.com/offensiveadhd/lets-store">lets-store</a> <span class="dim">community store</span></li>
+        <li><a href="https://github.com/offensiveadhd/lets-unique-template">lets-unique-template</a> <span class="dim">pulse template</span></li>
       </ul>
     </div>
     <div>

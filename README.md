@@ -1,10 +1,10 @@
 # lets-site
 
-The public website for [lets](https://github.com/TikoTikTok/lets): talk to
+The public website for [lets](https://github.com/offensiveadhd/lets): talk to
 Claude through windows, not just text.
 
 Published with GitHub Pages as a project site at
-**https://tikotiktok.github.io/lets-site/**.
+**https://lets.offensiveadhd.com/**.
 
 Plain HTML, one CSS file and a few ES modules. No build step, no bundler, no
 CDN, no web fonts from the network, no analytics.
@@ -77,4 +77,4 @@ Pages serves `index.html` at the root and `404.html` for missing paths.
 
 ## License
 
-MIT © TikoTikTok
+MIT © offensiveadhd

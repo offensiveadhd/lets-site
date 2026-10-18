@@ -22,7 +22,7 @@
         <li><a href="../uniques.html">Uniques</a></li>
         <li><a href="../playground.html">Playground</a></li>
         <li><a href="../index.html#install">Install</a></li>
-        <li><a href="https://github.com/TikoTikTok/lets">GitHub</a></li>
+        <li><a href="https://github.com/offensiveadhd/lets">GitHub</a></li>
       </ul>
     </nav>
   </div>
@@ -80,10 +80,10 @@
 <p>mors stores nothing on the host. The message lives in the window, and in a saved session after Send to Claude.</p>
 
 <h2 id="install">Install</h2>
-<p>mors is not in the engine's <code>defaults.json</code>. It lives in <a href="https://github.com/TikoTikTok/lets-store">lets-store</a>, so you install it once:</p>
+<p>mors is not in the engine's <code>defaults.json</code>. It lives in <a href="https://github.com/offensiveadhd/lets-store">lets-store</a>, so you install it once:</p>
 <pre><code>/lets store mors      <span class="c"># inspect → confirm</span>
 /lets mors            <span class="c"># open it</span></code></pre>
-<p>Claude shows you the inspection (permissions, problems, the verified flag) and copies it into <code>~/.lets/uniques/mors</code> only after you say yes. Manual: clone <a href="https://github.com/TikoTikTok/lets-unique-mors">the repo</a> into <code>~/.lets/uniques/mors</code>.</p>
+<p>Claude shows you the inspection (permissions, problems, the verified flag) and copies it into <code>~/.lets/uniques/mors</code> only after you say yes. Manual: clone <a href="https://github.com/offensiveadhd/lets-unique-mors">the repo</a> into <code>~/.lets/uniques/mors</code>.</p>
 <p>mors needs engine 0.4.0 or later (<code>"engine": "&gt;=0.4.0"</code>) for handoff sessions; it needs no new engine endpoint. It asks for no permissions: <code>"fs.write": []</code>, <code>"net": []</code>. Its capabilities are <code>entity</code>, <code>chat</code> and <code>components</code>.</p>
 <p class="note note-new">This page describes <strong>mors 0.1.0</strong> (2026-10-13). Like the other lets repositories, its repository is private for now.</p>
 
@@ -244,7 +244,7 @@
   ui/mors.js             <span class="c"># the window</span>
   ui/morse.js            <span class="c"># table, encode, decode, the keyer state machine, timing</span>
   ui/style.css</code></pre>
-<p>Plain HTML, ES modules and CSS: no build step, no CDN, no inline script, no <code>eval</code>, no user content through <code>innerHTML</code>. MIT licensed. More: <a href="https://github.com/TikoTikTok/lets-unique-mors">lets-unique-mors</a> has the full <code>GUIDE.md</code>, the behaviour contract (<code>CONTRACT.md</code>) and JSON Schemas for the messages.</p>
+<p>Plain HTML, ES modules and CSS: no build step, no CDN, no inline script, no <code>eval</code>, no user content through <code>innerHTML</code>. MIT licensed. More: <a href="https://github.com/offensiveadhd/lets-unique-mors">lets-unique-mors</a> has the full <code>GUIDE.md</code>, the behaviour contract (<code>CONTRACT.md</code>) and JSON Schemas for the messages.</p>
 
 <h2 id="develop">Develop</h2>
 <p>Run the host standalone from a lets checkout. The registry looks for <code>&lt;dir&gt;/mors/unique.json</code>, so point it at the parent of a folder named <code>mors</code> (a symlink or junction to this repo works):</p>
@@ -263,18 +263,18 @@ node engine/bin/lets.mjs events                            <span class="c"># dra
     <div>
       <div class="footer-brand"><img src="../assets/logo.svg" alt="" width="28" height="28">lets</div>
       <p>Talk to Claude through windows, not just text.</p>
-      <p>MIT © TikoTikTok · made with Claude Code</p>
+      <p>MIT © offensiveadhd · made with Claude Code</p>
     </div>
     <div>
       <h2>Repositories</h2>
       <ul>
-        <li><a href="https://github.com/TikoTikTok/lets">lets</a> <span class="dim">engine, plugin, SDK, protocol</span></li>
-        <li><a href="https://github.com/TikoTikTok/lets-unique-graph">lets-unique-graph</a> <span class="dim">the graph board</span></li>
-        <li><a href="https://github.com/TikoTikTok/lets-unique-den">lets-unique-den</a> <span class="dim">Doto's home</span></li>
-        <li><a href="https://github.com/TikoTikTok/lets-unique-cocode">lets-unique-cocode</a> <span class="dim">talk in code</span></li>
-        <li><a href="https://github.com/TikoTikTok/lets-unique-mors">lets-unique-mors</a> <span class="dim">talk in Morse</span></li>
-        <li><a href="https://github.com/TikoTikTok/lets-store">lets-store</a> <span class="dim">community store</span></li>
-        <li><a href="https://github.com/TikoTikTok/lets-unique-template">lets-unique-template</a> <span class="dim">pulse template</span></li>
+        <li><a href="https://github.com/offensiveadhd/lets">lets</a> <span class="dim">engine, plugin, SDK, protocol</span></li>
+        <li><a href="https://github.com/offensiveadhd/lets-unique-graph">lets-unique-graph</a> <span class="dim">the graph board</span></li>
+        <li><a href="https://github.com/offensiveadhd/lets-unique-den">lets-unique-den</a> <span class="dim">Doto's home</span></li>
+        <li><a href="https://github.com/offensiveadhd/lets-unique-cocode">lets-unique-cocode</a> <span class="dim">talk in code</span></li>
+        <li><a href="https://github.com/offensiveadhd/lets-unique-mors">lets-unique-mors</a> <span class="dim">talk in Morse</span></li>
+        <li><a href="https://github.com/offensiveadhd/lets-store">lets-store</a> <span class="dim">community store</span></li>
+        <li><a href="https://github.com/offensiveadhd/lets-unique-template">lets-unique-template</a> <span class="dim">pulse template</span></li>
       </ul>
     </div>
     <div>

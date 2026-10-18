@@ -22,7 +22,7 @@
         <li><a href="../uniques.html">Uniques</a></li>
         <li><a href="../playground.html">Playground</a></li>
         <li><a href="../index.html#install">Install</a></li>
-        <li><a href="https://github.com/TikoTikTok/lets">GitHub</a></li>
+        <li><a href="https://github.com/offensiveadhd/lets">GitHub</a></li>
       </ul>
     </nav>
   </div>
@@ -76,11 +76,11 @@
   <table>
     <thead><tr><th scope="col">Unique</th><th scope="col">Repo</th><th scope="col">Default</th><th scope="col">In lets-store</th></tr></thead>
     <tbody>
-      <tr><td><strong>graph</strong>: talk in diagrams</td><td><a href="https://github.com/TikoTikTok/lets-unique-graph">lets-unique-graph</a></td><td>yes</td><td>yes, verified</td></tr>
-      <tr><td><strong>den</strong>: Doto's home <span class="badge badge-new">new in 0.6.0</span></td><td><a href="https://github.com/TikoTikTok/lets-unique-den">lets-unique-den</a></td><td>yes</td><td>yes, verified</td></tr>
-      <tr><td><strong>cocode</strong>: talk in code <span class="badge badge-new">new</span></td><td><a href="https://github.com/TikoTikTok/lets-unique-cocode">lets-unique-cocode</a></td><td>no</td><td>yes, verified</td></tr>
-      <tr><td><strong>mors</strong>: talk in Morse <span class="badge badge-new">new</span></td><td><a href="https://github.com/TikoTikTok/lets-unique-mors">lets-unique-mors</a></td><td>no</td><td>yes, verified</td></tr>
-      <tr><td><strong>pulse</strong>: a dial you talk through (template)</td><td><a href="https://github.com/TikoTikTok/lets-unique-template">lets-unique-template</a></td><td>no</td><td>yes, verified</td></tr>
+      <tr><td><strong>graph</strong>: talk in diagrams</td><td><a href="https://github.com/offensiveadhd/lets-unique-graph">lets-unique-graph</a></td><td>yes</td><td>yes, verified</td></tr>
+      <tr><td><strong>den</strong>: Doto's home <span class="badge badge-new">new in 0.6.0</span></td><td><a href="https://github.com/offensiveadhd/lets-unique-den">lets-unique-den</a></td><td>yes</td><td>yes, verified</td></tr>
+      <tr><td><strong>cocode</strong>: talk in code <span class="badge badge-new">new</span></td><td><a href="https://github.com/offensiveadhd/lets-unique-cocode">lets-unique-cocode</a></td><td>no</td><td>yes, verified</td></tr>
+      <tr><td><strong>mors</strong>: talk in Morse <span class="badge badge-new">new</span></td><td><a href="https://github.com/offensiveadhd/lets-unique-mors">lets-unique-mors</a></td><td>no</td><td>yes, verified</td></tr>
+      <tr><td><strong>pulse</strong>: a dial you talk through (template)</td><td><a href="https://github.com/offensiveadhd/lets-unique-template">lets-unique-template</a></td><td>no</td><td>yes, verified</td></tr>
     </tbody>
   </table>
 </div>
@@ -133,7 +133,7 @@ button.onclick = () =&gt; lets.emit(<span class="s">'my-unique.thing.changed'</s
 <p>Keep it under about 1,200 words.</p>
 
 <h2 id="template">Start from the template</h2>
-<p><a href="https://github.com/TikoTikTok/lets-unique-template">lets-unique-template</a> is <strong>pulse</strong>: a full-screen dark-violet mood dial. You drag a ring to set a value from 0 to 100 and pick one of three mode chips (calm / focused / wild); the companion reacts, and Claude can move the dial itself. It demonstrates the whole contract in a handful of files. Template 0.2.0 makes the dial keyboard-accessible, demonstrates Send to Claude and resume with a <code>session</code> block, and adds validate scaffolding.</p>
+<p><a href="https://github.com/offensiveadhd/lets-unique-template">lets-unique-template</a> is <strong>pulse</strong>: a full-screen dark-violet mood dial. You drag a ring to set a value from 0 to 100 and pick one of three mode chips (calm / focused / wild); the companion reacts, and Claude can move the dial itself. It demonstrates the whole contract in a handful of files. Template 0.2.0 makes the dial keyboard-accessible, demonstrates Send to Claude and resume with a <code>session</code> block, and adds validate scaffolding.</p>
 <ol>
   <li>On GitHub, "Use this template" and name the new repo <code>lets-unique-&lt;name&gt;</code>.</li>
   <li>Clone it and rename <code>pulse</code> everywhere: manifest <code>name</code>, <code>domains</code>, event and command types, <code>data-unique</code>, <code>Lets.connect</code>.</li>
@@ -158,7 +158,7 @@ node engine/bin/lets.mjs validate ./my-unique</code></pre>
 <ol>
   <li>Push your unique to GitHub as its own repo (or a folder in one).</li>
   <li>Validate it with the engine: <code>node &lt;lets&gt;/engine/bin/lets.mjs validate &lt;your-unique-dir&gt;</code>.</li>
-  <li>Fork <a href="https://github.com/TikoTikTok/lets-store">lets-store</a>, add an entry to <code>index.json</code> (keep entries sorted by <code>name</code>) and update the top-level <code>updated</code> date.</li>
+  <li>Fork <a href="https://github.com/offensiveadhd/lets-store">lets-store</a>, add an entry to <code>index.json</code> (keep entries sorted by <code>name</code>) and update the top-level <code>updated</code> date.</li>
   <li>Run the store validator: <code>npm run validate</code>.</li>
   <li>Open a pull request. The checklist in the store's <code>CONTRIBUTING.md</code> must be satisfied; CI runs the validator on every push and PR.</li>
 </ol>
@@ -214,18 +214,18 @@ node engine/bin/lets.mjs validate ./my-unique</code></pre>
     <div>
       <div class="footer-brand"><img src="../assets/logo.svg" alt="" width="28" height="28">lets</div>
       <p>Talk to Claude through windows, not just text.</p>
-      <p>MIT © TikoTikTok · made with Claude Code</p>
+      <p>MIT © offensiveadhd · made with Claude Code</p>
     </div>
     <div>
       <h2>Repositories</h2>
       <ul>
-        <li><a href="https://github.com/TikoTikTok/lets">lets</a> <span class="dim">engine, plugin, SDK, protocol</span></li>
-        <li><a href="https://github.com/TikoTikTok/lets-unique-graph">lets-unique-graph</a> <span class="dim">the graph board</span></li>
-        <li><a href="https://github.com/TikoTikTok/lets-unique-den">lets-unique-den</a> <span class="dim">Doto's home</span></li>
-        <li><a href="https://github.com/TikoTikTok/lets-unique-cocode">lets-unique-cocode</a> <span class="dim">talk in code</span></li>
-        <li><a href="https://github.com/TikoTikTok/lets-unique-mors">lets-unique-mors</a> <span class="dim">talk in Morse</span></li>
-        <li><a href="https://github.com/TikoTikTok/lets-store">lets-store</a> <span class="dim">community store</span></li>
-        <li><a href="https://github.com/TikoTikTok/lets-unique-template">lets-unique-template</a> <span class="dim">pulse template</span></li>
+        <li><a href="https://github.com/offensiveadhd/lets">lets</a> <span class="dim">engine, plugin, SDK, protocol</span></li>
+        <li><a href="https://github.com/offensiveadhd/lets-unique-graph">lets-unique-graph</a> <span class="dim">the graph board</span></li>
+        <li><a href="https://github.com/offensiveadhd/lets-unique-den">lets-unique-den</a> <span class="dim">Doto's home</span></li>
+        <li><a href="https://github.com/offensiveadhd/lets-unique-cocode">lets-unique-cocode</a> <span class="dim">talk in code</span></li>
+        <li><a href="https://github.com/offensiveadhd/lets-unique-mors">lets-unique-mors</a> <span class="dim">talk in Morse</span></li>
+        <li><a href="https://github.com/offensiveadhd/lets-store">lets-store</a> <span class="dim">community store</span></li>
+        <li><a href="https://github.com/offensiveadhd/lets-unique-template">lets-unique-template</a> <span class="dim">pulse template</span></li>
       </ul>
     </div>
     <div>

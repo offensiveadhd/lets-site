@@ -22,7 +22,7 @@
         <li><a href="../uniques.html">Uniques</a></li>
         <li><a href="../playground.html">Playground</a></li>
         <li><a href="../index.html#install">Install</a></li>
-        <li><a href="https://github.com/TikoTikTok/lets">GitHub</a></li>
+        <li><a href="https://github.com/offensiveadhd/lets">GitHub</a></li>
       </ul>
     </nav>
   </div>
@@ -84,10 +84,10 @@
 <p>An empty editor shows <em>seeds</em>: starting points Claude draws from memory and your saved sessions. cocode stores nothing on the host. The document lives in the window, and in a saved session after Send to Claude.</p>
 
 <h2 id="install">Install</h2>
-<p>cocode is not in the engine's <code>defaults.json</code>. It lives in <a href="https://github.com/TikoTikTok/lets-store">lets-store</a>, so you install it once:</p>
+<p>cocode is not in the engine's <code>defaults.json</code>. It lives in <a href="https://github.com/offensiveadhd/lets-store">lets-store</a>, so you install it once:</p>
 <pre><code>/lets store cocode      <span class="c"># inspect → confirm</span>
 /lets cocode            <span class="c"># open it</span></code></pre>
-<p>Claude shows you the inspection (permissions, problems, the verified flag) and copies it into <code>~/.lets/uniques/cocode</code> only after you say yes. Manual: clone <a href="https://github.com/TikoTikTok/lets-unique-cocode">the repo</a> into <code>~/.lets/uniques/cocode</code>.</p>
+<p>Claude shows you the inspection (permissions, problems, the verified flag) and copies it into <code>~/.lets/uniques/cocode</code> only after you say yes. Manual: clone <a href="https://github.com/offensiveadhd/lets-unique-cocode">the repo</a> into <code>~/.lets/uniques/cocode</code>.</p>
 <p>cocode needs engine 0.4.0 or later (<code>"engine": "&gt;=0.4.0"</code>) for handoff sessions; it needs no new engine endpoint. It asks for no write or network permission: <code>"fs.write": []</code>, <code>"net": []</code>. The window writes nothing itself. Claude runs your program with its own tools (<a href="#build">below</a>), except where the engine's local runner can run it for you: <span class="badge badge-new">new in 0.2.0</span> cocode also declares <code>permissions.exec</code>, the languages it may ask the engine to run, and the runner is new in lets 0.7.0 (<a href="#local-run">Run on your machine</a>).</p>
 <p class="note note-new">This page describes <strong>cocode 0.1.0</strong> (2026-10-13), plus the local runner marked <em>new in 0.2.0</em> and <a href="#reach">reach</a> marked <em>new in 0.3.0</em> (2026-10-15). Like the other lets repositories, its repository is private for now.</p>
 
@@ -195,7 +195,7 @@
     </tbody>
   </table>
 </div>
-<p>This is not a VM. Time and output are capped, CPU and memory are not, and a JavaScript or TypeScript program can still reach the network. Languages the engine does not run (<code>bash</code>, <code>go</code>, <code>rust</code> and the rest) still go through Claude, as described above. When the window ran the build itself, Claude is told the result through the <code>cocode.ran</code> event (<a href="#events">below</a>). To switch the local runner off for every unique, put <code>"runner": {"enabled": false}</code> in <code>~/.lets/config.json</code>. The full contract is in <a href="https://github.com/TikoTikTok/lets/blob/main/docs/RUNNER.md"><code>docs/RUNNER.md</code></a>.</p>
+<p>This is not a VM. Time and output are capped, CPU and memory are not, and a JavaScript or TypeScript program can still reach the network. Languages the engine does not run (<code>bash</code>, <code>go</code>, <code>rust</code> and the rest) still go through Claude, as described above. When the window ran the build itself, Claude is told the result through the <code>cocode.ran</code> event (<a href="#events">below</a>). To switch the local runner off for every unique, put <code>"runner": {"enabled": false}</code> in <code>~/.lets/config.json</code>. The full contract is in <a href="https://github.com/offensiveadhd/lets/blob/main/docs/RUNNER.md"><code>docs/RUNNER.md</code></a>.</p>
 
 <h3 id="reach">Reach: what leaves the sandbox <span class="badge badge-new">new in 0.3.0</span></h3>
 <p>A sandbox can print and compute. It cannot ping a host, open your browser, search the web, start a research agent or run a shell command, and before 0.3.0 a line like <code>ping('google.com')</code> quietly became a build with a <code>ping</code> function that printed what a ping <em>would</em> have said. Such a line is now a <strong>reach</strong>, and Claude does it for real.</p>
@@ -315,7 +315,7 @@
   ui/syntax.js           <span class="c"># tokenizer and language detection</span>
   ui/predict.js          <span class="c"># the local predictor</span>
   ui/style.css</code></pre>
-<p>Plain HTML, ES modules and CSS: no build step, no CDN, no inline script, no <code>eval</code>. MIT licensed. More: <a href="https://github.com/TikoTikTok/lets-unique-cocode">lets-unique-cocode</a> has the full <code>GUIDE.md</code>, the behaviour contract (<code>CONTRACT.md</code>) and JSON Schemas for the messages.</p>
+<p>Plain HTML, ES modules and CSS: no build step, no CDN, no inline script, no <code>eval</code>. MIT licensed. More: <a href="https://github.com/offensiveadhd/lets-unique-cocode">lets-unique-cocode</a> has the full <code>GUIDE.md</code>, the behaviour contract (<code>CONTRACT.md</code>) and JSON Schemas for the messages.</p>
 
 <nav class="doc-pager" aria-label="Previous and next page"><a class="prev" href="./den.html"><small>← Previous</small>Doto's home (den)</a><a class="next" href="./mors.html"><small>Next →</small>Talk in Morse (mors)</a></nav>
   </main>
@@ -326,18 +326,18 @@
     <div>
       <div class="footer-brand"><img src="../assets/logo.svg" alt="" width="28" height="28">lets</div>
       <p>Talk to Claude through windows, not just text.</p>
-      <p>MIT © TikoTikTok · made with Claude Code</p>
+      <p>MIT © offensiveadhd · made with Claude Code</p>
     </div>
     <div>
       <h2>Repositories</h2>
       <ul>
-        <li><a href="https://github.com/TikoTikTok/lets">lets</a> <span class="dim">engine, plugin, SDK, protocol</span></li>
-        <li><a href="https://github.com/TikoTikTok/lets-unique-graph">lets-unique-graph</a> <span class="dim">the graph board</span></li>
-        <li><a href="https://github.com/TikoTikTok/lets-unique-den">lets-unique-den</a> <span class="dim">Doto's home</span></li>
-        <li><a href="https://github.com/TikoTikTok/lets-unique-cocode">lets-unique-cocode</a> <span class="dim">talk in code</span></li>
-        <li><a href="https://github.com/TikoTikTok/lets-unique-mors">lets-unique-mors</a> <span class="dim">talk in Morse</span></li>
-        <li><a href="https://github.com/TikoTikTok/lets-store">lets-store</a> <span class="dim">community store</span></li>
-        <li><a href="https://github.com/TikoTikTok/lets-unique-template">lets-unique-template</a> <span class="dim">pulse template</span></li>
+        <li><a href="https://github.com/offensiveadhd/lets">lets</a> <span class="dim">engine, plugin, SDK, protocol</span></li>
+        <li><a href="https://github.com/offensiveadhd/lets-unique-graph">lets-unique-graph</a> <span class="dim">the graph board</span></li>
+        <li><a href="https://github.com/offensiveadhd/lets-unique-den">lets-unique-den</a> <span class="dim">Doto's home</span></li>
+        <li><a href="https://github.com/offensiveadhd/lets-unique-cocode">lets-unique-cocode</a> <span class="dim">talk in code</span></li>
+        <li><a href="https://github.com/offensiveadhd/lets-unique-mors">lets-unique-mors</a> <span class="dim">talk in Morse</span></li>
+        <li><a href="https://github.com/offensiveadhd/lets-store">lets-store</a> <span class="dim">community store</span></li>
+        <li><a href="https://github.com/offensiveadhd/lets-unique-template">lets-unique-template</a> <span class="dim">pulse template</span></li>
       </ul>
     </div>
     <div>
