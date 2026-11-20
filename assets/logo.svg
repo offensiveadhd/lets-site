@@ -1,38 +1,54 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-label="lets">
+  <title>lets</title>
   <defs>
-    <radialGradient id="bg" cx="50%" cy="40%" r="70%">
-      <stop offset="0%" stop-color="#2b1a55"/>
-      <stop offset="100%" stop-color="#120b1f"/>
+    <radialGradient id="ll-bg" cx="50%" cy="40%" r="72%">
+      <stop offset="0" stop-color="#2b1a52"/>
+      <stop offset="1" stop-color="#120b1f"/>
     </radialGradient>
-    <linearGradient id="orb" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#c79bff"/>
-      <stop offset="60%" stop-color="#a66bff"/>
-      <stop offset="100%" stop-color="#6b3fd6"/>
+    <radialGradient id="ll-orb" cx="38%" cy="32%" r="75%">
+      <stop offset="0" stop-color="#e3ccff"/>
+      <stop offset=".45" stop-color="#a66bff"/>
+      <stop offset="1" stop-color="#5a2fb0"/>
+    </radialGradient>
+    <radialGradient id="ll-you" cx="38%" cy="32%" r="75%">
+      <stop offset="0" stop-color="#dcfcff"/>
+      <stop offset=".45" stop-color="#6bf0ff"/>
+      <stop offset="1" stop-color="#2a8ea0"/>
+    </radialGradient>
+    <radialGradient id="ll-claude" cx="38%" cy="32%" r="75%">
+      <stop offset="0" stop-color="#ffd6f4"/>
+      <stop offset=".45" stop-color="#ff6bd6"/>
+      <stop offset="1" stop-color="#9b2d86"/>
+    </radialGradient>
+    <linearGradient id="ll-edge" gradientUnits="userSpaceOnUse" x1="36" y1="0" x2="92" y2="0">
+      <stop offset="0" stop-color="#6bf0ff"/>
+      <stop offset="1" stop-color="#ff6bd6"/>
     </linearGradient>
-    <linearGradient id="edge" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#6bf0ff"/>
-      <stop offset="100%" stop-color="#ff6bd6"/>
-    </linearGradient>
-    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="3" result="b"/>
+    <filter id="ll-glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3.2" result="b"/>
       <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
   </defs>
-  <rect width="128" height="128" rx="28" fill="url(#bg)"/>
-  <g stroke="url(#edge)" stroke-width="3" fill="none" filter="url(#glow)" stroke-linecap="round">
-    <path d="M36 88 C 36 60, 64 60, 64 44"/>
-    <path d="M92 88 C 92 60, 64 60, 64 44"/>
-    <path d="M36 88 C 50 96, 78 96, 92 88"/>
+  <rect width="128" height="128" rx="29" fill="url(#ll-bg)"/>
+  <rect x="1.5" y="1.5" width="125" height="125" rx="27.5" fill="none" stroke="#5a44a0" stroke-opacity=".6" stroke-width="3"/>
+  <!-- the conversation: you (cyan) and Claude (magenta), joined through the window's companion -->
+  <g filter="url(#ll-glow)" fill="none" stroke="url(#ll-edge)" stroke-width="4" stroke-linecap="round">
+    <path d="M36 89 C36 62 64 64 64 50"/>
+    <path d="M92 89 C92 62 64 64 64 50"/>
+    <path d="M38 91 C52 99 76 99 90 91"/>
   </g>
-  <circle cx="36" cy="88" r="9" fill="#6bf0ff" filter="url(#glow)"/>
-  <circle cx="92" cy="88" r="9" fill="#ff6bd6" filter="url(#glow)"/>
-  <g filter="url(#glow)">
-    <circle cx="64" cy="40" r="18" fill="url(#orb)"/>
-    <ellipse cx="57" cy="38" rx="3.2" ry="4.2" fill="#120b1f"/>
-    <ellipse cx="71" cy="38" rx="3.2" ry="4.2" fill="#120b1f"/>
-    <circle cx="58" cy="36.5" r="1.1" fill="#fff"/>
-    <circle cx="72" cy="36.5" r="1.1" fill="#fff"/>
-    <path d="M58 46 Q 64 50 70 46" stroke="#120b1f" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+  <g filter="url(#ll-glow)">
+    <circle cx="36" cy="89" r="10.5" fill="url(#ll-you)"/>
+    <circle cx="92" cy="89" r="10.5" fill="url(#ll-claude)"/>
   </g>
-  <circle cx="64" cy="40" r="24" fill="none" stroke="#a66bff" stroke-opacity="0.35" stroke-width="1.5"/>
+  <circle cx="33" cy="85.5" r="2.7" fill="#fff" fill-opacity=".7"/>
+  <circle cx="89" cy="85.5" r="2.7" fill="#fff" fill-opacity=".7"/>
+  <!-- Doto -->
+  <circle cx="64" cy="42" r="25.5" fill="none" stroke="#a66bff" stroke-opacity=".3" stroke-width="1.5"/>
+  <g filter="url(#ll-glow)">
+    <circle cx="64" cy="42" r="19.5" fill="url(#ll-orb)"/>
+  </g>
+  <circle cx="57.6" cy="35" r="5" fill="#fff" fill-opacity=".75"/>
+  <circle cx="57.2" cy="44.4" r="3.3" fill="#120b1f"/>
+  <circle cx="70.8" cy="44.4" r="3.3" fill="#120b1f"/>
 </svg>
