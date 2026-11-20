@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 400" role="img" aria-labelledby="wb-t wb-d">
+<title id="wb-t">lets-site</title>
+<desc id="wb-d">lets-site: the website at lets.offensiveadhd.com. A browser frame shows the landing page: the lets logo and name, the line Talk to Claude through windows, not just text, and an Install the engine button. In the stage beside it, among three node chips, Doto, a violet orb, rolls after the pointer as it circles.</desc>
+<style>text{font-family:Inter,"Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif}.m{font-family:ui-monospace,"Cascadia Code",SFMono-Regular,Menlo,Consolas,monospace}</style>
+<defs>
+<radialGradient id="wb-bg" cx="70%" cy="40%" r="85%"><stop offset="0" stop-color="#2b1a52"/><stop offset="1" stop-color="#120b1f"/></radialGradient>
+<radialGradient id="wb-cy" cx="96%" cy="100%" r="42%"><stop offset="0" stop-color="#6bf0ff" stop-opacity=".13"/><stop offset="1" stop-color="#6bf0ff" stop-opacity="0"/></radialGradient>
+<radialGradient id="wb-mg" cx="0%" cy="0%" r="48%"><stop offset="0" stop-color="#ff6bd6" stop-opacity=".12"/><stop offset="1" stop-color="#ff6bd6" stop-opacity="0"/></radialGradient>
+<radialGradient id="wb-orb" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#e3ccff"/><stop offset=".45" stop-color="#a66bff"/><stop offset="1" stop-color="#5a2fb0"/></radialGradient>
+<radialGradient id="wb-tile" cx="50%" cy="42%" r="70%"><stop offset="0" stop-color="#2b1a52"/><stop offset="1" stop-color="#120b1f"/></radialGradient>
+<linearGradient id="wb-ink" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c49bff"/><stop offset="1" stop-color="#ff8fe0"/></linearGradient>
+<linearGradient id="wb-btn" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#b98aff"/><stop offset="1" stop-color="#8a4dff"/></linearGradient>
+<linearGradient id="wb-wm" gradientUnits="userSpaceOnUse" x1="0" y1="29" x2="0" y2="167"><stop offset="0" stop-color="#f8f4ff"/><stop offset="1" stop-color="#cdbbff"/></linearGradient>
+<filter id="wb-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<filter id="wb-soft" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="2.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<filter id="wb-wmg" x="-20%" y="-70%" width="140%" height="240%"><feGaussianBlur stdDeviation="6" result="b"/><feColorMatrix in="b" type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 .34 0" result="g"/><feMerge><feMergeNode in="g"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<filter id="wb-ghost" x="-20%" y="-90%" width="140%" height="280%"><feGaussianBlur stdDeviation="1.5"/></filter>
+<pattern id="wb-grid" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.3" fill="#5a44a0" fill-opacity=".42"/></pattern>
+</defs>
+<rect x="1" y="1" width="1278" height="398" rx="28" fill="url(#wb-bg)"/>
+<rect x="1" y="1" width="1278" height="398" rx="28" fill="url(#wb-cy)"/>
+<rect x="1" y="1" width="1278" height="398" rx="28" fill="url(#wb-mg)"/>
+<rect x="1" y="1" width="1278" height="398" rx="28" fill="url(#wb-grid)"/>
+<rect x="1" y="1" width="1278" height="398" rx="28" fill="none" stroke="#5a44a0" stroke-opacity=".65" stroke-width="2"/>
+<circle cx="79" cy="105" r="6" fill="url(#wb-orb)"/>
+<text class="m" x="96" y="111" font-size="18" letter-spacing=".6" fill="#a99cd0">website · GitHub Pages</text>
+<g transform="translate(72 137)"><g transform="translate(9 -26.1) scale(0.9)" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="20"><g stroke="#8f74d6" filter="url(#wb-wmg)"><path transform="translate(0 0)" d="M0 39V121"/><path transform="translate(28 0)" d="M0 89H64A32 32 0 1 0 54.6 111.6"/><path transform="translate(126 0)" d="M16 39V101a20 20 0 0 0 20 20h2M0 57H38"/><path transform="translate(192 0)" d="M39.2 63.8A21 16 0 1 0 22 89A21 16 0 1 1 4.8 114.2"/><path transform="translate(262 0)" d="M0 91H26"/></g><g stroke="url(#wb-wm)" filter="url(#wb-wmg)"><path transform="translate(314 0)" d="M39.2 63.8A21 16 0 1 0 22 89A21 16 0 1 1 4.8 114.2"/><path transform="translate(388 0)" d="M0 62V121M0 34v.01"/><path transform="translate(416 0)" d="M16 39V101a20 20 0 0 0 20 20h2M0 57H38"/><path transform="translate(482 0)" d="M0 89H64A32 32 0 1 0 54.6 111.6"/></g></g></g>
+<text x="72" y="294.8" font-size="37" font-weight="400" fill="#dcd0ff"><tspan fill="#c49bff" font-weight="600">lets</tspan>.offensiveadhd.com</text>
+<g transform="translate(676 44)">
+<rect x="0" y="0" width="548" height="312" rx="16" fill="#170e2b" fill-opacity=".93" stroke="#5a44a0" stroke-opacity=".7" stroke-width="1.5"/>
+<!-- the browser bar -->
+<circle cx="20" cy="19" r="4.5" fill="#ff6b8b" fill-opacity=".8"/><circle cx="36" cy="19" r="4.5" fill="#ffd166" fill-opacity=".8"/><circle cx="52" cy="19" r="4.5" fill="#5ef2a6" fill-opacity=".8"/>
+<rect x="98" y="8" width="352" height="22" rx="11" fill="#120b1f" stroke="#3a2a63" stroke-width="1.5"/>
+<text class="m" x="274" y="23.500" font-size="12.5" text-anchor="middle" fill="#c9bdf0">lets.offensiveadhd.com</text>
+<path d="M1 38H547" stroke="#3a2a63" stroke-width="1.5"/>
+<!-- the page: nav -->
+<g transform="translate(20 44) scale(.33)"><rect width="64" height="64" rx="15" fill="url(#wb-tile)"/><rect x=".75" y=".75" width="62.5" height="62.5" rx="14.25" fill="none" stroke="#5a44a0" stroke-opacity=".8" stroke-width="1.5"/><g fill="none" stroke-width="2.6" stroke-linecap="round"><path d="M17 46C17 33 32 34 32 24" stroke="#6bf0ff"/><path d="M47 46C47 33 32 34 32 24" stroke="#ff6bd6"/><path d="M17 46C25 51 39 51 47 46" stroke="#c49bff"/></g><circle cx="17" cy="46" r="5" fill="#6bf0ff"/><circle cx="47" cy="46" r="5" fill="#ff6bd6"/><circle cx="32" cy="22" r="11.5" fill="url(#wb-orb)"/><circle cx="28.46" cy="18.02" r="2.88" fill="#fff" fill-opacity=".75"/><circle cx="28.02" cy="23.11" r="1.88" fill="#120b1f"/><circle cx="35.98" cy="23.11" r="1.88" fill="#120b1f"/></g>
+<text x="49" y="60" font-size="15" font-weight="800" fill="#ece6ff">lets</text>
+<rect x="274" y="51" width="30" height="6" rx="3" fill="#ece6ff" fill-opacity=".5"/><rect x="316" y="51" width="46" height="6" rx="3" fill="#ece6ff" fill-opacity=".5"/><rect x="374" y="51" width="62" height="6" rx="3" fill="#ece6ff" fill-opacity=".5"/><rect x="448" y="51" width="38" height="6" rx="3" fill="#ece6ff" fill-opacity=".5"/><rect x="498" y="51" width="42" height="6" rx="3" fill="#ece6ff" fill-opacity=".5"/>
+<path d="M1 71H547" stroke="#3a2a63" stroke-opacity=".7" stroke-width="1"/>
+<!-- the hero, left -->
+<g transform="translate(20 92) scale(.72)"><rect width="64" height="64" rx="15" fill="url(#wb-tile)"/><rect x=".75" y=".75" width="62.5" height="62.5" rx="14.25" fill="none" stroke="#5a44a0" stroke-opacity=".8" stroke-width="1.5"/><g fill="none" stroke-width="2.6" stroke-linecap="round"><path d="M17 46C17 33 32 34 32 24" stroke="#6bf0ff"/><path d="M47 46C47 33 32 34 32 24" stroke="#ff6bd6"/><path d="M17 46C25 51 39 51 47 46" stroke="#c49bff"/></g><circle cx="17" cy="46" r="5" fill="#6bf0ff"/><circle cx="47" cy="46" r="5" fill="#ff6bd6"/><circle cx="32" cy="22" r="11.5" fill="url(#wb-orb)"/><circle cx="28.46" cy="18.02" r="2.88" fill="#fff" fill-opacity=".75"/><circle cx="28.02" cy="23.11" r="1.88" fill="#120b1f"/><circle cx="35.98" cy="23.11" r="1.88" fill="#120b1f"/></g>
+<text x="78" y="130" font-size="44" font-weight="800" letter-spacing="-1" fill="#f1ebff">lets</text>
+<text x="20" y="164" font-size="15.5" font-weight="700" fill="#e9deff">Talk to Claude through <tspan fill="#c49bff">windows</tspan>,</text>
+<text x="20" y="184" font-size="15.5" font-weight="700" fill="#e9deff">not just text.</text>
+<g fill="#ece6ff" fill-opacity=".26"><rect x="20" y="200" width="252" height="6" rx="3"/><rect x="20" y="213" width="236" height="6" rx="3"/><rect x="20" y="226" width="150" height="6" rx="3"/></g>
+<rect x="20" y="250" width="132" height="32" rx="10" fill="url(#wb-btn)"/>
+<text x="86" y="270.500" font-size="12" font-weight="700" text-anchor="middle" fill="#fff">Install the engine</text>
+<rect x="160" y="250" width="112" height="32" rx="10" fill="#1d1238" stroke="#5a44a0" stroke-width="1.5"/>
+<rect x="176" y="263" width="80" height="6" rx="3" fill="#ece6ff" fill-opacity=".6"/>
+<!-- the hero stage: Doto follows the pointer -->
+<rect x="304" y="84" width="228" height="212" rx="22" fill="#1a1030" fill-opacity=".92" stroke="#5a44a0" stroke-opacity=".7" stroke-width="1.5"/>
+<rect x="306" y="86" width="224" height="208" rx="20" fill="url(#wb-grid)"/>
+<rect x="318" y="98" width="96" height="26" rx="8" fill="#1d1238" stroke="#a66bff" stroke-opacity=".85" stroke-width="1.4"/><text x="366" y="115.5" font-size="11.5" font-weight="600" text-anchor="middle" fill="#ece6ff">API gateway</text>
+<rect x="446" y="152" width="74" height="26" rx="8" fill="#1d1238" stroke="#6bf0ff" stroke-opacity=".85" stroke-width="1.4"/><text x="483" y="169.5" font-size="11.5" font-weight="600" text-anchor="middle" fill="#ece6ff">Users DB</text>
+<rect x="320" y="236" width="98" height="26" rx="8" fill="#1d1238" stroke="#ff6bd6" stroke-opacity=".85" stroke-width="1.4"/><text x="369" y="253.5" font-size="11.5" font-weight="600" text-anchor="middle" fill="#ece6ff">Token valid?</text>
+<text x="418" y="285" font-size="10.5" text-anchor="middle" fill="#a99cd0">Click Doto. He counts.</text>
+<g transform="translate(380 152)"><g><animateMotion dur="10s" begin="-9.150s" repeatCount="indefinite" path="M0 0C50 -30 120 0 110 50C102 90 40 112 8 82C-18 58 -28 22 0 0Z"/><g transform="translate(-36 -2)"><g filter="url(#wb-glow)"><circle r="24" fill="url(#wb-orb)"/></g><circle cx="-7.38" cy="-8.31" r="6" fill="#fff" fill-opacity=".75"/><ellipse cx="-8.31" cy="2.31" rx="3.92" ry="3.92" fill="#120b1f"><animate attributeName="ry" dur="5s" begin="0s" repeatCount="indefinite" values="3.92;3.92;0.58;3.92;3.92" keyTimes="0;.56;.58;.6;1"/></ellipse><ellipse cx="8.31" cy="2.31" rx="3.92" ry="3.92" fill="#120b1f"><animate attributeName="ry" dur="5s" begin="0s" repeatCount="indefinite" values="3.92;3.92;0.58;3.92;3.92" keyTimes="0;.56;.58;.6;1"/></ellipse></g></g></g>
+<g transform="translate(380 152)"><g><animateMotion dur="10s" begin="0s" repeatCount="indefinite" path="M0 0C50 -30 120 0 110 50C102 90 40 112 8 82C-18 58 -28 22 0 0Z"/><path transform="scale(0.82)" d="M0 0v30l8.2-7.4 5.8 12.9 5.2-2.3-5.6-12.6h10.9z" fill="#f6f2ff" stroke="#120b1f" stroke-width="2.2" stroke-linejoin="round"/></g></g>
+</g>
+</svg>
