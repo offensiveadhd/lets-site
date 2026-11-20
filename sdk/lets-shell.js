@@ -567,8 +567,9 @@ function mount(lets, opts) {
     menu.replaceChildren(h('div', { class: 'lets-menu-head', 'aria-hidden': 'true', text: persona.name }),
       ...items.map((it) => h('button', { class: 'lets-menu-item', type: 'button', role: 'menuitem', 'data-src': it.src, onclick: () => pick(it) },
         h('span', { class: 'lets-mi-label', text: it.label }), it.hint && h('span', { class: 'lets-mi-hint', text: it.hint }))),
-      M.waiting ? h('div', { class: 'lets-menu-wait lets-dots', 'aria-hidden': 'true' }, h('i'), h('i'), h('i'))
-        : !items.length && h('div', { class: 'lets-menu-empty', text: 'Nothing yet. Draw something.' }));
+      // spread, so nothing is passed when there is nothing to add: replaceChildren would draw a bare `false` as text
+      ...(M.waiting ? [h('div', { class: 'lets-menu-wait lets-dots', 'aria-hidden': 'true' }, h('i'), h('i'), h('i'))]
+        : !items.length ? [h('div', { class: 'lets-menu-empty', text: 'Nothing yet. Draw something.' })] : []));
     sprite.dataset.hasSuggestions = String(!M.open && M.remote.length > 0);
     if (fi >= 0 && items.length) menu.querySelectorAll('.lets-menu-item')[Math.min(fi, items.length - 1)].focus();
   }
